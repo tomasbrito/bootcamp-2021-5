@@ -1,5 +1,9 @@
-public class Ordenar {
+import java.util.*;
 
+import static java.util.Comparator.comparingInt;
+import static java.util.stream.Collectors.toMap;
+
+public class Ordenar {
     /**
      * Code Kata: Ordenar Cadena.
      * Cada palabra de la cadena contendrá un solo número.
@@ -13,8 +17,81 @@ public class Ordenar {
      * Las palabras en la cadena de entrada solo contendrán números consecutivos válidos.
      *
      * Ejemplos:
-     *    "oraci4on un3a e2s Es1ta" -> "Es1ta e2s un3a oraci4on"
+     *    "oraci4on un3a e2s Es1ta" -> "Es1ta e2s un3a oraci4on" //happy path
+     *    "Esto1 no2 funciona4" -> "error1" // negocio
+     *    "" -> "" //
+     *    "este tambien es un valor vacio" -> "" // negocio
+     *    " 1este 2es 3un 4string 5largo 6que 7necesita 8sobre 9diez 9palabras 9para 9fallar" -> "error"
+     *
      *
      */
 
+    public static String order(String s) {
+
+        //atributos - propiedades del
+
+        //1. guardar la cadena en un array
+        String[] palabrasSeparadas = s.split(" ");
+        int caracterNumero=0;
+        String res="";
+        //2. buscar y ordenar las palabras en otro array
+        Map<Integer,String> palabraOrdenada = new HashMap();
+        //busqueda de numeros en palabras
+        for (String palabra:
+             palabrasSeparadas) {
+            //contar y guardar las palabras que contiene un numero dentro de ella
+            for (int i = 0; i <palabra.length() ; i++) {
+                char caracter = palabra.charAt(i);
+                if (caracter == '1' || caracter == '2' || caracter == '3' || caracter == '4' ||
+                    caracter == '5' ||caracter == '6' || caracter == '7' ||caracter == '8' ||
+                    caracter == '9'){
+                    caracterNumero++;
+                    palabraOrdenada.put(Integer.parseInt(String.valueOf(caracter)),palabra);
+                }
+            }
+        }
+        //validar si en cada palabra existe la misma cantidad de numeros
+        if(palabrasSeparadas.length == caracterNumero){
+            //validar si el largo es mayor a 10
+            if (caracterNumero >10){
+                return "errorLargo";
+            }
+            //ordenar data
+            palabraOrdenada= sortMapByKey(palabraOrdenada);
+            //guardar Values en un String
+            for (int i = 0; i <palabraOrdenada.size() ; i++) {
+                //validar si palabra viene con un valor null
+                if(palabraOrdenada.get(i+1)!= null){
+                    res = res+palabraOrdenada.get(i+1) +" ";
+                }else{
+                    return "errornumeros";
+                }
+
+            }
+            return res.trim();
+
+
+        }else{
+            if (caracterNumero==0 && palabrasSeparadas.length > 1){
+                return "errorvaciopalabras";
+            }
+            return "errorvacio";
+        }
+    }
+
+    private static Map<Integer, String> sortMapByKey(Map<Integer, String> map)
+    {
+        Map<Integer, String> sortedMap =  map.entrySet().stream()
+                .sorted(comparingInt(e -> e.getKey() ))
+                .collect(toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (a, b) -> { throw new AssertionError();},
+                        LinkedHashMap::new
+                ));
+        return sortedMap;
+    }
+
 }
+
+
