@@ -1,3 +1,5 @@
+package junit.earaya;
+
 import java.util.*;
 
 import static java.util.Comparator.comparingInt;
@@ -5,7 +7,7 @@ import static java.util.stream.Collectors.toMap;
 
 public class Ordenar {
     /**
-     * Code Kata: Ordenar Cadena.
+     * Code Kata: junit.earaya.Ordenar Cadena.
      * Cada palabra de la cadena contendrá un solo número.
      * Este número es la posición que debería tener la palabra en el resultado.
      *
@@ -17,34 +19,34 @@ public class Ordenar {
      * Las palabras en la cadena de entrada solo contendrán números consecutivos válidos.
      *
      * Ejemplos:
-     *    "oraci4on un3a e2s Es1ta" -> "Es1ta e2s un3a oraci4on" //happy path
-     *    "Esto1 no2 funciona4" -> "error1" // negocio
-     *    "" -> "" //
-     *    "este tambien es un valor vacio" -> "" // negocio
-     *    " 1este 2es 3un 4string 5largo 6que 7necesita 8sobre 9diez 9palabras 9para 9fallar" -> "error"
+     *    "oraci4on un3a e2s Es1ta" -> "Es1ta e2s un3a oraci4on" // caso feliz
+     *    "Esto1 no2 funciona4" -> "errornumeros" // negocio
+     *    "" -> "" -> "errorvacio"// negocio
+     *    "este tambien es un valor vacio" -> "errorvacioletras" // negocio
+     *    " 1este 2es 3un 4string 5largo 6que 7necesita 8sobre 9diez 9palabras 9para 9fallar" -> "error" //negocio
      *
      *
      */
 
     public static String order(String s) {
 
-        //atributos - propiedades del
+        //atributos
+        int caracterNumero=0;
+        String res="";
 
         //1. guardar la cadena en un array
         String[] palabrasSeparadas = s.split(" ");
-        int caracterNumero=0;
-        String res="";
         //2. buscar y ordenar las palabras en otro array
         Map<Integer,String> palabraOrdenada = new HashMap();
         //busqueda de numeros en palabras
         for (String palabra:
-             palabrasSeparadas) {
+                palabrasSeparadas) {
             //contar y guardar las palabras que contiene un numero dentro de ella
             for (int i = 0; i <palabra.length() ; i++) {
                 char caracter = palabra.charAt(i);
                 if (caracter == '1' || caracter == '2' || caracter == '3' || caracter == '4' ||
-                    caracter == '5' ||caracter == '6' || caracter == '7' ||caracter == '8' ||
-                    caracter == '9'){
+                        caracter == '5' ||caracter == '6' || caracter == '7' ||caracter == '8' ||
+                        caracter == '9'){
                     caracterNumero++;
                     palabraOrdenada.put(Integer.parseInt(String.valueOf(caracter)),palabra);
                 }
@@ -53,8 +55,8 @@ public class Ordenar {
         //validar si en cada palabra existe la misma cantidad de numeros
         if(palabrasSeparadas.length == caracterNumero){
             //validar si el largo es mayor a 10
-            if (caracterNumero >10){
-                return "errorLargo";
+            if (caracterNumero >9){
+                return "errorlargo";
             }
             //ordenar data
             palabraOrdenada= sortMapByKey(palabraOrdenada);
@@ -73,7 +75,7 @@ public class Ordenar {
 
         }else{
             if (caracterNumero==0 && palabrasSeparadas.length > 1){
-                return "errorvaciopalabras";
+                return "errorvacioletras";
             }
             return "errorvacio";
         }
@@ -91,7 +93,6 @@ public class Ordenar {
                 ));
         return sortedMap;
     }
-
 }
 
 
