@@ -1,5 +1,6 @@
 package junit.earaya;
 
+import junit.sespinoza.KataUno;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 

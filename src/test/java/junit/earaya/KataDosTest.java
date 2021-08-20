@@ -1,4 +1,5 @@
 package junit.earaya;
+import junit.sespinoza.KataDos;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -7,9 +8,7 @@ public class KataDosTest {
 
     @Test
     public void fixedTests() {
-
-
-         assertEquals("HELLO WORLD", KataDos.toAlternativeString("hello world"));
+        assertEquals("HELLO WORLD", KataDos.toAlternativeString("hello world"));
         assertEquals("hello world", KataDos.toAlternativeString("HELLO WORLD"));
         assertEquals("HELLO world", KataDos.toAlternativeString("hello WORLD"));
         assertEquals("hEllO wOrld", KataDos.toAlternativeString("HeLLo WoRLD"));
