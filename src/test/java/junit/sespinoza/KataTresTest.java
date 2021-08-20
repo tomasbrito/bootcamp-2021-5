@@ -1,3 +1,4 @@
+/*
 package junit.sespinoza;
 import static org.junit.Assert.*;
 import org.junit.Test;
@@ -30,3 +31,4 @@ public class KataTresTest {
         assertArrayEquals(r,KataTres.nbMonths(8001,8000,1000,1.5));
     }
 }
+*/

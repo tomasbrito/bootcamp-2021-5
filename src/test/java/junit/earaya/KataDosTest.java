@@ -1,3 +1,4 @@
+/*
 package junit.earaya;
 import org.junit.Test;
 
@@ -26,4 +27,4 @@ public class KataDosTest {
         assertEquals("ALTerNAtiNG CaSe <=> altERnaTIng cAsE", KataDos.toAlternativeString("altERnaTIng cAsE <=> ALTerNAtiNG CaSe"));
         assertEquals("altERnaTIng cAsE <=> ALTerNAtiNG CaSe", KataDos.toAlternativeString("ALTerNAtiNG CaSe <=> altERnaTIng cAsE"));
     }
-}
+}*/
