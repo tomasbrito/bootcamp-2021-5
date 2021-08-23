@@ -1,4 +1,4 @@
-package Junit.jcharif;
+package junit.jcharif;
 
 public class KataUno {
 
