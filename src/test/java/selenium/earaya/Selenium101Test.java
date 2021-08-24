@@ -1,4 +1,4 @@
-package selenium;
+package selenium.earaya;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.After;
@@ -6,22 +6,22 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 
 public class Selenium101Test {
 
-    WebDriver driver;
+    WebDriver driver; // es la instancia a crear del navegador - firefox, chrome, safari
 
     @BeforeClass
     public static void SetUp(){
         System.out.println("Setup");
-        WebDriverManager.chromedriver().setup();
+        WebDriverManager.edgedriver().setup(); //vamos a crear una instancia de Google Chrome
     }
 
     @Before
     public void init(){
         System.out.println("init");
-        driver = new ChromeDriver();
+        driver = new EdgeDriver();
     }
 
     @After
