@@ -1,9 +1,9 @@
 package junit.lkelly;
 
 public class Fighter {
-   private String name;
-   private int health;
-   private int damagePerAttack;
+   /*private*/ String name;
+    /*private*/ int health;
+    /*private*/ int damagePerAttack;
 
 
    public  Fighter(String name, int health, int damagePerAttack){
@@ -11,7 +11,7 @@ public class Fighter {
         this.health = health;
         this.damagePerAttack = damagePerAttack;
    }
-
+/*
     public int getDamagePerAttack() {
         return damagePerAttack;
     }
@@ -23,6 +23,6 @@ public class Fighter {
     public int getHealth() {
         return health;
     }
-
+*/
 
 }

@@ -3,10 +3,10 @@ package junit.lkelly;
 import java.util.*;
 public class KataSortFiles {
     public static Object SortCsvColumns(String preSorting) {
-        ArrayList<String> lineas = new ArrayList<>(Arrays.asList(Arrays.toString(preSorting.split("\n"))));
+       String[] lineas = preSorting.split("\n");
      //String[][] tabla;
         ArrayList<ArrayList<String>> tabla = new ArrayList<>();
-        for (int i=0; i<= lineas.size()-1;i++){
+        for (int i=0; i<= lineas.length-1;i++){
             tabla.add(separarLineas(lineas,i));
         }
 
@@ -15,33 +15,25 @@ public class KataSortFiles {
             columnas.put(tabla.get(0).get(i),new ArrayList<String>());
         }
         ArrayList<String> columna = new ArrayList<>();
-        for (int i=1; i<=tabla.size()-1;i++){
-          /*  for (int j=0;tabla.get(i).size()-1;j++){
-                String key = tabla.get(0).get(i);
-                columna = columnas.get(key);
-                columna.add(columnas.get(i).get(j));
-                columnas.put(key,columna);
-            }*/
-        }
+        // FALTA AGREGAR
         ArrayList<String> filaCero = tabla.get(0);
-        for (int i=0; i<=filaCero.size()-1;i++){
-            filaCero.get(i).toLowerCase();
-        }
+        filaCero.sort(String::compareToIgnoreCase);
 
-        Collections.sort(filaCero);
 
         Object resultado ="";
 
         for (int i=0; i<= tabla.get(0).size()-1;i++ ){
-            resultado =  resultado + tabla.get(0).get(i) +"\n";
+            if(i == tabla.get(0).size()-1) resultado =  resultado + tabla.get(0).get(i) +"\n";
+            else resultado =  resultado + tabla.get(0).get(i) +" | ";
         }
+
 
 
         return resultado;
     }
 
-    private static ArrayList<String> separarLineas(ArrayList<String> lineas, int i){
-       String s = lineas.get(i);
+    private static ArrayList<String> separarLineas(String[] lineas, int i){
+       String s = lineas[i];
        return new ArrayList<String>(Arrays.asList(s.split(";")));
     }
 
