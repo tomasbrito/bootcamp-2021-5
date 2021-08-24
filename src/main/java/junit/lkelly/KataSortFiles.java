@@ -16,12 +16,12 @@ public class KataSortFiles {
         }
         ArrayList<String> columna = new ArrayList<>();
         for (int i=1; i<=tabla.size()-1;i++){
-            for (int j=0;tabla.get(i).size()-1;j++){
+          /*  for (int j=0;tabla.get(i).size()-1;j++){
                 String key = tabla.get(0).get(i);
                 columna = columnas.get(key);
                 columna.add(columnas.get(i).get(j));
                 columnas.put(key,columna);
-            }
+            }*/
         }
         ArrayList<String> filaCero = tabla.get(0);
         for (int i=0; i<=filaCero.size()-1;i++){
