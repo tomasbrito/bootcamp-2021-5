@@ -18,10 +18,9 @@ public class Ordenar {
      * "oraci4on un3a e2s Es1ta" -> "Es1ta e2s un3a oraci4on"
      */
     public static void main(String[] args) {
-        int arreglo [];
-        arreglo = new int[2];
-        arreglo = KataTres.nbMonths(2000,8000,1000,1.5);
-        System.out.println(arreglo);
+        KataCuatro.sortCsvColumns("myjinxin2015;raulbc777;smile67;Dentzil;SteffenVogel_79\n"
+                + "17945;10091;10088;3907;10132\n"
+                + "2;12;13;48;11");
     }
 }
 

@@ -7,6 +7,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class Selenium101Test {
 
@@ -15,13 +17,13 @@ public class Selenium101Test {
     @BeforeClass
     public static void SetUp(){
         System.out.println("Setup");
-        WebDriverManager.chromedriver().setup();
+        WebDriverManager.firefoxdriver().setup();
     }
 
     @Before
     public void init(){
         System.out.println("init");
-        driver = new ChromeDriver();
+        driver = new FirefoxDriver();
     }
 
     @After
