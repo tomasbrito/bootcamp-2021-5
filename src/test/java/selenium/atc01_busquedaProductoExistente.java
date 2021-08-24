@@ -4,39 +4,28 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 
-public class Selenium101Test {
-
+public class atc01_busquedaProductoExistente {
     WebDriver driver;
 
+
     @BeforeClass
-    public static void SetUp(){
-        System.out.println("Setup");
+    public void  init(){
         WebDriverManager.edgedriver().setup();
     }
-
     @Before
-    public void init(){
-        System.out.println("init");
+    public void setup(){
         driver = new EdgeDriver();
+        driver.manage().deleteAllCookies(); // borrar cookies
+        driver.manage().window().maximize(); // maximizar la ventana
     }
-
     @After
     public void close(){
         System.out.println("After");
-       if(driver != null){
-           driver.close();
-       }
-    }
+        if (driver !=  )
 
-    @Test
-    public void test() {
-        // Your test code here
-        System.out.println("Driver Chrome Configurado!");
     }
 
 
