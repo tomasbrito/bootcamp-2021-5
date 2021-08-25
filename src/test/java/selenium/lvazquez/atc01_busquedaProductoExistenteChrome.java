@@ -1,40 +1,44 @@
-package selenium;
+package selenium.lvazquez;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.edge.EdgeDriver;
 
-public class atc01_busquedaProductoExistenteEdge {
+public class atc01_busquedaProductoExistenteChrome {
 
     WebDriver driver;
 
     @BeforeClass
     public static void init() {
-        WebDriverManager.edgedriver().setup();
+        WebDriverManager.chromedriver().setup();
     }
 
     @Before
     public void setup() {
-        driver = new EdgeDriver();
+        driver = new ChromeDriver();
         driver.manage().deleteAllCookies();
         driver.manage().window().maximize();
     }
 
     @Test
     public void atc01() {
+        //abrir navegador
         driver.get("http://automationpractice.com/");
 
+        //buscar campo busqueda y escribir
         driver.findElement(By.xpath("//*[@id=\'search_query_top\']"))
                 .sendKeys("chiffon dress");
 
+        //clickear boton buscar
         driver.findElement(By.cssSelector("#searchbox > button")).click();
 
+        //buscar url actual
         String currentUrl = driver.getCurrentUrl();
         System.out.println(currentUrl);
 
+        //comparar url
         if(currentUrl.contains("submit_search=")){
             Assert.assertTrue(true);
         } else {
@@ -45,6 +49,7 @@ public class atc01_busquedaProductoExistenteEdge {
     @After
     public void close() {
         System.out.println("after");
+        // if (driver != null) driver.close();
         System.out.println("simulacion driver.close()");
     }
 

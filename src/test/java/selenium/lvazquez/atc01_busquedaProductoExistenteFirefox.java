@@ -1,4 +1,4 @@
-package selenium;
+package selenium.lvazquez;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.*;
