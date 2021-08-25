@@ -23,7 +23,7 @@ public class atc03_MensajeProductoNoEncontrado {
     }
 
     @Test
-    public void atc03() {
+    public void atc03() throws Exception {
         driver.get("http://automationpractice.com/");
 
         WebElement searchBox = driver.findElement(By.xpath("//*[@id=\'search_query_top\']"));
@@ -31,11 +31,13 @@ public class atc03_MensajeProductoNoEncontrado {
         searchBox.sendKeys("liquido matapulgas");
         searchBox.submit();
 
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            Assert.assertTrue(false);
-        }
+        Thread.sleep(2000);
+
+//        try {
+//            Thread.sleep(2000);
+//        } catch (InterruptedException e) {
+//            Assert.assertTrue(false);
+//        }
 
         String message = driver.findElement(By.xpath("//*[@id='center_column']/p")).getText();
 
