@@ -13,19 +13,15 @@ public class atc01_busquedaProductoExistente {
     By barrabusqueda = By.xpath("//*[@id='search_query_top']");
 
     @BeforeClass
-    public static void init(){
-        WebDriverManager.chromedriver().setup();
-
-    }
+    public static void init(){ WebDriverManager.chromedriver().setup();}
 
     @Before
     public void Setup(){
         driver = new ChromeDriver();
         driver.manage().deleteAllCookies(); //borrar cookies
         driver.manage().window().maximize();
-
-
     }
+
 
     @After
     public void close(){
@@ -33,24 +29,29 @@ public class atc01_busquedaProductoExistente {
         if (driver != null   ){
             driver.close();
         }
-
     }
 
     @Test
     public  void atc01(){
         driver.get("http://automationpractice.com/index.php");
-        System.out.println("validar");
+        System.out.println("se abre url");
         driver.findElement(barrabusqueda).sendKeys("chiffon dress");
-        System.out.println("se tipea el objeto");
-        // Validar - Asserts
+        System.out.println("se tipea en el objeto");
+        driver.findElement(By.cssSelector("button.btn:nth-child(5)")).click();
+        System.out.println("se presiona boton buscar");
+        //validar - assert
         String urlActual = driver.getCurrentUrl();
         if (urlActual.contains("submit_search=")){
             Assert.assertTrue(true);
-        }else {
+        }else{
             Assert.fail();
         }
+        driver.get("https://es-la.facebook.com/"); //NUEVO
+        System.out.println("Se abre 2da URL"); //NUEVO
+        //driver.navigate().back(); //NUEVO
+        //driver.navigate().forward();//NUEVO
+        //driver.findElement(By.id("email")).sendKeys("Probando Selenium");//NUEVO
         System.out.println(urlActual);
-
     }
 
 }
