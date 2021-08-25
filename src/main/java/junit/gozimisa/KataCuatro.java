@@ -1,35 +1,30 @@
 package junit.gozimisa;
 
-/*
-Dentzil;myjinxin2015;raulbc777;smile67;SteffenVogel_79\n
-3907;17945;10091;10088;10132\n
-48;2;12;13;11
-
-considerar que todos tengan la misma cantidad de columna
- */
-
 import java.util.Arrays;
 
 public class KataCuatro {
     public static String sortCsvColumns(String csvFileContent)  {
-        String[] fila = csvFileContent.split("\n");
-        String[] primeracolumna = new String[fila[0].split(";").length];
+        String[] columna = csvFileContent.split("\n");
+        String[] primerafila = new String[columna[0].split(";").length];
 
-        Arrays.fill(primeracolumna, "");
-        System.out.println(Arrays.asList(primeracolumna));
-        for (String s : fila) {
-            String[] line = s.split(";");
-            for (int j = 0; j < line.length; j++) {
-                primeracolumna[j] += line[j] + ",";
+        //llenar un arreglo juntando los datos de las columnas
+        Arrays.fill(primerafila, "");
+        for (int i=0;i<columna.length;i++){
+            String[] celda = columna[i].split(";");
+            for (int j = 0; j < celda.length; j++) {
+                primerafila[j] += celda[j] + ";";
             }
         }
-        Arrays.sort(primeracolumna, String.CASE_INSENSITIVE_ORDER);
 
+        //ordenar
+        System.out.println(Arrays.asList(primerafila));
+        Arrays.sort(primerafila, String.CASE_INSENSITIVE_ORDER);
 
+        //rehacer el arreglo y agregar los \n y ,
         StringBuilder sb = new StringBuilder("");
-        for (int i = 0; i < fila.length; i++) {
-            for (String column : primeracolumna) {
-                String[] temp = column.split(",");
+        for (int i = 0; i < columna.length; i++) {
+            for(int j=0; j<primerafila.length;j++){
+                String[] temp = primerafila[j].split(";");
                 sb.append(temp[i]).append(";");
             }
             sb.setLength(sb.length() - 1);
@@ -40,3 +35,4 @@ public class KataCuatro {
         return String.valueOf(sb);
     }
 }
+

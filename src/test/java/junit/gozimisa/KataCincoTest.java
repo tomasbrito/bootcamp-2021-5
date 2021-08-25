@@ -4,9 +4,12 @@ import static org.junit.Assert.*;
 
 public class KataCincoTest {
     @Test
-    public void test() {
-        assertArrayEquals(new int[]{8, 8, 9, 9, 10, 10}, KataCinco.sort(new int[]{8, 8, 9, 9, 10, 10}));
-        assertArrayEquals(new int[]{4, 1, 3, 2}, KataCinco.sort(new int[]{1, 2, 3, 4}));
-        assertArrayEquals(new int[]{9, 999, 99}, KataCinco.sort(new int[]{9, 99, 999}));
+    public void basicTests() {
+        assertEquals("Lew", KataCinco.declareWinner(new Fighter("Lew", 10, 2), new Fighter("Harry", 5, 4), "Lew"));
+        assertEquals("Harry", KataCinco.declareWinner(new Fighter("Lew", 10, 2), new Fighter("Harry", 5, 4), "Harry"));
+        assertEquals("Harald", KataCinco.declareWinner(new Fighter("Harald", 20, 5), new Fighter("Harry", 5, 4), "Harry"));
+        assertEquals("Harald", KataCinco.declareWinner(new Fighter("Harald", 20, 5), new Fighter("Harry", 5, 4), "Harald"));
+        assertEquals("Harald", KataCinco.declareWinner(new Fighter("Jerry", 30, 3), new Fighter("Harald", 20, 5), "Jerry"));
+        assertEquals("Harald", KataCinco.declareWinner(new Fighter("Jerry", 30, 3), new Fighter("Harald", 20, 5), "Harald"));
     }
 }
