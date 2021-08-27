@@ -1,5 +1,5 @@
 package junit.gozimisa;
-
+//kata 5
 public class KataCinco {
     public static String declareWinner(Fighter fighter1, Fighter fighter2, String firstAttacker) {
         boolean ganaa=false;
