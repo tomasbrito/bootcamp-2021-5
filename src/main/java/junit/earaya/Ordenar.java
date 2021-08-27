@@ -28,7 +28,8 @@ public class Ordenar {
      *
      */
 
-    public static String order(String s) {
+
+    public String order(String s) {
 
         //atributos
         int caracterNumero=0;
