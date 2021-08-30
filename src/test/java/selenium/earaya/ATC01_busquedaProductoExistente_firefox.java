@@ -8,7 +8,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 //atc: automatic test case
-public class atc01_busquedaProductoExistente_firefox {
+public class ATC01_busquedaProductoExistente_firefox {
 
     WebDriver driver;
     By barraBusqueda = By.xpath("//*[@id='search_query_top']");
