@@ -23,7 +23,7 @@ public class KataCuatro {
 
         //3. Buscar el orden en que aparecen los titulos al estar ordenados en la secuencia original
         //3a. Buscar el indice que tiene una palabra ordenada en el array desordenado
-        ArrayList<Integer> order = new ArrayList<Integer>();
+        ArrayList<Integer> order = new ArrayList<>();
         for (int i = 0; i < titles.length; i++) {
             int num = Arrays.asList(titles).indexOf(sortedTitles[i]);
             order.add(num);
