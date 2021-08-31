@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.Select;
 import java.util.List;
 import java.util.Objects;
 
-public class ManejoDeObjetos {
+public class ManejoDeWebElements {
 
     //atributos
     static WebDriver driver;
