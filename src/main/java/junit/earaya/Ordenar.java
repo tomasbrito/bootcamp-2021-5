@@ -38,7 +38,7 @@ public class Ordenar {
         //1. guardar la cadena en un array
         String[] palabrasSeparadas = s.split(" ");
         //2. buscar y ordenar las palabras en otro array
-        Map<Integer,String> palabraOrdenada = new HashMap();
+        HashMap palabraOrdenada = new HashMap();
         //busqueda de numeros en palabras
         for (String palabra:
                 palabrasSeparadas) {
@@ -60,7 +60,7 @@ public class Ordenar {
                 return "errorlargo";
             }
             //ordenar data
-            palabraOrdenada= sortMapByKey(palabraOrdenada);
+            palabraOrdenada= (HashMap) sortMapByKey(palabraOrdenada);
             //guardar Values en un String
             for (int i = 0; i <palabraOrdenada.size() ; i++) {
                 //validar si palabra viene con un valor null
@@ -84,7 +84,7 @@ public class Ordenar {
 
     private static Map<Integer, String> sortMapByKey(Map<Integer, String> map)
     {
-        Map<Integer, String> sortedMap =  map.entrySet().stream()
+        return map.entrySet().stream()
                 .sorted(comparingInt(e -> e.getKey() ))
                 .collect(toMap(
                         Map.Entry::getKey,
@@ -92,7 +92,6 @@ public class Ordenar {
                         (a, b) -> { throw new AssertionError();},
                         LinkedHashMap::new
                 ));
-        return sortedMap;
     }
 }
 
