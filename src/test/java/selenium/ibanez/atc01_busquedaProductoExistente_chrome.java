@@ -7,7 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 //atc: automatic test case
-public class atc01_busquedaProductoExistente_chrome {
+public class ATC01_busquedaProductoExistente_chrome {
 
     WebDriver driver;
     By barraBusqueda = By.xpath("//*[@id='search_query_top']");
@@ -37,9 +37,11 @@ public class atc01_busquedaProductoExistente_chrome {
     public void atc01(){
         driver.get("http://automationpractice.com/index.php");
         System.out.println("se abre url");
-        driver.findElement(barraBusqueda).sendKeys("chiffon dress");
+        driver.findElement(barraBusqueda)
+                .sendKeys("chiffon dress");
         System.out.println("se tipea en el objeto");
-        driver.findElement(By.cssSelector("button.btn:nth-child(5)")).click();
+        driver.findElement(By.cssSelector("button.btn:nth-child(5)"))
+                .click();
         System.out.println("se presiona boton buscar");
         //validar - assert
         String urlActual = driver.getCurrentUrl();
