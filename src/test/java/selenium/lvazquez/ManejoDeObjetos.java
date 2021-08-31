@@ -8,10 +8,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ManejoDeObjetos {
-    WebDriver driver;
+
+    //atributos
+    static WebDriver driver;
 
     @BeforeClass
     public static void init() {
@@ -19,34 +22,40 @@ public class ManejoDeObjetos {
     }
 
     @Before
-    public void setup() {
+    public void setUp() {
         driver = new ChromeDriver();
-        driver.manage().deleteAllCookies();
+        driver.manage().deleteAllCookies(); //borrar cookies
         driver.manage().window().maximize();
     }
 
     @Test
     public void dropdown() {
+        System.out.println("sesion 4");
         driver.get("https://the-internet.herokuapp.com/dropdown");
+        //identificar el objeto dropdown - tag HTML : <select> </select>
         WebElement dropdown = driver.findElement(By.id("dropdown"));
+
+        //libreria aux : Select -> dropdown
         Select manejoDropdown = new Select(dropdown);
-        manejoDropdown.selectByValue("1");
-        manejoDropdown.selectByValue("2");
+
+        manejoDropdown.selectByValue("1"); // Option 1
+        manejoDropdown.selectByValue("2"); // Option 2
         manejoDropdown.selectByVisibleText("Option 1");
         manejoDropdown.selectByVisibleText("Option 2");
+
     }
 
     @Test
-    public void dropdownDinamico() {
-        //se hace con jQuery
+    public void dropDownDinamico() {
+        //Jquery
         driver.get("https://the-internet.herokuapp.com/jqueryui/menu");
 
-        // agarrar los botones
+        //WebElement con los que trabajaremos
         WebElement btnEnabled = driver.findElement(By.id("ui-id-3"));
         WebElement btnDownload = driver.findElement(By.id("ui-id-4"));
         WebElement btnPDF = driver.findElement(By.id("ui-id-5"));
 
-        // navegar
+        //navegacion
         btnEnabled.click();
         btnDownload.click();
         Assert.assertEquals("PDF", btnPDF.getText());
@@ -56,9 +65,10 @@ public class ManejoDeObjetos {
     public void checkbox() {
         driver.get("https://the-internet.herokuapp.com/checkboxes");
 
+        //WebElement con los que trabajaremos
+        // tag a identificar : input -> <input>
         WebElement checkbox1 = driver.findElement(By.xpath("//*[@id=\"checkboxes\"]/input[1]"));
         WebElement checkbox2 = driver.findElement(By.xpath("//*[@id=\"checkboxes\"]/input[2]"));
-
         checkbox1.click();
         checkbox2.click();
         checkbox1.isSelected();
@@ -69,50 +79,77 @@ public class ManejoDeObjetos {
     public void iframes() {
         driver.get("https://the-internet.herokuapp.com/iframe");
 
+        //WebElement con los que trabajaremos: iframe
         List<WebElement> iframes = driver.findElements(By.tagName("iframe"));
-        driver.switchTo().frame(iframes.get(0));
+
+        // cambiar al iframe : otro documento HTML
+        driver.switchTo().frame(iframes.get(0)); // instruccion interna, solo para posicionarnos
+
+        //seleccionar objetos del iframe para comenzar a trabajar
         WebElement escribir = driver.findElement(By.id("tinymce"));
         escribir.clear();
-        escribir.sendKeys("Pruebarda");
+        escribir.sendKeys("Hola saludos desde el Bootcamp Tsoft");
     }
 
     @Test
     public void webTables() {
-        //ordenar quien debe mas $
+        //ejercicio tabla 1: ordenar por deuda de mayor a menor y entregar el nombre de la 1era persona que debe mas dinero
         driver.get("https://the-internet.herokuapp.com/tables");
 
+        //traer la lista de WebTables
         List<WebElement> webtables = driver.findElements(By.tagName("table"));
 
-        // identificar filas y columnas de la tabla
-        List<WebElement> columnas = webtables.get(0)
-                .findElement(By.tagName("thead"))
-                .findElements(By.tagName("th"));
-
-        int columnasSize = columnas.size();
-
-        WebElement dueColumn = columnas.get(3);
-        if (dueColumn.getText() == "Due"){
-            dueColumn.click();
-            dueColumn.click();
+        // 1. cuantas filas y columnas tiene la tabla 1
+        List<WebElement> columnas = webtables.get(0).findElement(By.tagName("thead")).findElements(By.tagName("th"));
+        //2. presionar click 2 veces al elemento 3 de la lista columnas para ordenar de mayor a menor
+        if (columnas.get(3).getText().contains("Due")) {
+            columnas.get(3).click();
+            columnas.get(3).click();
         }
 
-        List<WebElement> filas =  webtables.get(0)
-                .findElement(By.tagName("tbody"))
-                .findElements(By.tagName("td"));
+        //3. obtener las filas de datos
+        List<WebElement> filas = webtables.get(0).findElement(By.tagName("tbody")).findElements(By.tagName("tr"));
 
+        //4. obtener data de la primera fila
         String nombre = filas.get(0).findElement(By.xpath("td[2]")).getText();
         String apellido = filas.get(0).findElement(By.xpath("td[1]")).getText();
         String deuda = filas.get(0).findElement(By.xpath("td[4]")).getText();
 
-        System.out.println("mas deuda: " + nombre + apellido);
+        //5. imprimir datos en consola
+        System.out.println("El usuario con mayor deuda es: " + nombre + " " + apellido + " " + deuda);
 
-        // tabla 2 ordenar por nombre y entregar la deuda de los usuarios sin usar xpath
+    }
 
+    @Test
+    public void webTables2() {
+        //ejercicio tabla 2: ordenar por Nombre y entregar datos de deuda de todos los usuarios
+        driver.get("https://the-internet.herokuapp.com/tables");
 
+        WebElement table2 = driver.findElement(By.id("table2"));
+        WebElement nameColumn = table2.findElement(By.className("first-name"));
+        nameColumn.click();
+
+        List<String> duesData = new ArrayList();
+        List<WebElement> rows = table2
+                .findElement(By.tagName("tbody"))
+                .findElements(By.tagName("tr"));
+
+        for (WebElement row : rows) {
+            String name = row.findElement(By.className("first-name")).getText();
+            String lastName = row.findElement(By.className("last-name")).getText();
+            String due = row.findElement(By.className("dues")).getText();
+
+            duesData.add(name + " " + lastName + " dues: " + due);
+        }
+
+        for (String due : duesData) {
+            System.out.println(due);
+        }
     }
 
     @After
     public void close() {
-        // if (driver != null) driver.close();
+        if (driver != null) driver.close();
     }
+
 }
