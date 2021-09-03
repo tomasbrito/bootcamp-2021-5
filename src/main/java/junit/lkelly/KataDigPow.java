@@ -2,7 +2,7 @@ package junit.lkelly;
 
 import java.util.ArrayList;
 
-public class DigPow {
+public class KataDigPow {
     public static long digPow(int i, int i1) {
        int result = -1;
        int suma =0;
