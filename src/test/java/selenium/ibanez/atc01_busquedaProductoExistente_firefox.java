@@ -1,4 +1,4 @@
-package selenium.earaya;
+package selenium.ibanez;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.*;
