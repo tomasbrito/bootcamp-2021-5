@@ -14,6 +14,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.awt.event.KeyEvent;
 import java.util.concurrent.TimeUnit;
 
 
@@ -42,11 +43,34 @@ public class Paquete {
 
     @Test
     public void prohibirBusqueda() throws InterruptedException {
-        driver.get(url); //cargo la url
-        driver.findElement(By.xpath("//body/nav[1]/div[2]/div[1]/div[3]/ul[1]/li[3]/a[1]")).click(); //clickeo el botón de 'paquetes'
+
+
+        //atributos
         WebDriverWait exwait = new WebDriverWait(driver, 10);
+
+        //atributos Localizadores
         By inputOrigen = By.xpath("//body/app-root[1]/app-searchbox-container[1]/div[1]/app-searchbox[1]/div[2]/div[1]/div[1]/div[3]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]/input[1]");
         By inputDestino = By.xpath("//body/app-root[1]/app-searchbox-container[1]/div[1]/app-searchbox[1]/div[2]/div[1]/div[1]/div[3]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]/input[1]");
+        By locbtnPaquete = By.xpath("//a[contains(@class,'shifu-3-button-circle PACKAGES paint-circle')]");
+
+        //1. ir a url
+        driver.get(url); //cargo la url
+
+        //2. boton pestana principal paquete
+        WebElement WeBtnPaquete = driver.findElement(locbtnPaquete);
+        WeBtnPaquete.click();
+
+        //acceder elemento y enviamos palabra
+        WebElement weInputorigen = driver.findElement(inputOrigen);
+        weInputorigen.sendKeys("Santiago");
+        weInputorigen.sendKeys(Keys.ENTER);
+
+
+        //
+
+
+
+
         //Select s = new Select();
         //driver.findElement(inputOrigen).sendKeys("Santiago");
         // driver.findElement(inputOrigen).sendKeys(Keys.ENTER);
