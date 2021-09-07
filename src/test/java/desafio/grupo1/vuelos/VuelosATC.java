@@ -65,6 +65,29 @@ public class VuelosATC {
                 .getText().contains("Acepta los términos y condiciones")); // Valida mensaje de error en términos y condiciones
     }
 
+    @Test
+    public void ATC02_NoGuardarDatosDeCompra() {
+        this.irASeccionCompra();
+        WebElement inputNombre = driver.findElement(By.xpath("//*[@id=\"formData.travelers[0].firstName\"]/div/div/input"));
+        // 13)
+        inputNombre.sendKeys("prueba");
+        // 14)
+        driver.navigate().back();
+        // 15)
+        driver.switchTo().alert().accept();
+        // 16)
+        this.bigWait.until(ExpectedConditions.elementToBeClickable(By
+                .xpath("//*[@id=\"clusters\"]/span[1]/div/span/reduced-cluster/div/div/div/div/div[2]/span[3]/div/span")));
+        driver.findElement(By.xpath("//*[@id=\"clusters\"]/span[1]/div/span/reduced-cluster/div/div/div/div/div[2]/span[3]/div/span")).click();
+        // 17)
+        driver.findElement(By.xpath("//*[@id=\"passengers-modal-position\"]/passengers-modal/div/div[2]/span[4]/span/a")).click();
+        // 18)
+        this.bigWait.until(ExpectedConditions.elementToBeClickable(By.id("buy-button")));
+        inputNombre = driver.findElement(By.xpath("//*[@id=\"formData.travelers[0].firstName\"]/div/div/input"));
+        assertEquals(inputNombre.getText(), "");
+    }
+
+
     private void irASeccionCompra() {
         // Declaro localizadores para poder aprovechar después que se espere hasta que sean clickeables
         By inputOrigenLocalizador = By.xpath("//*[@id=\"sboxContainer-flights\"]/div/div/div[3]/div[2]/div[1]/div[1]/div/div/div/input");
