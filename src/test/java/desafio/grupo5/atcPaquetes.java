@@ -197,13 +197,6 @@ public class atcPaquetes {
 
         Thread.sleep(5000);
 
-        /*
-        *   8- El campo "habitaciones"  debe tener el valor 1 para "Adulto"
-            12-Se carga la página de vuelos.
-            14- Se carga la página de adicionales.
-            16- Se muestra el mensaje “Quitaste el transfer de tu paquete”.
-            19- Se muestra una ventana con el titulo “Tu itinerario de viaje” y los datos de la reserva.
-        */
         Assert.assertEquals("Esplendor by Wyndham Cervantes", driver.getTitle());
         // 11- Seleccionar habitación “Habitación Doble Estándar con Minibar”.
         driver.findElement(By.xpath("//body[1]/aloha-app-root[1]/aloha-detail[1]/div[1]/div[4]/div[1]/div[2]/aloha-roompacks-container[1]/aloha-roompacks-grid-container[1]/div[2]/div[1]/aloha-roompacks-group-container[2]/div[2]/aloha-roompack-container[1]/div[4]/aloha-roompack-selection[1]")).click();
@@ -217,7 +210,7 @@ public class atcPaquetes {
         WebElement vuelo = driver.findElement(By.xpath("//body/div[@id='flights-container-wrapper']/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/div[1]/span[3]/trips-cluster-selected[1]/span[1]/cluster[1]/div[1]/div[1]"));
         //14- Hacer click en el botón siguiente.
         vuelo.findElement(By.xpath("//body/div[@id='flights-container-wrapper']/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/div[1]/span[3]/trips-cluster-selected[1]/span[1]/cluster[1]/div[1]/div[1]/div[2]/fare[1]/span[1]/span[1]/div[2]/buy-button[1]/a[1]")).click();
-        //TODO WAIT
+
         Thread.sleep(5000);
         By localizadorAviso = By.xpath("//body/app-root[1]/app-toasts-container[1]/div[1]");
         //15- Seleccionar quitar traslado compartido.
@@ -243,6 +236,7 @@ public class atcPaquetes {
         String titulos = driver.findElement(By.xpath("//body/app-root[1]/div[1]/div[1]/app-wizard-ab[1]/wizard[1]/wizard-modal[1]/div[1]/div[1]/div[1]")).getText();
         String titulo = titulos.split("\n")[0];
         Assert.assertEquals("Tu itinerario de viaje",titulo);
+
     }
 
     //Función para completar los campos de busqueda de ciudades.
