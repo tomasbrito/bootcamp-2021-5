@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
@@ -43,7 +44,8 @@ public class VuelosATC {
     @Test
     public void ATC01_RechazoCompraVuelo() {
         this.irASeccionCompra(); // Lo separo ya que otra prueba lo va a requerir
-        driver.findElement(By.id("buy-button")).click(); // 12)
+        // 12) Clickear boton 'Comprar'
+        driver.findElement(By.id("buy-button")).click();
         // Validaciones:
         assertEquals("Elige la tarjeta con la que quieres pagar", driver.findElement(By.xpath("//card-storage/div/div/p")).getText()); // Valida mensaje de error de la tarjeta
         assertTrue(driver.findElement(By.xpath("//*[@id=\"formData.travelers[0].firstName\"]/div/div/validation-error/span")).getText().contains("Ingresa el nombre")); // Valida mensaje de error en nombre
@@ -91,12 +93,7 @@ public class VuelosATC {
 
     @Test
     public void ATC03_ReseteoFechaIda() {
-        // Cargar la página web
-        driver.get("https://www.viajesfalabella.cl/");
-        this.smallWait.until(ExpectedConditions.elementToBeClickable(seccionVuelosLocalizador));
-        // 1) Busco seccion "Vuelos"
-        WebElement seccionVuelos = driver.findElement(seccionVuelosLocalizador);
-        seccionVuelos.click();
+        this.irASeccionVuelos();
         this.smallWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"sboxContainer-flights\"]/div/div/div[3]/div[2]/div[2]/div/div[1]/div[2]/input")));
         WebElement inputFechaIda = driver.findElement(By.xpath("//*[@id=\"sboxContainer-flights\"]/div/div/div[3]/div[2]/div[2]/div/div[1]/div[2]/input"));
         inputFechaIda.click();
@@ -114,17 +111,78 @@ public class VuelosATC {
         assertEquals("", inputFechaIda.getText());
     }
 
-
-    private void irASeccionCompra() {
-        // Declaro localizadores para poder aprovechar después que se espere hasta que sean clickeables
+    @Test
+    public void ATC04_DenegarFechaNacimientoDeMenor() {
+        this.irASeccionVuelos();
         By inputOrigenLocalizador = By.xpath("//*[@id=\"sboxContainer-flights\"]/div/div/div[3]/div[2]/div[1]/div[1]/div/div/div/input");
         By botonSiguiente = By.xpath("//*[@id=\"clusters\"]/span[1]/div/span/reduced-cluster/div/div/div/div/div[2]/span[3]/div/span");
+        this.smallWait.until(ExpectedConditions.elementToBeClickable(inputOrigenLocalizador));
+        // 3) Click input 'solo ida'
+        driver.findElements(By.xpath("//label[@class='radio-label-container']")).get(1).click();
+        // 4) Ingresar origen en el input origen
+        WebElement inputOrigen = driver.findElement(inputOrigenLocalizador);
+        inputOrigen.sendKeys(this.origen);
+        this.smallWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//body/div[16]/div/div/ul"))); // Espera a que salgan las opciones de autocompletado
+        // 5) Presionar TAB
+        inputOrigen.sendKeys(Keys.TAB);
+        // 6) Ingresar destino en el input destino
+        WebElement inputDestino = driver.findElement(By.xpath("//*[@id=\"sboxContainer-flights\"]/div/div/div[3]/div[2]/div[1]/div[2]/div/div/div/div/input"));
+        inputDestino.sendKeys(this.destino);
+        // 7) Presionar ENTER
+        this.smallWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//body/div[16]/div/div/ul"))); // Espera a que salgan las opciones de autocompletado
+         inputDestino.sendKeys(Keys.ENTER);
+        // 8) Clickear checkbox
+        driver.findElement(By.xpath("//*[@id=\"sboxContainer-flights\"]/div/div/div[3]/div[2]/div[2]/span/label/i")).click();
+        // 9) Clickear 'Buscar'
+        driver.findElement(By.xpath("//*[@id=\"sboxContainer-flights\"]/div/div/div[3]/div[2]/div[4]/div/a")).click();
+        // 10) Esperar a que cargue la página
+        this.bigWait.until(ExpectedConditions.elementToBeClickable(botonSiguiente));
+        String h1 = driver.findElement(By.xpath("//*[@id=\"flights-container\"]/div/div[1]/div[1]/div[2]/div/h1")).getText();
+        // Valida la busqueda
+        assertTrue(h1.contains("Vuelos a") && h1.contains(this.destino));
+        // 11) Clickear boton 'Siguiente'
+        driver.findElement(botonSiguiente).click();
+        // 12) Agregar un menor
+        driver.findElements(By.xpath("//*[@class=\"steppers-icon-right eva-3-icon-plus\"]")).get(1).click();
+        // 13) Seleccionar la edad del menor
+        Select edadMenor = new Select(driver.findElement(By.id("eva-select")));
+        edadMenor.selectByValue("6");
+        this.smallWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"passengers-modal-position\"]//a[@class='eva-3-btn -primary -lg']")));
+        // 14) Clickear boton 'Continuar'
+        driver.findElement(By.xpath("//*[@id=\"passengers-modal-position\"]//a[@class='eva-3-btn -primary -lg']")).click();
+        // 15) Valida ubicacion en la seccion de compra del vuelo
+        this.bigWait.until(ExpectedConditions.elementToBeClickable(By.id("buy-button")));
+        String url = driver.getCurrentUrl();
+        assertTrue(url.contains("checkout"));
+        // 16) Seleccionar la opcion 1 del input dia
+        Select dia = new Select(driver.findElement(By.id("traveler-birthday-day-1")));
+        dia.selectByIndex(1);
+        // 17) Seleccionar la opcion 1 del input mes
+        Select mes = new Select(driver.findElement(By.id("traveler-birthday-month-1")));
+        mes.selectByIndex(1);
+        // 18) Seleccionar año mas antiguo
+        List<WebElement> años = driver.findElements(By.xpath("//*[@id=\"traveler-birthday-year-1\"]/option"));
+        Select año = new Select(driver.findElement(By.id("traveler-birthday-year-1")));
+        año.selectByIndex(años.size()-1);
+        // Valida mensaje de error
+        String msj = driver.findElement(By.xpath("//*[@id=\"formData.travelers[1].birthdate.day\"]/div/validation-error")).getText();
+        assertEquals("La fecha de nacimiento ingresada no coincide con el rango de edad de un pasajero menor", msj);
+    }
+
+    private void irASeccionVuelos() {
         // Cargar la página web
         driver.get("https://www.viajesfalabella.cl/");
         this.smallWait.until(ExpectedConditions.elementToBeClickable(seccionVuelosLocalizador));
         // 1) Busco seccion "Vuelos"
         WebElement seccionVuelos = driver.findElement(seccionVuelosLocalizador);
         seccionVuelos.click();
+    }
+
+    private void irASeccionCompra() {
+        // Declaro localizadores para poder aprovechar después que se espere hasta que sean clickeables
+        By inputOrigenLocalizador = By.xpath("//*[@id=\"sboxContainer-flights\"]/div/div/div[3]/div[2]/div[1]/div[1]/div/div/div/input");
+        By botonSiguiente = By.xpath("//*[@id=\"clusters\"]/span[1]/div/span/reduced-cluster/div/div/div/div/div[2]/span[3]/div/span");
+        this.irASeccionVuelos();
         this.smallWait.until(ExpectedConditions.elementToBeClickable(inputOrigenLocalizador));
         // Valida ubicacion en la seccion 'Vuelos'
         String url = driver.getCurrentUrl();
