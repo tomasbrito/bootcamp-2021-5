@@ -10,6 +10,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class VuelosATC {
@@ -85,6 +87,31 @@ public class VuelosATC {
         this.bigWait.until(ExpectedConditions.elementToBeClickable(By.id("buy-button")));
         inputNombre = driver.findElement(By.xpath("//*[@id=\"formData.travelers[0].firstName\"]/div/div/input"));
         assertEquals(inputNombre.getText(), "");
+    }
+
+    @Test
+    public void ATC03_ReseteoFechaIda() {
+        // Cargar la página web
+        driver.get("https://www.viajesfalabella.cl/");
+        this.smallWait.until(ExpectedConditions.elementToBeClickable(seccionVuelosLocalizador));
+        // 1) Busco seccion "Vuelos"
+        WebElement seccionVuelos = driver.findElement(seccionVuelosLocalizador);
+        seccionVuelos.click();
+        this.smallWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"sboxContainer-flights\"]/div/div/div[3]/div[2]/div[2]/div/div[1]/div[2]/input")));
+        WebElement inputFechaIda = driver.findElement(By.xpath("//*[@id=\"sboxContainer-flights\"]/div/div/div[3]/div[2]/div[2]/div/div[1]/div[2]/input"));
+        inputFechaIda.click();
+        this.smallWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div._dpmg2--month-active > div._dpmg2--dates > span._dpmg2--today")));
+        List<WebElement> diasDisponibles = driver.findElements(By.cssSelector("div._dpmg2--month-active > div._dpmg2--dates > span._dpmg2--available"));
+        if (Integer.parseInt(diasDisponibles.get(0).getText().replace("\nHOY", "")) < 25) {
+            diasDisponibles.get(3).click(); // 2)
+            diasDisponibles.get(2).click(); // 3)
+        } else { // Si hoy es mayor al dia 25 clickeo dias del proximo mes
+            // 2)
+            driver.findElement(By.cssSelector("body > div.datepicker-flights-main > div > div._dpmg2--months > div:nth-child(2) > div._dpmg2--dates > span:nth-child(3)")).click();
+            // 3)
+            driver.findElement(By.cssSelector("body > div.datepicker-flights-main > div > div._dpmg2--months > div:nth-child(2) > div._dpmg2--dates > span:nth-child(2)")).click();
+        }
+        assertEquals("", inputFechaIda.getText());
     }
 
 
