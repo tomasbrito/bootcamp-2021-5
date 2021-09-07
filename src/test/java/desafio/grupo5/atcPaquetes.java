@@ -188,7 +188,6 @@ public class atcPaquetes {
         WebElement alojamiento = driver.findElement(By.xpath("//body/aloha-app-root[1]/aloha-results[1]/div[1]/div[1]/div[2]/div[2]/div[2]/aloha-list-view-container[1]/div[2]/aloha-cluster-container[1]/div[1]"));
         alojamiento.findElement(By.xpath("//*[@class='eva-3-btn -md -primary -eva-3-fwidth']")).click();
 
-        //TODO WAIT
         Thread.sleep(2000);
 
         // CAMBIO PESTAÑA
@@ -197,7 +196,6 @@ public class atcPaquetes {
         }
 
         Thread.sleep(5000);
-        //TODO Wait
 
         /*
         *   8- El campo "habitaciones"  debe tener el valor 1 para "Adulto"
