@@ -32,12 +32,14 @@ public class TC_001 {
         driver.get("https://www.viajesfalabella.cl/hoteles/");
 
         //Seleccionar el destino---------------------------------------------------------------------------------------------------------------------------
-        WebElement destino = driver.findElement(By.xpath("//*[@id=\"sboxContainer-hotels\"]/div/div/div[3]/div[2]/div[1]/div/div/div/div/div/input"));
-        destino.click();
+        String destino = "buenos aires";
+        WebElement campoDestino = driver.findElement(By.xpath("//*[@id=\"sboxContainer-hotels\"]/div/div/div[3]/div[2]/div[1]/div/div/div/div/div/input"));
+        campoDestino.click();
         Thread.sleep(1000);
-        destino.sendKeys("bue");
+        campoDestino.sendKeys(destino);
         Thread.sleep(1000);
-        destino.sendKeys(Keys.ENTER);
+        campoDestino.sendKeys(Keys.ENTER);
+
 
         //Seleccionar una fecha---------------------------------------------------------------------------------------------------------------------------
         driver.findElement(By.xpath("//*[@id=\"sboxContainer-hotels\"]/div/div/div[3]/div[2]/div[2]/div/div/div[1]/div/input")).click();
@@ -60,6 +62,7 @@ public class TC_001 {
         Thread.sleep(1000);
         Select edad = new Select(driver.findElement(By.xpath("/html/body/div[2]/div/div[1]/div[2]/div[1]/div[2]/div[3]/div[1]/div[2]/div/div/select")));
         edad.selectByVisibleText("9 años");
+
 
         driver.findElement(By.xpath("/html/body/div[2]/div/div[2]/a[1]")).click();
 
@@ -84,17 +87,22 @@ public class TC_001 {
         //btn: ver habitaciones
         driver.findElement(By.xpath("//*[@id=\"roompacks-container-wrapper\"]/aloha-roompacks-container/aloha-roompacks-grid-container/div[2]/div[2]/aloha-reservation-summary-container/div/aloha-next-step-button/aloha-button/button/em")).click();
         Thread.sleep(4000);
-
+        //capturo la ubicacion
+        String ubicacionHotel = driver.findElement(By.xpath("/html/body/aloha-app-root/aloha-detail/div/aloha-re-search-container/aloha-re-search/div/div[1]/div/ul/li[2]/span/span")).getText();
+        //btn:siguiente
         driver.findElement(By.xpath("//*[@id=\"pricebox-overlay\"]/div[1]/div/button/em")).click();
         Thread.sleep(5000);
 
         //VALIDAMOS ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        String cantPersonas = "Alojamiento para 4 personas";
-        double total = Double.parseDouble(precioXNoche) * 15;
-        double actual = Double.parseDouble(driver.findElement(By.xpath("//*[@id=\"chk-total-price\"]/div[2]/money/div/span[3]")).getText());
+        String msjPersonas = "Alojamiento para 4 personas";
+        double totalEsperado = Double.parseDouble(precioXNoche) * 15;
+        double totalActual = Double.parseDouble(driver.findElement(By.xpath("//*[@id=\"chk-total-price\"]/div[2]/money/div/span[3]")).getText());
 
-        //Assert.assertEquals(cantPersonas, driver.findElement(By.xpath("//*[@id=\"pricebox-list-detail\"]/ul/div[1]/div[1]/p/span")));
-        Assert.assertEquals(total, actual, 30);
+        String cantPersonas = driver.findElement(By.xpath("//*[@id=\"pricebox-list-detail\"]/ul/div[1]/div[1]/p/span")).getText();
+        /*
+        if (totalEsperado == totalActual &&  cantPersonas ==){
+
+        }*/
 
     }
 
