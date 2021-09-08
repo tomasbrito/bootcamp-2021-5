@@ -42,7 +42,7 @@ public class atcPaquetes {
         WebElement cOrigen = driver.findElement(By.xpath("//input[contains(@class,'sbox-places-first sbox-origin-container')]"));
         WebElement cDestino = driver.findElement(By.xpath("//input[contains(@class,'sbox-places-second')]"));
         WebElement btnBuscar = driver.findElement(By.xpath("//a[contains(@class, 'sbox-search')]"));
-        WebElement checkboxSinFecha = driver.findElement(By.xpath("//body/app-root[1]/app-searchbox-container[1]/div[1]/app-searchbox[1]/div[2]/div[1]/div[1]/div[3]/div[2]/div[9]/span[1]/label[1]/span[1]"));
+        WebElement checkboxSinFecha = driver.findElement(By.xpath("//*[contains(@class,'sbox-switch-container')]"));
         By localizadorOpcion = By.xpath("//body/div[11]/div[1]/div[1]/ul[1]/li[1]");
         By localizadorCheckbox = By.xpath("//*[contains(@class, 'switch-container')]");
         String origen = "Buenos Aires";
