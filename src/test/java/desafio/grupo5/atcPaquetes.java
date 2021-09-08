@@ -205,8 +205,10 @@ public class atcPaquetes {
         // 7- Hacer click en  "habitaciones".
         habitaciones.click();
         // 8- Seleccionar 1 adulto.
+        WebElement personas = driver.findElement(By.xpath("//body/div[4]/div[1]/div[1]/div[2]/div[1]/div[2]/div[1]/div[2]/div[1]/input[1]"));
         driver.findElement(By.xpath("//body/div[4]/div[1]/div[1]/div[2]/div[1]/div[2]/div[1]/div[2]/div[1]/a[1]")).click();
         driver.findElement(By.xpath("//body/div[4]/div[1]/div[2]/a[1]")).click();
+        Assert.assertEquals("1",personas.getAttribute("value"));
 
         // 9- Seleccionar el alojamiento sugerido.  10- Hacer click en el botón siguiente.
         WebElement alojamiento = driver.findElement(By.xpath("//body/aloha-app-root[1]/aloha-results[1]/div[1]/div[1]/div[2]/div[2]/div[2]/aloha-list-view-container[1]/div[2]/aloha-cluster-container[1]/div[1]"));
