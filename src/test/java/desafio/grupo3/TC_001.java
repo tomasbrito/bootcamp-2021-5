@@ -47,7 +47,7 @@ public class TC_001 {
 
         WebElement fechaSalida = driver.findElement(By.cssSelector("body > div.sbox-ui-datepicker-container.sbox-v4-components > div > div._dpmg2--months > div:nth-child(2) > div._dpmg2--dates > span:nth-child(3) > span._dpmg2--date-number"));
         fechaSalida.click();
-
+        //btn:aplicar
         driver.findElement(By.cssSelector("body > div.sbox-ui-datepicker-container.sbox-v4-components > div > div._dpmg2--date-footer > div._dpmg2--desktopFooter-btn-container > button._dpmg2--desktopFooter-button._dpmg2--desktopFooter-button-apply.sbox-3-btn.-lg.-primary > em")).click();
 
         //Seleccionar habitaciones---------------------------------------------------------------------------------------------------------------------------
@@ -81,14 +81,14 @@ public class TC_001 {
         //obtenemos precio por noche y descuento
         //int precioXNoche = Integer.parseInt(driver.findElement(By.xpath("//*[@id=\"roompacks-container-wrapper\"]/aloha-roompacks-container/aloha-roompacks-grid-container/div[2]/div[1]/aloha-roompacks-group-container/div[2]/aloha-roompack-container/div[2]/aloha-roompack-price-container/aloha-summary-price/div/span[2]")).getText());
         String precioXNoche = driver.findElement(By.xpath("//*[@id=\"roompacks-container-wrapper\"]/aloha-roompacks-container/aloha-roompacks-grid-container/div[2]/div[1]/aloha-roompacks-group-container/div[2]/aloha-roompack-container/div[2]/aloha-roompack-price-container/aloha-summary-price/div/span[2]")).getText();
-
+        //btn: ver habitaciones
         driver.findElement(By.xpath("//*[@id=\"roompacks-container-wrapper\"]/aloha-roompacks-container/aloha-roompacks-grid-container/div[2]/div[2]/aloha-reservation-summary-container/div/aloha-next-step-button/aloha-button/button/em")).click();
         Thread.sleep(4000);
 
         driver.findElement(By.xpath("//*[@id=\"pricebox-overlay\"]/div[1]/div/button/em")).click();
         Thread.sleep(5000);
 
-        //Comprobamos q los datos sean correctos
+        //VALIDAMOS ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         String cantPersonas = "Alojamiento para 4 personas";
         double total = Double.parseDouble(precioXNoche) * 15;
         double actual = Double.parseDouble(driver.findElement(By.xpath("//*[@id=\"chk-total-price\"]/div[2]/money/div/span[3]")).getText());
