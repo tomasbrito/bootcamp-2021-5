@@ -53,7 +53,9 @@ public class TC_001 {
         //Seleccionar habitaciones---------------------------------------------------------------------------------------------------------------------------
         driver.findElement(By.xpath("//*[@id=\"sboxContainer-hotels\"]/div/div/div[3]/div[2]/div[3]/div/div/div[2]/div/div")).click();
         Thread.sleep(1000);
+        //agregamos adulto
         driver.findElement(By.xpath("/html/body/div[2]/div/div[1]/div[2]/div[1]/div[2]/div[1]/div[2]/div/a[2]")).click();
+        //agregamos niño
         driver.findElement(By.xpath("/html/body/div[2]/div/div[1]/div[2]/div[1]/div[2]/div[2]/div[2]/div/a[2]")).click();
         Thread.sleep(1000);
         Select edad = new Select(driver.findElement(By.xpath("/html/body/div[2]/div/div[1]/div[2]/div[1]/div[2]/div[3]/div[1]/div[2]/div/div/select")));

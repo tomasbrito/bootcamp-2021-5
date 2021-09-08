@@ -38,6 +38,7 @@ public class TC_003 {
         driver.findElement(By.xpath("//*[@id=\"sboxContainer-hotels\"]/div/div/div[3]/div[2]/div[3]/div/div/div[2]/div/div")).click();
         driver.findElement(By.xpath("/html/body/div[2]/div/div[1]/div[2]/div[1]/div[2]/div[2]/div[2]/div/a[2]")).click();
         driver.findElement(By.xpath("/html/body/div[2]/div/div[2]/a[1]")).click();
+
         //evaluamos:
         String esperado = "Ingresa la edad del menor";
         assertEquals(esperado, driver.findElement(By.xpath("/html/body/div[2]/div/div[1]/div[2]/div[1]/div[3]/div/div[2]/p")).getText());
