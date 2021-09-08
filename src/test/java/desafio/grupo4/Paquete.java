@@ -38,7 +38,7 @@ public class Paquete {
         }
     }
 
-    @Test
+    @Test //TODO TC 001
     public void prohibirBusqueda() throws InterruptedException {
 
 
@@ -58,6 +58,11 @@ public class Paquete {
         //2. boton pestana principal paquete
         WebElement WeBtnPaquete = driver.findElement(locbtnPaquete);
         WeBtnPaquete.click();
+
+        //Valido que esté en la URL correcta
+        exwait.until(ExpectedConditions.urlContains("/paquetes"));
+        Assert.assertEquals("https://www.viajesfalabella.cl/paquetes/", driver.getCurrentUrl());
+
 
         //acceder elemento y enviamos palabra
         WebElement weInputorigen = driver.findElement(inputOrigen);
