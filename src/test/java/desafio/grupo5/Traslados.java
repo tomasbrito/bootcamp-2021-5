@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class tc_traslados {
+public class Traslados {
     WebDriver driver;
 
     @BeforeClass
@@ -26,7 +26,7 @@ public class tc_traslados {
 
     }
     @Test
-    public void busquedaCampoIncompleto() throws InterruptedException {
+    public void tc001_busquedaCampoIncompleto() throws InterruptedException {
         //Declaramos el wait y los localizadores a esperar
         WebDriverWait wait = new WebDriverWait(driver,10);
         By localizadorLugar = By.xpath("//span[contains(text(),'Sheraton Pilar Hotel & Convention Center, Pilar, P')]");
@@ -52,13 +52,15 @@ public class tc_traslados {
         fieldDate.click();
         fechaElegida.click();
         wait.until(ExpectedConditions.elementToBeClickable(localizadorBtnAplicar)).click();
+        // Validamos que la fecha sea correcta
         Assert.assertEquals("Mar, 21 sep 2021",fieldDate.getAttribute("value"));
         btnBuscar.click();
+        //Validamos el error
         Assert.assertEquals("Ingresa un origen.", driver.findElement(localizadorAlerta).getText());
     }
 
     @Test
-    public void busquedaSimple(){
+    public void tc002_busquedaSimple(){
         WebDriverWait wait = new WebDriverWait(driver, 10);
         By localizadorFrom = By.xpath("//span[contains(text(),'Aeropuerto Southern')]");
         By localizadorTo = By.xpath("//span[contains(text(),'Cecil Hotel, South Main Street, Los Ángeles, Calif')]");
@@ -98,6 +100,7 @@ public class tc_traslados {
         wait.until(ExpectedConditions.elementToBeClickable(localizadorBtnAplicar)).click();
         Assert.assertEquals("Lun, 20 sep 2021",fieldDate.getAttribute("value"));
 
+        // Clickeamos en pasajeros y validamos
         btnPasajeros.click();
         wait.until(ExpectedConditions.elementToBeClickable(btnSumarAdultos)).click();
         wait.until(ExpectedConditions.elementToBeClickable(btnSumarAdultos)).click();
@@ -105,6 +108,7 @@ public class tc_traslados {
         WebElement campoPasajerosAssert = driver.findElement(By.xpath("//app-searchbox[1]/div[9]/div[1]/div[1]/div[3]/div[2]/div[4]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/input[1]"));
         Assert.assertEquals("3",campoPasajerosAssert.getAttribute("value"));
         btnBuscar.click();
+        // Validamos que muestre los resultados
         if(driver.getCurrentUrl().contains("search")){
             Assert.assertTrue(true);
         }else{
@@ -113,11 +117,11 @@ public class tc_traslados {
     }
 
     @Test
-    public void busquedaCambioTarjeta(){
+    public void tc003_busquedaCambioTarjeta(){
         WebDriverWait wait = new WebDriverWait(driver, 10);
         By localizadorFrom = By.xpath("//span[contains(text(),'Aeropuerto La Guardia, Nueva York,')]");
         By localizadorTo = By.xpath("//span[contains(text(),'Seaport Hotel Boston, Seaport Lane, Boston, Massac')]");
-        By localizadorFecha = By.xpath("//body/div[3]/div[1]/div[5]/div[1]/div[4]/span[8]/span[1]");
+        By localizadorFecha = By.xpath("//body/div[3]/div[1]/div[5]/div[1]/div[4]/span[16]/span[1]");
         By localizadorBtnAplicar = By.xpath("//body[1]/div[3]/div[1]/div[6]/div[2]/button[2]/em[1]");
         //1. Ingresamos al home
         driver.get("https://www.viajesfalabella.cl/traslados");
@@ -131,25 +135,28 @@ public class tc_traslados {
         WebElement btnBuscar = driver.findElement(By.xpath("//em[contains(text(),'Buscar')]"));
 
 
-        //Clickeamos en el campo desde
+        //Clickeamos en el campo desde, seleccionamos la opción y validamos
         fieldFrom.click();
         fieldFrom.sendKeys("New");
         wait.until(ExpectedConditions.elementToBeClickable(localizadorFrom)).click();
         Assert.assertEquals("Aeropuerto La Guardia, Nueva York, Estados Unidos",fieldFrom.getAttribute("value"));
 
+        //Clickemoas en el campo hasta, seleccionamos la opción y validamos
         fieldTo.click();
         fieldTo.sendKeys("Sea");
         wait.until(ExpectedConditions.elementToBeClickable(localizadorTo)).click();
         Assert.assertEquals("Seaport Hotel Boston, Seaport Lane, Boston, Massachusetts, EE. UU.",fieldTo.getAttribute("value"));
 
+        //Clickemos en el campo fecha, seleccionamos y validamos
         fieldDate.click();
         wait.until(ExpectedConditions.elementToBeClickable(localizadorFecha)).click();
         wait.until(ExpectedConditions.elementToBeClickable(localizadorBtnAplicar)).click();
-        Assert.assertEquals("Mié, 8 sep 2021",fieldDate.getAttribute("value"));
+        Assert.assertEquals("Jue, 16 sep 2021",fieldDate.getAttribute("value"));
         btnBuscar.click();
 
-        wait.until(ExpectedConditions.urlContains("ChIJCwWGU3hw44kRHxmdbY32A7E/08-09-2021/00:00/1"));
-        By localizadorBtnComprar = By.xpath("//*[@id=\"bodyID\"]/div[6]/div[1]/div/div[2]/main/div[3]/div/div[2]/div[4]/search-item/div[2]/div[2]/div[2]/div/div[1]/div[2]/button");
+        //Esperamos a que cargue la página y validamos
+        wait.until(ExpectedConditions.urlContains("ChIJCwWGU3hw44kRHxmdbY32A7E/16-09-2021/00:00/1"));
+        By localizadorBtnComprar = By.xpath("//body/div[6]/div[1]/div[1]/div[2]/main[1]/div[3]/div[1]/div[2]/div[5]/search-item[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[2]/button[1]");
         if(driver.getCurrentUrl().contains("search")){
             Assert.assertTrue(true);
         }else{
@@ -158,7 +165,7 @@ public class tc_traslados {
         wait.until(ExpectedConditions.elementToBeClickable(localizadorBtnComprar)).click();
 
 
-
+        // Esperamos a entrar al checkout y validamos
         wait.until(ExpectedConditions.urlContains("checkout"));
         By localizadorBtnTarjeta = By.xpath("//card-container[1]/div[1]/div[2]/card-storage[1]/div[1]/card-empty-slot[1]/div[1]/div[1]");
         if(driver.getCurrentUrl().contains("checkout")){
@@ -168,7 +175,7 @@ public class tc_traslados {
         }
         wait.until(ExpectedConditions.elementToBeClickable(localizadorBtnTarjeta)).click();
 
-
+        // Selecionamos banco, tarjeta y cuotas y validamos
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//payment-option-selector[1]/div[2]/ul[1]/li[2]/div[1]"))).click();
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//payment-option-selector[1]/div[2]/ul[1]/li[3]/div[1]"))).click();
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//payment-option-selector[1]/div[2]/ul[1]/li[2]/h5[1]"))).click();
@@ -177,6 +184,7 @@ public class tc_traslados {
         }else{
             Assert.fail();
         }
+        //Cambiamos el banco, tarjeta y cuotas y validamos
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//em[contains(text(),'Cambiar')]"))).click();
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//payment-option-selector[1]/div[2]/ul[1]/li[1]/div[1]"))).click();
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//payment-option-selector[1]/div[2]/ul[1]/li[2]/div[1]"))).click();
@@ -189,7 +197,8 @@ public class tc_traslados {
     }
 
     @Test
-    public void busquedaDatosIncompletos(){
+    public void tc004_busquedaDatosIncompletos(){
+        //Declaramos el wait y los localizadores
         WebDriverWait wait = new WebDriverWait(driver, 10);
         By localizadorFrom = By.xpath("//body/div[7]/div[1]/div[1]/ul[1]/li[1]/span[1]");
         By localizadorTo = By.xpath("//span[contains(text(),'Sanibel Beach, Sanibel, Florida')]");
@@ -205,45 +214,52 @@ public class tc_traslados {
         WebElement fieldTo = driver.findElement(By.xpath("//*[contains(@class, 'sbox-places-second')]"));
         WebElement fieldDate = driver.findElement(By.xpath("//*[contains(@class, 'input-tag sbox-checkin')]"));
         WebElement btnBuscar = driver.findElement(By.xpath("//em[contains(text(),'Buscar')]"));
-        //Clickeamos en el campo desde
+        //Clickeamos en el campo desde y validamos
         fieldFrom.click();
         fieldFrom.sendKeys("Mia");
         wait.until(ExpectedConditions.elementToBeClickable(localizadorFrom)).click();
         Assert.assertEquals("Aeropuerto Internacional Miami, Miami, Estados Unidos",fieldFrom.getAttribute("value"));
 
+        //Clickeamos en el campo hasta y validamos
         fieldTo.click();
         fieldTo.sendKeys("San");
         wait.until(ExpectedConditions.elementToBeClickable(localizadorTo)).click();
         Assert.assertEquals("Sanibel Beach, Sanibel, Florida, EE. UU.",fieldTo.getAttribute("value"));
 
+        //Clickeamos en el campo fecha y validamos
         fieldDate.click();
         wait.until(ExpectedConditions.elementToBeClickable(localizadorFecha)).click();
         wait.until(ExpectedConditions.elementToBeClickable(localizadorBtnAplicar)).click();
         Assert.assertEquals("Sáb, 11 sep 2021",fieldDate.getAttribute("value"));
         btnBuscar.click();
 
+        // Click en buscar y carga la página
         wait.until(ExpectedConditions.urlContains("search"));
         if(driver.getCurrentUrl().contains("search")){
             Assert.assertTrue(true);
         }else{
             Assert.fail();
         }
+        //Seleccionamos dólares en el dropdown moneda y click en comprar
         Select moneda = new Select(driver.findElement(By.id("currency-select")));
         moneda.selectByVisibleText("Dólares");
         By btnComprar =By.xpath("//*[@id=\"bodyID\"]/div[6]/div[1]/div/div[2]/main/div[3]/div/div[2]/div[5]/search-item/div[2]/div[2]/div[2]/div/div[1]/div[2]/button");
         wait.until(ExpectedConditions.elementToBeClickable(btnComprar)).click();
 
+        // Ingresamos al checkout e ingresamos nombre
         wait.until(ExpectedConditions.urlContains("checkout"));
         By fieldName = By.xpath("//input-component-v2[1]/div[1]/div[1]/div[1]/input[1]");
         wait.until(ExpectedConditions.elementToBeClickable(fieldName)).click();
         driver.findElement(fieldName).sendKeys("Santiago");
         Assert.assertEquals("Santiago",driver.findElement(fieldName).getAttribute("value"));
 
-        By fieldLastName = By.xpath("//checkout-form[1]/div[1]/form-component[1]/form[1]/div[1]/travelers[1]/div[1]/ul[1]/li[1]/ul[1]/li[1]/traveler[1]/div[1]/div[2]/div[1]/div[1]/traveler-last-name-input[1]/div[1]/div[1]/input-component-v2[1]/div[1]/div[1]/div[1]/input[1]");
+        // Ingresamos apellido
+        By fieldLastName = By.xpath("//traveler-last-name-input[1]/div[1]/div[1]/input-component-v2[1]/div[1]/div[1]/div[1]/input[1]");
         driver.findElement(fieldLastName).click();
         driver.findElement(fieldLastName).sendKeys("Espinoza");
         Assert.assertEquals("Espinoza",driver.findElement(fieldLastName).getAttribute("value"));
 
+        // Marcamos el checkbox y validamos
         WebElement checkTerms = driver.findElement(By.xpath("//terms-checkbox-component[1]/checkbox-component[1]/span[1]/label[1]/i[1]"));
         checkTerms.click();
 
@@ -258,7 +274,7 @@ public class tc_traslados {
     public void close(){
         System.out.println("After");
         if(driver != null){
-            //driver.close();
+            driver.close();
         }
     }
 }
