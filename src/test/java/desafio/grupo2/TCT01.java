@@ -46,13 +46,13 @@ public class TCT01 {
         //1
         driver.get("https://www.viajesfalabella.cl/");
         //2
-        driver.findElement(By.xpath("//body/nav[1]/div[2]/div[1]/div[3]/ul[1]/li[6]/a[1]")).click();
+        driver.findElement(By.linkText("Traslados")).click();
         //3
-        driver.findElement(By.xpath("//*[@id=\"sboxContainer-transferspoi\"]/div/div/div[3]/div[2]/div[4]/div/div/div[2]/div/div")).click();
+        driver.findElement(By.xpath("//*[@id=\"sboxContainer-transferspoi\"]/div/div/div[3]/div[2]/div[4]/div")).click();
         //4
         driver.findElement(By.xpath("/html/body/div[1]/div/div[1]/div[2]/div/div[1]/div/div[2]/div[2]/div/a[2]")).click();
         //5
-        driver.findElement(By.xpath("//*[@id=\"sboxContainer-transferspoi\"]/div/div/div[3]/div[2]/div[5]/div/a/em")).click();
+        driver.findElement(By.linkText("Buscar")).click();
         //6
         WebElement verificacion= driver.findElement(By.xpath("//*[@id=\"sboxContainer-transferspoi\"]/div/div/div[3]/div[2]/div[4]/div/div/div[2]/div/div/div/span[2]"));
         //resultados esperados

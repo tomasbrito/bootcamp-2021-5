@@ -48,9 +48,9 @@ public class TCA01 {
         //1
         driver.get("https://www.viajesfalabella.cl/");
         //2
-        driver.findElement(By.className("button-circle-icon")).click();
+        driver.findElement(By.linkText("Alojamientos")).click();
         //3
-        driver.findElement(By.xpath("//*[@id=\"sboxContainer-hotels\"]/div/div/div[3]/div[2]/div[1]/div/div/div/div/div/input")).sendKeys("la");
+        driver.findElement(By.xpath("//div[@id='sboxContainer-hotels'] //input[@placeholder='Ingresa una ciudad, alojamiento o atracción']")).sendKeys("la");
         //4
         By ventana = By.className("ac-group-title");
         WebElement verificacion = driver.findElement(ventana);

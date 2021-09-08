@@ -55,24 +55,24 @@ public class TCP02 {
         //1
         driver.get("https://www.viajesfalabella.cl/");
         //2
-        driver.findElement(By.xpath("//*[@id=\"sboxContainer-packages\"]/div/div/div[3]/div[1]/div[2]/div/div/span[3]/input")).click();
+        driver.findElement(By.xpath("//*[@id=\"sboxContainer-packages\"] //input[@value='va']")).click();
 
         //4
-        WebElement origen= driver.findElement(By.xpath("//*[@id=\"sboxContainer-packages\"]/div/div/div[3]/div[2]/div[2]/div[1]/div/div/div/input"));
+        WebElement origen= driver.findElement(By.xpath("//*[@id=\"sboxContainer-packages\"] //input[@placeholder='Ingresa una ciudad']"));
         origen.click();
         //5
         origen.sendKeys("cordoba");
         //7
-        driver.findElement(By.xpath("//body/div[11]/div[1]/div[1]/ul[1]/li[1]")).click();
+        driver.findElement(By.className("item-text")).click();
         //8
         WebElement destino = driver.findElement(By.xpath("//*[@id=\"sboxContainer-packages\"]/div/div/div[3]/div[2]/div[2]/div[2]/div/div/div/div/input"));
         destino.click();
         //9
         destino.sendKeys("rosario");
         //11
-        driver.findElement(By.xpath("//body/div[11]/div[1]/div[1]/ul[1]/li[1]")).click();
+        driver.findElement(By.className("item-text")).click();
         //12
-        driver.findElement(By.xpath("//em[contains(text(),'Buscar')]")).click();
+        driver.findElement(By.linkText("Buscar")).click();
 
         //resultados esperados
         Assert.assertEquals("Ingresa una fecha de partida.", driver.findElement(By.xpath("//span[contains(text(),'Ingresa una fecha de partida.')]")).getText());

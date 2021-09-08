@@ -61,30 +61,29 @@ public class TCA04 {
         //1
         driver.get("https://www.viajesfalabella.cl/");
 
-        By ventana = By.className("ac-group-title");
-
         //2
-        driver.findElement(By.className("button-circle-icon")).click();
+        driver.findElement(By.linkText("Alojamientos")).click();
         //3
-        driver.findElement(By.xpath("//*[@id=\"sboxContainer-hotels\"]/div/div/div[3]/div[2]/div[1]/div/div/div/div/div/input")).click();
+        WebElement origen= driver.findElement(By.xpath("//div[@id='sboxContainer-hotels'] //input[@placeholder='Ingresa una ciudad, alojamiento o atracción']"));
+        origen.click();
         //4
-        driver.findElement(By.xpath("//*[@id=\"sboxContainer-hotels\"]/div/div/div[3]/div[2]/div[1]/div/div/div/div/div/input")).sendKeys("San Martin de los Andes");
+        origen.sendKeys("San Martin de los Andes");
         //5
         driver.findElement(By.className("item-text")).click();
         //6
-        driver.findElement(By.xpath("//*[@id=\"sboxContainer-hotels\"]/div/div/div[3]/div[2]/div[2]/div/div/div[1]/div")).click();
+        driver.findElement(By.xpath("//div[@id='sboxContainer-hotels'] //input[@placeholder='Entrada']")).click();
         //7
-        driver.findElement(By.className("_dpmg2--controls-next")).click();
+        //driver.findElement(By.className("_dpmg2--controls-next")).click();
         //8
-        driver.findElement(By.xpath("/html/body/div[1]/div/div[5]/div[3]/div[4]/span[10]/span[1]")).click();//fecha inicio
+        driver.findElements(By.className("_dpmg2--date-number")).get(9).click();//fecha inicio
         //9
-        driver.findElement(By.xpath("/html/body/div[1]/div/div[5]/div[3]/div[4]/span[17]")).click();//fecha salida
+        driver.findElements(By.className("_dpmg2--date-number")).get(16).click();;//fecha salida
         //10
         driver.findElement(By.xpath("//em[contains(text(),'Aplicar')]")).click();
         //11
-        driver.findElement(By.xpath("//*[@id=\"sboxContainer-hotels\"]/div/div/div[3]/div[2]/div[3]/div")).click();
+        driver.findElement(By.xpath("//label[contains(text(),'Habitaciones')]")).click();
         //12
-        driver.findElement(By.xpath("/html/body/div[2]/div/div[1]/div[2]/div[1]/div[2]/div[1]/div[2]/div/a[1]")).click();
+        driver.findElement(By.xpath("//body/div[2]/div[1]/div[1]/div[2]/div[1]/div[2]/div[1]/div[2]/div[1]/a[1]")).click();
         //13
         driver.findElement(By.xpath("/html/body/div[2]/div/div[1]/div[2]/div[1]/div[2]/div[2]/div[2]/div/a[2]")).click();
 
@@ -94,19 +93,20 @@ public class TCA04 {
         //15
         manejodropdown.selectByValue("11");
         //16
-        driver.findElement(By.xpath("/html/body/div[2]/div/div[2]/a[1]")).click();
+        driver.findElement(By.linkText("Aplicar")).click();
         //17
-        driver.findElement(By.xpath("//*[@id=\"sboxContainer-hotels\"]/div/div/div[3]/div[2]/div[4]/div/a/em")).click();
-        Thread.sleep(5000);////////
+        driver.findElement(By.linkText("Buscar")).click();
+        Thread.sleep(5000);
         //18
         driver.navigate().back();
 
 
-        Assert.assertEquals("", driver.findElement(By.xpath("//*[@id=\"sboxContainer-hotels\"]/div/div/div[3]/div[2]/div[1]/div/div/div/div/div/input")).getText());
-        Assert.assertEquals("", driver.findElement(By.xpath("//*[@id=\"sboxContainer-hotels\"]/div/div/div[3]/div[2]/div[2]/div/div/div[1]/div/input")).getText());
-        Assert.assertEquals("", driver.findElement(By.xpath("//*[@id=\"sboxContainer-hotels\"]/div/div/div[3]/div[2]/div[2]/div/div/div[2]/div/input")).getText());
+        Assert.assertEquals("", driver.findElement(By.xpath("//div[@id='sboxContainer-hotels'] //input[@placeholder='Ingresa una ciudad, alojamiento o atracción']")).getText());
+        Assert.assertEquals("", driver.findElement(By.xpath("//div[@id='sboxContainer-hotels'] //input[@placeholder='Entrada']")).getText());
+        Assert.assertEquals("", driver.findElement(By.xpath("//div[@id='sboxContainer-hotels'] //input[@placeholder='Salida']")).getText());
 
-        //Assert.assertEquals("2", driver.findElement(By.xpath("/html/body/div[2]/div/div[1]/div[2]/div[1]/div[2]/div[1]/div[2]")).getText());
+        //Assert.assertEquals("1 habitación", driver.findElement(By.xpath("//*[@id=\"sboxContainer-hotels\"]/div/div/div[3]/div[2]/div[3]/div/div/div[2]/div/div/div/div[1]")).getText());
+
 
 
     }
