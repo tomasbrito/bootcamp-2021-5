@@ -42,7 +42,7 @@ public class atcPaquetes {
         WebElement cOrigen = driver.findElement(By.xpath("//input[contains(@class,'sbox-places-first sbox-origin-container')]"));
         WebElement cDestino = driver.findElement(By.xpath("//input[contains(@class,'sbox-places-second')]"));
         WebElement btnBuscar = driver.findElement(By.xpath("//a[contains(@class, 'sbox-search')]"));
-        WebElement checkboxSinFecha = driver.findElement(By.xpath("//body/app-root[1]/app-searchbox-container[1]/div[1]/app-searchbox[1]/div[2]/div[1]/div[1]/div[3]/div[2]/div[9]/span[1]/label[1]/span[1]"));
+        WebElement checkboxSinFecha = driver.findElement(By.xpath("//*[contains(@class,'sbox-switch-container')]"));
         By localizadorOpcion = By.xpath("//body/div[11]/div[1]/div[1]/ul[1]/li[1]");
         By localizadorCheckbox = By.xpath("//*[contains(@class, 'switch-container')]");
         String origen = "Buenos Aires";
@@ -75,6 +75,7 @@ public class atcPaquetes {
         WebElement cDestino = driver.findElement(By.xpath("//input[contains(@class, 'sbox-places-second')]"));
         WebElement btnBuscar = driver.findElement(By.xpath("//a[contains(@class, 'sbox-search')]"));
         WebElement fechaIda = driver.findElement(By.xpath("//input[@placeholder='Ida']"));
+        WebElement fechaVuelta = driver.findElement(By.xpath("//input[@placeholder='Vuelta']"));
         By localizadorOpcion = By.xpath("/html/body/div[11]/div/div[1]/ul/li[1]");
         String origen = "Buenos Aires";
         String destino = "Bariloche";
@@ -90,13 +91,15 @@ public class atcPaquetes {
         String textDestino = seleccionarCiudadBusqueda(cDestino,localizadorOpcion,destino);
         Assert.assertEquals("San Carlos de Bariloche, Rio Negro, Argentina",textDestino);
 
-        // 7- Seleccionar campo fecha desde.  8- Seleccionar fecha 3 dic 2021.
+        // 7- Seleccionar campo fecha desde.  8- Seleccionar fecha 6 dic 2021.
         fechaIda.click();
         WebElement btnNext = driver.findElement(By.xpath("//body/div[5]/div[1]/div[2]/div[2]"));
         for (int i =1;i<=2;i++) btnNext.click();
         driver.findElement(By.xpath("//body/div[5]/div[1]/div[5]/div[4]/div[4]/span[6]")).click();
         driver.findElement(By.xpath("//body/div[5]/div[1]/div[5]/div[4]/div[4]/span[16]")).click();
         driver.findElement(By.xpath("/html/body/div[7]/div/div[6]/div[2]/button[2]")).click();
+        Assert.assertEquals("Lun, 6 dic 2021",fechaIda.getAttribute("value"));
+        Assert.assertEquals("Jue, 16 dic 2021",fechaVuelta.getAttribute("value"));
 
         // 11- Hacer click en el botón Buscar.
          btnBuscar.click();
@@ -111,6 +114,7 @@ public class atcPaquetes {
         WebElement cOrigen = driver.findElement(By.xpath("//input[contains(@class, 'sbox-places-first sbox-origin-container')]"));
         WebElement cDestino = driver.findElement(By.xpath("//input[contains(@class, 'sbox-places-second')]"));
         WebElement fechaIda = driver.findElement(By.xpath("//input[@placeholder='Ida']"));
+        WebElement fechaVuelta = driver.findElement(By.xpath("//input[@placeholder='Vuelta']"));
         WebElement btnBuscar = driver.findElement(By.xpath("//a[contains(@class, 'sbox-search')]"));
         By localizadorOpcion = By.xpath("//body/div[11]/div[1]/div[1]/ul[1]/li[1]");
         String origen = "Buenos Aires";
@@ -131,23 +135,39 @@ public class atcPaquetes {
 
         //8- Seleccionar fecha ida “ 4 oct 2021”. 10- Seleccionar fecha vuelta “ 16 oct 2021”.
         fechaIda.click();
+
         driver.findElement(By.xpath("/html/body/div[5]/div/div[5]/div[2]/div[4]/span[4]")).click(); // Seleccionamos fecha ida
         driver.findElement(By.xpath("/html/body/div[5]/div/div[5]/div[2]/div[4]/span[16]")).click(); // Seleccionamos fecha vuelta
         driver.findElement(By.xpath("/html/body/div[7]/div/div[6]/div[2]/button[2]")).click();
 
+        Assert.assertEquals("Lun, 4 oct 2021",fechaIda.getAttribute("value"));
+        Assert.assertEquals("Sáb, 16 oct 2021",fechaVuelta.getAttribute("value"));
+
         //13-  Seleccionar campo fecha desde. 14- Seleccionar fecha desde “ 4 oct 2021”.
         // 15-  Seleccionar campo fecha hasta. 16- Seleccionar fecha hasta “ 9 oct 2021”.
-        WebElement fechaHasta = driver.findElement(By.xpath("//input[contains(@class,'sbox-hotel-first-checkout-date')]"));
-        fechaHasta.click();
+        WebElement fechaDesde1 = driver.findElement(By.xpath("//input[contains(@class,'sbox-hotel-first-checkin-date')]"));
+        WebElement fechaHasta1 = driver.findElement(By.xpath("//input[contains(@class,'sbox-hotel-first-checkout-date')]"));
+        fechaHasta1.click();
         driver.findElement(By.xpath("//body/div[2]/div[1]/div[5]/div[2]/div[4]/span[9]")).click();
         driver.findElement(By.xpath("//body/div[2]/div[1]/div[6]/div[2]/button[2]")).click();
+        Assert.assertEquals("Lun, 4 oct 2021",fechaIda.getAttribute("value"));
+        Assert.assertEquals("Lun, 4 oct 2021",fechaDesde1.getAttribute("value"));
+        Assert.assertEquals("Sáb, 9 oct 2021",fechaHasta1.getAttribute("value"));
 
         //  17- Seleccionar campo Segundo destino. 18- Introducir "Cancún" en el campo Segundo destino de la sección Elige donde alojarte y presionar la tecla enter.
         WebElement segundoDestino = driver.findElement(By.xpath("//input[contains(@class,'sbox-hotel-second-destination')]"));
+
+        WebElement fechaDesde2 = driver.findElement(By.xpath("//input[contains(@class,'sbox-hotel-second-checkin-date')]"));
+        WebElement fechaHasta2 = driver.findElement(By.xpath("//input[contains(@class,'sbox-hotel-second-checkout-date')]"));
         String textDestino2 =seleccionarCiudadBusqueda(segundoDestino,localizadorOpcion,destino2);
         Assert.assertEquals("Cancún, Quintana Roo, México",textDestino2);
+        Assert.assertEquals("Sáb, 9 oct 2021",fechaDesde2.getAttribute("value"));
+        Assert.assertEquals("Sáb, 16 oct 2021",fechaHasta2.getAttribute("value"));
+
+
         //  19- Hacer click en el botón Buscar.
         btnBuscar.click();
+
 
         // 20- Hacer click en el botón Ver resumen.
         By localizadorBtnResumen = By.xpath("//body[1]/div[13]/div[1]/div[3]/div[1]/div[2]/div[1]/div[2]");
@@ -169,6 +189,7 @@ public class atcPaquetes {
         Assert.assertTrue(driver.getCurrentUrl().contains("trip/accommodations/results/"));
 
         WebElement fechaIda = driver.findElement(By.xpath("//input[@placeholder='Ida']"));
+        WebElement fechaVuelta = driver.findElement(By.xpath("//input[@placeholder='Vuelta']"));
         WebElement habitaciones = driver.findElement(By.xpath("//body/aloha-app-root[1]/aloha-results[1]/div[1]/div[1]/div[2]/div[1]/aloha-old-research[1]/div[1]/div[1]/div[1]/div[3]/div[2]/div[5]/div[1]/div[1]"));
 
         // 4- Seleccionar fecha desde 6 dic 2021
@@ -177,12 +198,17 @@ public class atcPaquetes {
         // 6- Seleccionar fecha hasta 16 dic 2021
         driver.findElement(By.xpath("//body/div[7]/div[1]/div[5]/div[4]/div[4]/span[16]")).click();
         driver.findElement(By.xpath("//body/div[7]/div[1]/div[6]/div[2]/button[2]")).click();
+        Assert.assertEquals("Lun, 6 dic 2021",fechaIda.getAttribute("value"));
+        Assert.assertEquals("Jue, 16 dic 2021",fechaVuelta.getAttribute("value"));
+
 
         // 7- Hacer click en  "habitaciones".
         habitaciones.click();
         // 8- Seleccionar 1 adulto.
+        WebElement personas = driver.findElement(By.xpath("//body/div[4]/div[1]/div[1]/div[2]/div[1]/div[2]/div[1]/div[2]/div[1]/input[1]"));
         driver.findElement(By.xpath("//body/div[4]/div[1]/div[1]/div[2]/div[1]/div[2]/div[1]/div[2]/div[1]/a[1]")).click();
         driver.findElement(By.xpath("//body/div[4]/div[1]/div[2]/a[1]")).click();
+        Assert.assertEquals("1",personas.getAttribute("value"));
 
         // 9- Seleccionar el alojamiento sugerido.  10- Hacer click en el botón siguiente.
         WebElement alojamiento = driver.findElement(By.xpath("//body/aloha-app-root[1]/aloha-results[1]/div[1]/div[1]/div[2]/div[2]/div[2]/aloha-list-view-container[1]/div[2]/aloha-cluster-container[1]/div[1]"));
