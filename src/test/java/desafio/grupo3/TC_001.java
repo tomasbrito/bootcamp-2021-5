@@ -35,7 +35,7 @@ public class TC_001 {
         WebElement destino = driver.findElement(By.xpath("//*[@id=\"sboxContainer-hotels\"]/div/div/div[3]/div[2]/div[1]/div/div/div/div/div/input"));
         destino.click();
         Thread.sleep(1000);
-        destino.sendKeys("mia");
+        destino.sendKeys("bue");
         Thread.sleep(1000);
         destino.sendKeys(Keys.ENTER);
 
@@ -74,7 +74,7 @@ public class TC_001 {
             driver.switchTo().window(winHandle);
             Thread.sleep(4000);
         }
-
+        //btn: ver habitaciones
         driver.findElement(By.xpath("/html/body/aloha-app-root/aloha-detail/div/div[2]/div[2]/div/aloha-infobox-container/aloha-infobox-wrapper-container/div/div/div/aloha-infobox-shopping-content/div/div[2]/aloha-button/button")).click();
         //obtenemos precio por noche y descuento
         //int precioXNoche = Integer.parseInt(driver.findElement(By.xpath("//*[@id=\"roompacks-container-wrapper\"]/aloha-roompacks-container/aloha-roompacks-grid-container/div[2]/div[1]/aloha-roompacks-group-container/div[2]/aloha-roompack-container/div[2]/aloha-roompack-price-container/aloha-summary-price/div/span[2]")).getText());
