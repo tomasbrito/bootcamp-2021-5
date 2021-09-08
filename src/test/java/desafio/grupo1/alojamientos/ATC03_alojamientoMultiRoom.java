@@ -21,6 +21,10 @@ public class ATC03_alojamientoMultiRoom {
     final String HOTELES_URL = "https://www.viajesfalabella.cl/hoteles/";
     final int TIMEOUT_SECS = 5;
     final String RESULTADO_BUSQUEDA_URL = "www.viajesfalabella.cl/accommodations/results";
+    final String YEAR_MONTH = "2021-10"; // aaaa-mm
+    final String ENTRADA_DAY = "1";
+    final String SALIDA_DAY = "15";
+    final String CHILDREN_AGE = "10";
 
     @BeforeClass
     public static void initialiseBrowser() {
@@ -62,20 +66,18 @@ public class ATC03_alojamientoMultiRoom {
         WebElement entradaInput = driver.findElement(By.xpath("//input[@placeholder=\"Entrada\"]"));
         entradaInput.click();
 
-        //TODO extraer año-mes
-        WebElement entradaMonth = driver.findElement(By.xpath("//div[@data-month=\"2021-10\"]"));
+        WebElement entradaMonth = driver.findElement(By.xpath("//div[@data-month='" + YEAR_MONTH + "']"));
         List<WebElement> daysList = entradaMonth.findElements(By.tagName("span"));
 
-        //TODO extrare dias
         for (WebElement day : daysList) {
-            if (day.getText().equals("1")) {
+            if (day.getText().equals(ENTRADA_DAY)) {
                 day.click();
                 break;
             }
         }
 
         for (WebElement day : daysList) {
-            if (day.getText().equals("15")) {
+            if (day.getText().equals(SALIDA_DAY)) {
                 day.click();
                 break;
             }
@@ -89,37 +91,32 @@ public class ATC03_alojamientoMultiRoom {
 
         habitacionesInput.click();
 
-        //TODO arreglar xpaths y extraer edad
-        //1er bloque
-        driver.findElement(By.xpath(
-                        "/html/body/div[2]/div/div[1]/div[2]/div[1]/div[2]/div[1]/div[2]/div/a[1]"))
-                .click();
-        driver.findElement(By.xpath(
-                        "/html/body/div[2]/div/div[1]/div[2]/div[1]/div[2]/div[2]/div[2]/div/a[2]"))
-                .click();
+        List<WebElement> minusButtons = driver.findElements(By.xpath(
+                "//a[contains(@class,\"steppers-icon-left\")]"));
+        List<WebElement> plusButtons = driver.findElements(By.xpath(
+                "//a[contains(@class,\"steppers-icon-right\")]"));
 
-        WebElement firstAgeList = driver.findElement(
-                By.xpath("/html/body/div[2]/div/div[1]/div[2]/div[1]/div[2]/div[3]/div[1]/div[2]/div/div/select"));
-        Select ageListSelect = new Select(firstAgeList);
-        ageListSelect.selectByValue("10");
+        minusButtons.get(0).click();
+        plusButtons.get(1).click();
 
         WebElement añadirHabitacionAnchor = driver.findElement(
                 By.linkText("Añadir habitación"));
         añadirHabitacionAnchor.click();
 
-        //TODO agregar validacion del segundo blouque
-        //2do bloque
-        driver.findElement(By.xpath(
-                        "/html/body/div[2]/div/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/a[1]"))
-                .click();
-        driver.findElement(By.xpath(
-                        "/html/body/div[2]/div/div[1]/div[2]/div[2]/div[2]/div[2]/div[2]/div/a[2]"))
-                .click();
+        List<WebElement> roomBlocks = driver.findElements(By.xpath(
+                "//div[@class=\"_pnlpk-itemBlock\"]"));
 
-        WebElement secondAgeList = driver.findElement(
-                By.xpath("/html/body/div[2]/div/div[1]/div[2]/div[2]/div[2]/div[3]/div[1]/div[2]/div/div/select"));
-        Select secondAgeListSelect = new Select(secondAgeList);
-        secondAgeListSelect.selectByValue("10");
+        resultsFetchWait.until(ExpectedConditions.visibilityOf(roomBlocks.get(1)));
+        Assert.assertTrue(roomBlocks.get(1).isDisplayed());
+
+        minusButtons.get(2).click();
+        plusButtons.get(3).click();
+
+        for (int i = 0; i < 2; i++) {
+            WebElement ageList = roomBlocks.get(i).findElement(By.tagName("select"));
+            Select ageListSelect = new Select(ageList);
+            ageListSelect.selectByValue(CHILDREN_AGE);
+        }
 
         WebElement habitacionesAplicarButton = driver.findElement(
                 By.linkText("Aplicar"));
@@ -132,13 +129,16 @@ public class ATC03_alojamientoMultiRoom {
 
         Assert.assertTrue(driver.getCurrentUrl().contains(RESULTADO_BUSQUEDA_URL));
 
-        //TODO agregar verificacion de habitaciones y personas
+        List<WebElement> accommodationRoomBlocks = driver.findElements(
+                By.className("stepper__room"));
+
+        Assert.assertEquals(2, accommodationRoomBlocks.size());
 
     }
 
     @After
     public void cleanup() {
-        //if (driver != null) driver.close();
+        if (driver != null) driver.close();
     }
 
 }

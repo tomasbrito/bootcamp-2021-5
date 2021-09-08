@@ -9,7 +9,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
@@ -37,7 +36,7 @@ public class ATC02_precioUsd {
     }
 
     @Test
-    public void atc02() throws InterruptedException {
+    public void atc02() {
 
         driver.get(BASE_URL);
         Assert.assertEquals(BASE_URL, driver.getCurrentUrl());
@@ -60,14 +59,15 @@ public class ATC02_precioUsd {
                 ExpectedConditions.numberOfElementsToBeMoreThan(firstOptionBy, 0));
         driver.findElement(firstOptionBy).click();
 
-        //TODO
-        WebElement checkbox = driver.findElement(By.xpath("//body/app-root[1]/app-searchbox-container[1]/div[1]/app-searchbox[1]/div[4]/div[1]/div[1]/div[3]/div[2]/div[5]/label[1]/i[1]"));
-        checkbox.click();
+        //este nodo tiene un problema con un eventlistener en javascript
+        // solamente lo toma con el xpath completo
+        WebElement fechaNoDecididaCheckbox = driver.findElement(By.xpath(
+                "//label[text()=\"Todavía no he decidido la fecha\"]"));
+        fechaNoDecididaCheckbox.click();
 
         driver.findElement(By.linkText("Buscar")).click();
 
-        WebDriverWait fetchSearchResults = new WebDriverWait(driver, TIMEOUT_SECS);
-        fetchSearchResults.until(ExpectedConditions.urlContains(RESULTADO_BUSQUEDA_QUERY));
+        resultsFetchWait.until(ExpectedConditions.urlContains(RESULTADO_BUSQUEDA_QUERY));
 
         Assert.assertTrue(driver.getCurrentUrl().contains(RESULTADO_BUSQUEDA_QUERY));
 
@@ -76,14 +76,10 @@ public class ATC02_precioUsd {
 
         currencySelect.selectByValue(CURRENCY_VALUE);
 
-        FluentWait<WebDriver> currencyChangeWait = new FluentWait<>(driver)
-                .withTimeout(Duration.ofSeconds(TIMEOUT_SECS))
-                .pollingEvery(Duration.ofMillis(300));
-
         By pricesListBy = By.className("landing-inline");
         WebElement spinner = driver.findElement(By.id("fullLoader"));
 
-        currencyChangeWait.until(ExpectedConditions.invisibilityOf(spinner));
+        resultsFetchWait.until(ExpectedConditions.invisibilityOf(spinner));
 
         List<WebElement> pricesList = driver.findElements(pricesListBy);
         for (WebElement price : pricesList){

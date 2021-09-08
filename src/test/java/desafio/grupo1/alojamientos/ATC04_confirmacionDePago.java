@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class ATC04_confirmacionDePago {
 
@@ -24,7 +25,9 @@ public class ATC04_confirmacionDePago {
     final String HOTEL_DETAILS_URL = "https://www.viajesfalabella.cl/accommodations/detail/";
     final String TRIPS_URL = "https://www.viajesfalabella.cl/trips/";
     final String CHECKOUT_URL = "https://www.viajesfalabella.cl/checkout";
-
+    final String YEAR_MONTH = "2021-10"; // aaaa-mm
+    final String ENTRADA_DAY = "1";
+    final String SALIDA_DAY = "15";
 
 
     @BeforeClass
@@ -37,6 +40,7 @@ public class ATC04_confirmacionDePago {
         driver = new ChromeDriver();
         driver.manage().deleteAllCookies();
         driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
     @Test
@@ -63,24 +67,21 @@ public class ATC04_confirmacionDePago {
                 ExpectedConditions.numberOfElementsToBeMoreThan(firstOptionBy, 0));
         driver.findElement(firstOptionBy).click();
 
-
         WebElement entradaInput = driver.findElement(By.xpath("//input[@placeholder=\"Entrada\"]"));
         entradaInput.click();
 
-        //TODO extraer año-mes
-        WebElement entradaMonth = driver.findElement(By.xpath("//div[@data-month=\"2021-10\"]"));
+        WebElement entradaMonth = driver.findElement(By.xpath("//div[@data-month='" + YEAR_MONTH + "']"));
         List<WebElement> daysList = entradaMonth.findElements(By.tagName("span"));
 
-        //TODO extrare dias
         for (WebElement day : daysList) {
-            if (day.getText().equals("1")) {
+            if (day.getText().equals(ENTRADA_DAY)) {
                 day.click();
                 break;
             }
         }
 
         for (WebElement day : daysList) {
-            if (day.getText().equals("15")) {
+            if (day.getText().equals(SALIDA_DAY)) {
                 day.click();
                 break;
             }
@@ -96,68 +97,64 @@ public class ATC04_confirmacionDePago {
 
         Assert.assertTrue(driver.getCurrentUrl().contains(RESULTADO_BUSQUEDA_URL));
 
-        //TODO cambiar xpath
-        WebElement hotelesButton = driver.findElement(By.xpath(
-                "/html/body/aloha-app-root/aloha-results/div/div/div/div[2]/div[2]/aloha-list-view-container/aloha-results-toolbar/div[1]/div[1]/nav/div/div/ul/li[2]"));
-        hotelesButton.click();
+        WebElement fetchAnimationDiv = driver.findElement(By.className("-eva-3-hide"));
+        resultsFetchWait.until(ExpectedConditions.invisibilityOf(fetchAnimationDiv));
 
-        //TODO agregar wait y cambiar xpath
-        Thread.sleep(5000);
+        By hotelsListBy = By.className("results-cluster-container");
+        resultsFetchWait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(hotelsListBy));
 
-        WebElement verDetalleButton = driver.findElement(By.xpath(
-                "/html/body/aloha-app-root/aloha-results/div/div/div/div[2]/div[2]/aloha-list-view-container/div[2]/div[1]/aloha-cluster-container/div/div/div[2]/aloha-cluster-pricebox-container/div/div[2]/div[2]/aloha-button/button"));
+        List<WebElement> hotelsList = driver.findElements(hotelsListBy);
+        WebElement firstHotel = hotelsList.get(0);
+
+        String hotelName = firstHotel.findElement(By.xpath(
+                        "//span[contains(@class,\"accommodation-name\")]")).
+                getText();
+        WebElement verDetalleButton = firstHotel.findElement(By.tagName("button"));
+
         verDetalleButton.click();
 
-        //cambiar a la nueva pestaña
         ArrayList<String> browserTabs = new ArrayList<>(driver.getWindowHandles());
         driver.close();
         driver.switchTo().window(browserTabs.get(1));
-
-        //TODO assert que la nueva pestaña tenga en el titulo el mismo nombre que el hotel que se eligio antes
 
         WebDriverWait hotelDetailsWait = new WebDriverWait(driver, TIMEOUT_SECS);
         hotelDetailsWait.until(ExpectedConditions.urlContains(HOTEL_DETAILS_URL));
 
         Assert.assertTrue(driver.getCurrentUrl().contains(HOTEL_DETAILS_URL));
 
-        //TODO sleep
-        Thread.sleep(5000);
+        String pageHotelTitle = driver.findElement(By.className("main-info"))
+                .findElement(By.tagName("h1"))
+                .getText();
+
+        Assert.assertEquals(hotelName, pageHotelTitle);
 
         WebElement verHabitacionesButton = driver.findElement(By.xpath(
-                "/html/body/aloha-app-root/aloha-detail/div/div[2]/div[2]/div/aloha-infobox-container/aloha-infobox-wrapper-container/div/div/div/aloha-infobox-shopping-content/div/div[2]/aloha-button/button/em"));
+                "//em[text()=\"Ver habitaciones\"]"));
         verHabitacionesButton.click();
 
-        //TODO sleep boton clickeable
-        Thread.sleep(2000);
-
         WebElement reservarAhoraButton = driver.findElement(By.xpath(
-                "//*[@id=\"roompacks-container-wrapper\"]/aloha-roompacks-container/aloha-roompacks-grid-container/div[2]/div[2]/aloha-reservation-summary-container/div/aloha-next-step-button/aloha-button/button/em"));
+                "//em[text()=\"Reservar ahora\"]"));
+
+        fetchSearchResults.until(ExpectedConditions.elementToBeClickable(reservarAhoraButton));
         reservarAhoraButton.click();
 
-        //TODO capaz dejar un solo wait?
-        WebDriverWait tripsListWait = new WebDriverWait(driver, TIMEOUT_SECS);
-        tripsListWait.until(ExpectedConditions.urlContains(TRIPS_URL));
-
+        fetchSearchResults.until(ExpectedConditions.urlContains(TRIPS_URL));
         Assert.assertTrue(driver.getCurrentUrl().contains(TRIPS_URL));
 
-        Thread.sleep(5000);
+        By siguienteButtonBy = By.xpath("//em[text()=\"Siguiente\"]");
+        resultsFetchWait.until(ExpectedConditions.presenceOfElementLocated(siguienteButtonBy));
 
-        WebElement siguienteButton = driver.findElement(By.xpath(
-                "/html/body/app-root/div/app-pricebox-sticky/div/div/div[1]/div/button"));
+        WebElement siguienteButton = driver.findElement(siguienteButtonBy);
         siguienteButton.click();
 
-        WebDriverWait checkoutWait = new WebDriverWait(driver, TIMEOUT_SECS);
-        checkoutWait.until(ExpectedConditions.urlContains(CHECKOUT_URL));
-
+        resultsFetchWait.until(ExpectedConditions.urlContains(CHECKOUT_URL));
         Assert.assertTrue(driver.getCurrentUrl().contains(CHECKOUT_URL));
-
-        //TODO checkear que contenga el nombre del hotel?
 
     }
 
     @After
     public void cleanup() {
-        //if (driver != null) driver.close();
+        if (driver != null) driver.close();
     }
 
 }
