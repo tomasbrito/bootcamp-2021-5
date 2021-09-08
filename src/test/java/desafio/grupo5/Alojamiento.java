@@ -170,6 +170,8 @@ public class Alojamiento {
         //Se ingresa "45000000" en el campo "DNI"
         driver.findElement(DNI).sendKeys("45000000");
         //Se valida que el numero sea el esperado.
+        Assert.assertEquals("45000000",driver.findElement(DNI).getAttribute("value"));
+        //Se valida que el mensaje de error sea "Ingresa un numero de tarjeta valido".
         Assert.assertEquals("Ingresa un número de tarjeta válido", driver.findElement(error).getText());
     }
     @Test
