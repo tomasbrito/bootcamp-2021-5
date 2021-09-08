@@ -9,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
+
 public class Alojamiento {
     WebDriver driver;
     By botonAlojamiento = By.xpath("//*[contains(@class, 'shifu-3-button-circle HOTELS ')]");
@@ -26,6 +27,8 @@ public class Alojamiento {
     By direccion = By.xpath("/html[1]/body[1]/af-app[1]/div[1]/div[1]/div[1]/checkout-form[1]/div[1]/form-component[1]/form[1]/div[1]/payment-component[1]/div[1]/div[1]/payment-method[1]/div[1]/payment-method-selector-container[1]/prepaid-payment-container[1]/div[1]/div[2]/invoice-component[1]/div[1]/div[2]/div[1]/invoice-default-component[1]/div[1]/address[1]/div[1]/div[4]/div[1]/address-street-input[1]/div[1]/div[1]/input-component-v2[1]/div[1]/div[1]/div[1]/input[1]");
     By nombre = By.xpath("/html[1]/body[1]/af-app[1]/div[1]/div[1]/div[1]/checkout-form[1]/div[1]/form-component[1]/form[1]/div[1]/travelers[1]/div[1]/ul[1]/li[1]/ul[1]/li[1]/traveler[1]/div[1]/div[2]/div[1]/div[1]/traveler-first-name-input[1]/div[1]/div[1]/input-component-v2[1]/div[1]/div[1]/div[1]/input[1]");
     By apellido = By.xpath("/html[1]/body[1]/af-app[1]/div[1]/div[1]/div[1]/checkout-form[1]/div[1]/form-component[1]/form[1]/div[1]/travelers[1]/div[1]/ul[1]/li[1]/ul[1]/li[1]/traveler[1]/div[1]/div[2]/div[1]/div[1]/traveler-last-name-input[1]/div[1]/div[1]/input-component-v2[1]/div[1]/div[1]/div[1]/input[1]");
+
+
     @BeforeClass
     public static void init() {
         WebDriverManager.chromedriver().setup();
@@ -36,8 +39,9 @@ public class Alojamiento {
         driver.manage().deleteAllCookies(); //Borrando Cookies
         driver.manage().window().maximize();
     }
+
     @Test
-    public void atc05() throws InterruptedException {
+    public void tc005_busquedaAlojamientoSinFecha() throws InterruptedException {
         driver.get("https://www.viajesfalabella.cl");
         System.out.println("Se abre URL");
         Thread.sleep(500);
@@ -61,7 +65,7 @@ public class Alojamiento {
     }
 
     @Test
-    public void atc06() throws InterruptedException {
+    public void tc006_busquedaAlojamientoSinFiltros() throws InterruptedException {
         //Se abre el URL
         driver.get("https://www.viajesfalabella.cl/hoteles/hl/901/i1/hoteles-en-san+carlos+de+bariloche?from=SB&encodedProps=cGFnZT0xJnZpZXdNb2RlPWxpc3Q=#page=1&view=list");
         System.out.println("Se abre URL");
@@ -113,9 +117,10 @@ public class Alojamiento {
         Thread.sleep(2000);
         //Se clickea en "Siguiente"
     }
+
     @Test
-    public void atc07() throws InterruptedException {
-        driver.get("https://www.viajesfalabella.cl/trips/xs/PC9f96d043c15d4c02bcf7d9380a84d26b27184355?searchParams=SC8yMDIxLTA5LTEwLzIwMjEtMDktMTcvQ0lUXzkwMS8y&searchId=399447e6-c24a-4a3f-bde5-1cb06997bd48&stepNum=0&locale=es-CL&dc=false&tx=true&d=aHR0cHM6Ly93d3cudmlhamVzZmFsYWJlbGxhLmNsL2FjY29tbW9kYXRpb25zL2RldGFpbC8zNjE4MTAvMjAyMS0wOS0xMC8yMDIxLTA5LTE3LzI%2Fc2VsZWN0ZWRfcm9vbV9wYWNrPTE3MzA3OTg4MjImc2VhcmNoSWQ9Mzk5NDQ3ZTYtYzI0YS00YTNmLWJkZTUtMWNiMDY5OTdiZDQ4JnRocm91Z2hSZXN1bHRzPXRydWU%3D&currency=CLP&flow=H&oTid=PCaabc6aa915cd44bbae8df4a92a3c32f327184355");
+    public void tc07_busquedaAlojamientoIngresoTarjeta() throws InterruptedException {
+        driver.get("https://www.viajesfalabella.cl/trips/xs/PC0dfbb38efb7e44ebbd824dc490da435b27185514?searchParams=SC8yMDIxLTA5LTEwLzIwMjEtMDktMTcvQ0lUXzkwMS8y&searchId=7bf9778f-8aa1-4594-be8d-ea28ce8a8275&stepNum=0&locale=es-CL&dc=false&tx=true&d=aHR0cHM6Ly93d3cudmlhamVzZmFsYWJlbGxhLmNsL2FjY29tbW9kYXRpb25zL2RldGFpbC8zNjE4MTAvMjAyMS0wOS0xMC8yMDIxLTA5LTE3LzI%2Fc2VsZWN0ZWRfcm9vbV9wYWNrPTE3MzA3OTg4MjImc2VhcmNoSWQ9N2JmOTc3OGYtOGFhMS00NTk0LWJlOGQtZWEyOGNlOGE4Mjc1JnRocm91Z2hSZXN1bHRzPXRydWU%3D&currency=CLP&flow=H&oTid=PCa49f381620544ce4867d331dfb35626027185514");
         // Por problemas efectuados debidos a la Disponibilidad de Alojamientos del Hotel elejido anteriormente, nos vimos obligados a cambiar el mismo para que funcione el test.
         // De todas formas se podria usar como un caso distinto, un caso de error por disponibilidad.
         System.out.println("Se abre URL");
@@ -175,8 +180,8 @@ public class Alojamiento {
         Assert.assertEquals("Ingresa un número de tarjeta válido", driver.findElement(error).getText());
     }
     @Test
-    public void atc08() throws InterruptedException {
-        driver.get("https://www.viajesfalabella.cl/trips/xs/PC9f96d043c15d4c02bcf7d9380a84d26b27184355?searchParams=SC8yMDIxLTA5LTEwLzIwMjEtMDktMTcvQ0lUXzkwMS8y&searchId=399447e6-c24a-4a3f-bde5-1cb06997bd48&stepNum=0&locale=es-CL&dc=false&tx=true&d=aHR0cHM6Ly93d3cudmlhamVzZmFsYWJlbGxhLmNsL2FjY29tbW9kYXRpb25zL2RldGFpbC8zNjE4MTAvMjAyMS0wOS0xMC8yMDIxLTA5LTE3LzI%2Fc2VsZWN0ZWRfcm9vbV9wYWNrPTE3MzA3OTg4MjImc2VhcmNoSWQ9Mzk5NDQ3ZTYtYzI0YS00YTNmLWJkZTUtMWNiMDY5OTdiZDQ4JnRocm91Z2hSZXN1bHRzPXRydWU%3D&currency=CLP&flow=H&oTid=PCaabc6aa915cd44bbae8df4a92a3c32f327184355");
+    public void tc08_busquedaAlojamientoIngresoBoleta() throws InterruptedException {
+        driver.get("https://www.viajesfalabella.cl/trips/xs/PC0dfbb38efb7e44ebbd824dc490da435b27185514?searchParams=SC8yMDIxLTA5LTEwLzIwMjEtMDktMTcvQ0lUXzkwMS8y&searchId=7bf9778f-8aa1-4594-be8d-ea28ce8a8275&stepNum=0&locale=es-CL&dc=false&tx=true&d=aHR0cHM6Ly93d3cudmlhamVzZmFsYWJlbGxhLmNsL2FjY29tbW9kYXRpb25zL2RldGFpbC8zNjE4MTAvMjAyMS0wOS0xMC8yMDIxLTA5LTE3LzI%2Fc2VsZWN0ZWRfcm9vbV9wYWNrPTE3MzA3OTg4MjImc2VhcmNoSWQ9N2JmOTc3OGYtOGFhMS00NTk0LWJlOGQtZWEyOGNlOGE4Mjc1JnRocm91Z2hSZXN1bHRzPXRydWU%3D&currency=CLP&flow=H&oTid=PCa49f381620544ce4867d331dfb35626027185514");
         // Por problemas efectuados debidos a la Disponibilidad de Alojamientos del Hotel elejido anteriormente, nos vimos obligados a cambiar el mismo para que funcione el test.
         // De todas formas se podria usar como un caso distinto, un caso de error por disponibilidad.
         System.out.println("Se abre URL");
