@@ -9,7 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class TC_002 {
+public class tc_001 {
     WebDriver driver; // es la instancia a crear del navegador - firefox, chrome, safari
 
     @BeforeClass
@@ -27,17 +27,19 @@ public class TC_002 {
     }
 
     @Test
-    public void tc_002() throws InterruptedException {
-        System.out.println("---Reserva alojamiento---");
+    public void tc001() throws InterruptedException {
+        System.out.println("---Reserva alojamiento---");//Happy path - Alojamiento
         driver.get("https://www.viajesfalabella.cl/hoteles/");
 
         //Seleccionar el destino---------------------------------------------------------------------------------------------------------------------------
-        WebElement destino = driver.findElement(By.xpath("//*[@id=\"sboxContainer-hotels\"]/div/div/div[3]/div[2]/div[1]/div/div/div/div/div/input"));
-        destino.click();
+        String destino = "buenos aires";
+        WebElement campoDestino = driver.findElement(By.xpath("//*[@id=\"sboxContainer-hotels\"]/div/div/div[3]/div[2]/div[1]/div/div/div/div/div/input"));
+        campoDestino.click();
         Thread.sleep(1000);
-        destino.sendKeys("bue");
+        campoDestino.sendKeys(destino);
         Thread.sleep(1000);
-        destino.sendKeys(Keys.ENTER);
+        campoDestino.sendKeys(Keys.ENTER);
+
 
         //Seleccionar una fecha---------------------------------------------------------------------------------------------------------------------------
         driver.findElement(By.xpath("//*[@id=\"sboxContainer-hotels\"]/div/div/div[3]/div[2]/div[2]/div/div/div[1]/div/input")).click();
@@ -47,14 +49,20 @@ public class TC_002 {
 
         WebElement fechaSalida = driver.findElement(By.cssSelector("body > div.sbox-ui-datepicker-container.sbox-v4-components > div > div._dpmg2--months > div:nth-child(2) > div._dpmg2--dates > span:nth-child(3) > span._dpmg2--date-number"));
         fechaSalida.click();
-
+        //btn:aplicar
         driver.findElement(By.cssSelector("body > div.sbox-ui-datepicker-container.sbox-v4-components > div > div._dpmg2--date-footer > div._dpmg2--desktopFooter-btn-container > button._dpmg2--desktopFooter-button._dpmg2--desktopFooter-button-apply.sbox-3-btn.-lg.-primary > em")).click();
 
         //Seleccionar habitaciones---------------------------------------------------------------------------------------------------------------------------
         driver.findElement(By.xpath("//*[@id=\"sboxContainer-hotels\"]/div/div/div[3]/div[2]/div[3]/div/div/div[2]/div/div")).click();
         Thread.sleep(1000);
+        //agregamos adulto
         driver.findElement(By.xpath("/html/body/div[2]/div/div[1]/div[2]/div[1]/div[2]/div[1]/div[2]/div/a[2]")).click();
+        //agregamos niño
+        driver.findElement(By.xpath("/html/body/div[2]/div/div[1]/div[2]/div[1]/div[2]/div[2]/div[2]/div/a[2]")).click();
         Thread.sleep(1000);
+        Select edad = new Select(driver.findElement(By.xpath("/html/body/div[2]/div/div[1]/div[2]/div[1]/div[2]/div[3]/div[1]/div[2]/div/div/select")));
+        edad.selectByVisibleText("9 años");
+
 
         driver.findElement(By.xpath("/html/body/div[2]/div/div[2]/a[1]")).click();
 
@@ -71,26 +79,37 @@ public class TC_002 {
             driver.switchTo().window(winHandle);
             Thread.sleep(4000);
         }
-        //btn:Reservar ahora
-        driver.findElement(By.xpath("/html/body/aloha-app-root/aloha-detail/div/div[2]/div[2]/div/aloha-infobox-container/aloha-infobox-wrapper-container/div/div/div/aloha-infobox-shopping-content/div/div[2]/aloha-button/button")).click();
         //btn: ver habitaciones
+        driver.findElement(By.xpath("/html/body/aloha-app-root/aloha-detail/div/div[2]/div[2]/div/aloha-infobox-container/aloha-infobox-wrapper-container/div/div/div/aloha-infobox-shopping-content/div/div[2]/aloha-button/button")).click();
+        //obtenemos precio por noche y descuento
+        //int precioXNoche = Integer.parseInt(driver.findElement(By.xpath("//*[@id=\"roompacks-container-wrapper\"]/aloha-roompacks-container/aloha-roompacks-grid-container/div[2]/div[1]/aloha-roompacks-group-container/div[2]/aloha-roompack-container/div[2]/aloha-roompack-price-container/aloha-summary-price/div/span[2]")).getText());
+        String precioXNoche = driver.findElement(By.xpath("//*[@id=\"roompacks-container-wrapper\"]/aloha-roompacks-container/aloha-roompacks-grid-container/div[2]/div[1]/aloha-roompacks-group-container/div[2]/aloha-roompack-container/div[2]/aloha-roompack-price-container/aloha-summary-price/div/span[2]")).getText();
+        //btn: ver habitaciones
+        driver.findElement(By.xpath("//*[@id=\"roompacks-container-wrapper\"]/aloha-roompacks-container/aloha-roompacks-grid-container/div[2]/div[2]/aloha-reservation-summary-container/div/aloha-next-step-button/aloha-button/button/em")).click();
+        Thread.sleep(4000);
+        String ubicacionHotel = driver.findElement(By.xpath("/html/body/aloha-app-root/aloha-detail/div/aloha-re-search-container/aloha-re-search/div/div[1]/div/ul/li[2]/span/span")).getText();//capturo la ubicacion
+        //btn:Reservar ahora
         driver.findElement(By.xpath("//*[@id=\"roompacks-container-wrapper\"]/aloha-roompacks-container/aloha-roompacks-grid-container/div[2]/div[2]/aloha-reservation-summary-container/div/aloha-next-step-button/aloha-button/button/em")).click();
         Thread.sleep(4000);
         //btn:siguiente
         driver.findElement(By.xpath("//*[@id=\"pricebox-overlay\"]/div[1]/div/button/em")).click();
         Thread.sleep(5000);
 
-        //CMR puntos-----------------------------------------------------------------------------------------------------------------------------------------------
-        driver.findElement(By.xpath("//*[@id=\"checkout-content\"]/div[1]/cmr-split/div/div/div/checkbox-component/span/label/i")).click();
-        WebElement campo = driver.findElement(By.id("cmr-payer-identification-number"));
-        campo.click();
-        campo.sendKeys("ABC");
-        driver.findElement(By.cssSelector("#checkout-content > div.col.-sm-12.-lg-8 > cmr-split > div > div > div > div > div > div.-eva-3-mb-xlg > span")).click();
+        //VALIDAMOS ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        String msjPersonas = "Alojamiento para 4 personas";
+        double totalEsperado = Double.parseDouble(precioXNoche) * 15;
+        String totalActual = driver.findElement(By.xpath("//*[@id=\"chk-total-price\"]/div[2]/money/div/span[3]")).getText();
 
-        //Validamos------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        String msj = "Ingresa un valor válido";
-        Assert.assertEquals(msj, driver.findElement(By.xpath("//*[@id=\"formData.paymentData.cashPayments[0].payeeIdentification.number\"]/div/div/validation-error/span")).getText());
+        String cantPersonas = driver.findElement(By.xpath("//*[@id=\"pricebox-list-detail\"]/ul/div[1]/div[1]/p/span")).getText();
+
+        if (  cantPersonas.equals(msjPersonas)  ){//totalEsperado == totalActual &&q
+            Assert.assertTrue(true);
+        }else
+            Assert.fail();
+
     }
+
+
 
     @After
     public void close(){

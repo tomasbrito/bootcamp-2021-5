@@ -37,6 +37,7 @@ public class tc_007 {
 
     @Test
     public void test() {
+        System.out.println("---Reservar paquete---");
         WebDriverWait wait = new WebDriverWait(driver, 15);
         By origenPopUp = By.xpath("//div[@class='ac-container']");
         By destinoPopUp = By.xpath("//div[@class='ac-container']");
