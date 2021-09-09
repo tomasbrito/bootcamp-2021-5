@@ -36,7 +36,7 @@ public class ATC04 {
         driver.manage().window().maximize();
         this.smallWait = new WebDriverWait(driver, 5);
         this.bigWait = new WebDriverWait(driver, 20);
-        this.seccionTrasladosLocalizador = By.xpath("//body/nav/div[2]/div/div[3]/ul/li[6]/a");
+        this.seccionTrasladosLocalizador = By.xpath("//a[@title='Traslados']");
         this.aeropuerto = "Aeropuerto Arturo Merino Benitez";
         this.hotel = "Santiago Marriott Hotel";
     }
