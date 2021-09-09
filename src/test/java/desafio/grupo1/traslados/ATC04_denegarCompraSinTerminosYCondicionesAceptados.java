@@ -15,7 +15,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class ATC04 {
+public class ATC04_denegarCompraSinTerminosYCondicionesAceptados {
 
     WebDriver driver;
     private String aeropuerto, hotel;
@@ -23,13 +23,13 @@ public class ATC04 {
     private WebDriverWait smallWait, bigWait;
 
     @BeforeClass
-    public static void init() {
+    public static void initialiseBrowser() {
         System.out.println("Init");
         WebDriverManager.chromedriver().setup();
     }
 
     @Before
-    public void setUp() {
+    public void setupBrowser() {
         System.out.println("SetUp");
         driver = new ChromeDriver();
         driver.manage().deleteAllCookies();
@@ -42,9 +42,12 @@ public class ATC04 {
     }
 
     @Test
-    public void denegarCompraSinTerminosYCondicionesAceptados() {
+    public void atc04() {
+        final String BASE_URL = "https://www.viajesfalabella.cl/";
+        final String TRASLADOS_URL = "https://www.viajesfalabella.cl/traslados/";
+
         // Carga la página web
-        driver.get("https://www.viajesfalabella.cl/");
+        driver.get(BASE_URL);
         // 2) Clickea 'Traslados' en la barra de navegacion
         this.smallWait.until(ExpectedConditions.elementToBeClickable(this.seccionTrasladosLocalizador));
         driver.findElement(this.seccionTrasladosLocalizador).click();
@@ -52,7 +55,7 @@ public class ATC04 {
         this.smallWait.until(ExpectedConditions.elementToBeClickable(localizadorInputAeropuerto));
         // Valida ubicacion en 'Traslados'
         String url = driver.getCurrentUrl();
-        assertTrue(url.contains("traslados"));
+        assertTrue(url.contains(TRASLADOS_URL));
         // 3) Ingresa el aeropuerto
         driver.findElement(localizadorInputAeropuerto).sendKeys(this.aeropuerto);
         // 4) Selecciona la primer opción
@@ -118,7 +121,7 @@ public class ATC04 {
     }
 
     @After
-    public void clean() {
+    public void cleanup() {
         System.out.println("Clean");
         if (driver != null)
             driver.close();
