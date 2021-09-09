@@ -7,7 +7,7 @@ import pom.grupo4.pages.VFPaquetesPage;
 
 public class atc01_prohibirBusquedaDePaquete extends TestBase {
     final String BASE_URL = "https://www.viajesfalabella.cl/";
-    final String HOTELES_URL = "https://www.viajesfalabella.cl/paquetes/";
+    final String PAQUETES_URL = "https://www.viajesfalabella.cl/paquetes/";
     final String entradaMsg = "Ingresa una fecha de partida.";
     final String salidaMsg = "Ingresa una fecha de regreso.";
 
