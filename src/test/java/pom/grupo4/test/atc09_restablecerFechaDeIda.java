@@ -17,7 +17,8 @@ public class atc09_restablecerFechaDeIda extends TestBase {
         alojamientosPage.goToUrl(BASE_URL);
         alojamientosPage.goToUrl(HOTELES_URL);
         alojamientosPage.clickearInputFecha();
-        alojamientosPage.clickearFechaIda();
+        alojamientosPage.clickearFechaIdaTC009();
+        alojamientosPage.clickearFechaVueltaTC009();
         Assert.assertEquals(valorEsperado, alojamientosPage.getFechaVueltaValue());
 
 
