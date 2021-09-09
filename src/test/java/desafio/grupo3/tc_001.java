@@ -82,7 +82,6 @@ public class tc_001 {
         //btn: ver habitaciones
         driver.findElement(By.xpath("/html/body/aloha-app-root/aloha-detail/div/div[2]/div[2]/div/aloha-infobox-container/aloha-infobox-wrapper-container/div/div/div/aloha-infobox-shopping-content/div/div[2]/aloha-button/button")).click();
         //obtenemos precio por noche y descuento
-        //int precioXNoche = Integer.parseInt(driver.findElement(By.xpath("//*[@id=\"roompacks-container-wrapper\"]/aloha-roompacks-container/aloha-roompacks-grid-container/div[2]/div[1]/aloha-roompacks-group-container/div[2]/aloha-roompack-container/div[2]/aloha-roompack-price-container/aloha-summary-price/div/span[2]")).getText());
         String precioXNoche = driver.findElement(By.xpath("//*[@id=\"roompacks-container-wrapper\"]/aloha-roompacks-container/aloha-roompacks-grid-container/div[2]/div[1]/aloha-roompacks-group-container/div[2]/aloha-roompack-container/div[2]/aloha-roompack-price-container/aloha-summary-price/div/span[2]")).getText();
         //btn: ver habitaciones
         driver.findElement(By.xpath("//*[@id=\"roompacks-container-wrapper\"]/aloha-roompacks-container/aloha-roompacks-grid-container/div[2]/div[2]/aloha-reservation-summary-container/div/aloha-next-step-button/aloha-button/button/em")).click();
@@ -98,11 +97,11 @@ public class tc_001 {
         //VALIDAMOS ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         String msjPersonas = "Alojamiento para 4 personas";
         double totalEsperado = Double.parseDouble(precioXNoche) * 15;
-        String totalActual = driver.findElement(By.xpath("//*[@id=\"chk-total-price\"]/div[2]/money/div/span[3]")).getText();
-
+        String totalA = driver.findElement(By.xpath("//*[@id=\"chk-total-price\"]/div[2]/money/div/span[3]")).getText();
+        double totalActual = Double.parseDouble(totalA);
         String cantPersonas = driver.findElement(By.xpath("//*[@id=\"pricebox-list-detail\"]/ul/div[1]/div[1]/p/span")).getText();
 
-        if (  cantPersonas.equals(msjPersonas)  ){//totalEsperado == totalActual &&q
+        if (totalEsperado == totalActual && cantPersonas.equals(msjPersonas)  ){
             Assert.assertTrue(true);
         }else
             Assert.fail();
