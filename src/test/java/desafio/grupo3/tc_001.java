@@ -77,7 +77,7 @@ public class tc_001 {
         //aca cambia de ventana:
         for (String winHandle : driver.getWindowHandles()) {
             driver.switchTo().window(winHandle);
-            Thread.sleep(4000);
+            Thread.sleep(1000);
         }
         //btn: ver habitaciones
         driver.findElement(By.xpath("/html/body/aloha-app-root/aloha-detail/div/div[2]/div[2]/div/aloha-infobox-container/aloha-infobox-wrapper-container/div/div/div/aloha-infobox-shopping-content/div/div[2]/aloha-button/button")).click();
@@ -88,7 +88,7 @@ public class tc_001 {
         Thread.sleep(4000);
         String ubicacionHotel = driver.findElement(By.xpath("/html/body/aloha-app-root/aloha-detail/div/aloha-re-search-container/aloha-re-search/div/div[1]/div/ul/li[2]/span/span")).getText();//capturo la ubicacion
         //btn:Reservar ahora
-        driver.findElement(By.xpath("//*[@id=\"roompacks-container-wrapper\"]/aloha-roompacks-container/aloha-roompacks-grid-container/div[2]/div[2]/aloha-reservation-summary-container/div/aloha-next-step-button/aloha-button/button/em")).click();
+        driver.findElement(By.xpath("//*[@id=\"roompacks-container-wrapper\"]/aloha-roompacks-container/aloha-roompacks-grid-container/div[2]/div[2]/aloha-reservation-summary-container/div/aloha-next-step-button/aloha-button/button")).click();
         Thread.sleep(4000);
         //btn:siguiente
         driver.findElement(By.xpath("//*[@id=\"pricebox-overlay\"]/div[1]/div/button/em")).click();
