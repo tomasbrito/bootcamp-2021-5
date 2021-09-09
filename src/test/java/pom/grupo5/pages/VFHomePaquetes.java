@@ -24,27 +24,29 @@ public class VFHomePaquetes extends SeleniumBase {
     public VFHomePaquetes(WebDriver driver, WebDriverWait wait) {
         super(driver,wait);
     }
-
     public String ingresarCiudadOrigen(String ciudad) {
         ingresarTexto(origen, ciudad);
         String textOrigen = encontrarElemento(localizadorOpcion).getText();
         ingresarEnter(origen);
         return textOrigen;
     }
-
     public String ingresarCiudadDestino(String ciudad) {
         ingresarTexto(destino, ciudad);
         String textDestino = encontrarElemento(localizadorOpcion).getText();
         ingresarEnter(destino);
         return textDestino;
     }
-
     public void realizarBusqueda() {encontrarElemento(btnBuscar).click();  }
-
     public void seleccionarTodaviaNoElegiFecha() { encontrarElemento(checkbox).click(); }
-
     public void seleccionVueloMasAuto() { encontrarElemento(btnVueloMasAuto).click();}
-
     public boolean urlContains(String s) {return obtenerUrl().contains(s);}
-
+    public String seleccionarFechaIda(String dd, String mm, String aaaa) {
+        encontrarElemento(fechaIda).click();
+        return obtenerAtributoValue(fechaIda);
+    }
+    public String seleccionarFechaVuelta(String dd, String mm, String aaaa) {
+        encontrarElemento(fechaVuelta).click();
+        return obtenerAtributoValue(fechaVuelta);
+    }
+    public void aplicarFecha(){encontrarElemento(btnApicarCalendario).click();}
 }
