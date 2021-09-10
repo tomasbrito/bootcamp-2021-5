@@ -12,7 +12,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class TC_006 {
+public class tc_006 {
     WebDriver driver;
 
     @BeforeClass
