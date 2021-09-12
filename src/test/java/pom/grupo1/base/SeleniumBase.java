@@ -1,10 +1,13 @@
 package pom.grupo1.base;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.sql.Time;
+import java.time.Duration;
 import java.util.List;
 
 public class SeleniumBase {
@@ -39,6 +42,10 @@ public class SeleniumBase {
         return findElement(locator).getText();
     }
 
+    public void type(String text, WebElement element) {
+        element.sendKeys(text);
+    }
+
     public void type(String text, By locator) {
         driver.findElement(locator).sendKeys(text);
     }
@@ -61,5 +68,42 @@ public class SeleniumBase {
 
     public String getCurrentUrl() {
         return driver.getCurrentUrl();
+    }
+
+    public void waitElementsToBeMoreThan(int amount, By locator, int timeout) {
+
+        FluentWait<WebDriver> fluentWait = new FluentWait<>(driver)
+                .withTimeout(Duration.ofSeconds(timeout))
+                .pollingEvery(Duration.ofMillis(500));
+
+        try {
+            fluentWait.until(ExpectedConditions.numberOfElementsToBeMoreThan(locator, amount));
+        } catch (TimeoutException e) {
+            System.out.println("Error: waitElementsToBeMoreThan");
+        }
+    }
+
+    public void waitUrlContains(String expectedUrl, int timeout) {
+
+        WebDriverWait wait = new WebDriverWait(driver, timeout);
+        try {
+            wait.until(ExpectedConditions.urlContains(expectedUrl));
+        } catch (TimeoutException e) {
+            System.out.println("Error: waitTitleContains");
+        }
+    }
+
+    public void waitInvisibilityOf(By locator, int timeout) {
+        WebDriverWait wait = new WebDriverWait(driver, timeout);
+        try {
+            wait.until(ExpectedConditions.invisibilityOf(findElement(locator)));
+        } catch (TimeoutException e) {
+            System.out.println("Error: waitInvisibilityOf");
+        }
+    }
+
+    public void selectByValue(By locator, String value){
+        Select select = new Select(findElement(locator));
+        select.selectByValue(value);
     }
 }
