@@ -11,7 +11,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import static org.junit.Assert.assertEquals;
 
-public class TC_003 {
+public class tc_003 {
     WebDriver driver; // es la instancia a crear del navegador - firefox, chrome, safari
 
     @BeforeClass
