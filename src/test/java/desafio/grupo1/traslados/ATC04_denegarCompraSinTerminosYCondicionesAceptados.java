@@ -18,104 +18,86 @@ import static org.junit.Assert.assertTrue;
 public class ATC04_denegarCompraSinTerminosYCondicionesAceptados {
 
     WebDriver driver;
-    final String url = "https://www.viajesfalabella.cl/";
     private String aeropuerto, hotel;
     private By seccionTrasladosLocalizador;
     private WebDriverWait smallWait, bigWait;
-    // Localizadores:
-    By localizadorInputAeropuerto = By.xpath("//input[@class=\"input-tag sbox-main-focus sbox-origin sbox-primary sbox-places-first places-inline\"]");
-    By localizadorPrimeraOpcionAeropuerto = By.xpath("//div[@class='ac-wrapper -desktop -show']//li");
-    By localizadorInputHotel = By.xpath("//input[@placeholder='Ingresa un hotel o dirección adónde quieras ir']");
-    By localizadorPrimeraOpcionHotel = By.xpath("//div[@class='ac-wrapper -desktop -facet -show']//li");
-    By localizadorFechaArribo = By.xpath("//input[@class=\"input-tag sbox-checkin\"]");
-    By localizadorFechaElegida = By.xpath("//div[@class='_dpmg2--wrapper _dpmg2--onlyway _dpmg2--show-info _dpmg2--show']//div[@class='_dpmg2--month _dpmg2--o-5'][1]//span[@class='_dpmg2--date _dpmg2--available'][2]");
-    By localizadorHora = By.xpath("//div[@class=\"select-container\"]/select[@class='select-tag sbox-time-arrival']");
-    By localizadorBuscar = By.xpath("//div[@class='sbox-button']//a[@class=\"sbox-3-btn -primary -md sbox-search\"]");
-    By localizadorComprar = By.xpath("//div[@class='search-cluster ng-scope'][1]//button");
-    By localizadorMetodoDePago = By.xpath("//payment-method-selector//li[2]//label");
-    By localizadorBanco = By.xpath("//*[@id='card-selector-0']");
-    By localizadorNombreYApellidoComprobante = By.xpath("//*[@id=\"formData.paymentData.cashPayments[0].invoice.fiscalName\"]//input");
-    By localizadorDNI = By.xpath("//*[@id=\"invoice-fiscal-identification-number-0\"]");
-    By localizadorDireccion = By.xpath("//*[@id=\"formData.paymentData.cashPayments[0].invoice.fiscalAddress.street\"]//input");
-    By localizadorNombre = By.xpath("//*[@id=\"formData.travelers[0].firstName\"]//input");
-    By localizadorApellido = By.xpath("//*[@id=\"formData.travelers[0].lastName\"]//input");
-    By localizadorAerolinea = By.xpath("//*[@id=\"transfer-info-departure-airline-0\"]");
-    By localizadorNumeroDeVuelo = By.xpath("//*[@id=\"transfer-info-departure-flightNumber-0\"]");
-    By localizadorEmail = By.xpath("//input[@class='contact-email input-tag ng-untouched ng-pristine ng-invalid']");
-    By localizadorConfirmarEmail = By.xpath("//*[@id=\"checkout-content\"]//email-address//input-component[2]//input");
-    By localizadorCodigoDeArea = By.xpath("//*[@id=\"formData.contactData.phones[0].areaCode\"]//input");
-    By localizadorNumeroDeTel = By.xpath("//*[@id=\"formData.contactData.phones[0].number\"]//input");
-    By localizadorComprarTraslado = By.id("buy-button");
-    By localizadorMensaje = By.xpath("//checkbox-component//span[2]");
-
 
     @BeforeClass
-    public static void init() {
+    public static void initialiseBrowser() {
         System.out.println("Init");
         WebDriverManager.chromedriver().setup();
     }
 
     @Before
-    public void setUp() {
+    public void setupBrowser() {
         System.out.println("SetUp");
         driver = new ChromeDriver();
         driver.manage().deleteAllCookies();
         driver.manage().window().maximize();
         this.smallWait = new WebDriverWait(driver, 5);
         this.bigWait = new WebDriverWait(driver, 20);
-        this.seccionTrasladosLocalizador = By.xpath("//a[@title='Traslados']");
+        this.seccionTrasladosLocalizador = By.xpath("//body/nav/div[2]/div/div[3]/ul/li[6]/a");
         this.aeropuerto = "Aeropuerto Arturo Merino Benitez";
         this.hotel = "Santiago Marriott Hotel";
     }
 
     @Test
-    public void denegarCompraSinTerminosYCondicionesAceptados() {
+    public void atc04() {
+        final String BASE_URL = "https://www.viajesfalabella.cl/";
+        final String TRASLADOS_URL = "https://www.viajesfalabella.cl/traslados/";
+
         // Carga la página web
-        driver.get(url);
+        driver.get(BASE_URL);
         // 2) Clickea 'Traslados' en la barra de navegacion
         this.smallWait.until(ExpectedConditions.elementToBeClickable(this.seccionTrasladosLocalizador));
         driver.findElement(this.seccionTrasladosLocalizador).click();
+        By localizadorInputAeropuerto = By.xpath("//*[@id=\"sboxContainer-transferspoi\"]/div/div/div[3]/div[2]/div[2]/div/div[1]/div/div/div/input");
         this.smallWait.until(ExpectedConditions.elementToBeClickable(localizadorInputAeropuerto));
         // Valida ubicacion en 'Traslados'
         String url = driver.getCurrentUrl();
-        assertTrue(url.contains("traslados"));
+        assertTrue(url.contains(TRASLADOS_URL));
         // 3) Ingresa el aeropuerto
         driver.findElement(localizadorInputAeropuerto).sendKeys(this.aeropuerto);
         // 4) Selecciona la primer opción
-        this.smallWait.until(ExpectedConditions.elementToBeClickable(localizadorPrimeraOpcionAeropuerto));
-        driver.findElement(localizadorPrimeraOpcionAeropuerto).click();
+        By primerAeropuerto = By.xpath("//body/div[15]/div/div/ul/li[1]");
+        this.smallWait.until(ExpectedConditions.elementToBeClickable(primerAeropuerto));
+        driver.findElement(primerAeropuerto).click();
         // 5) Ingresa el hotel
-        driver.findElement(localizadorInputHotel).sendKeys(this.hotel);
-        this.smallWait.until(ExpectedConditions.elementToBeClickable(localizadorPrimeraOpcionHotel));
-        driver.findElement(localizadorPrimeraOpcionHotel).click();
+        driver.findElement(By.xpath("//*[@id=\"sboxContainer-transferspoi\"]/div/div/div[3]/div[2]/div[2]/div/div[2]/div/div/div/div/input")).sendKeys(this.hotel);
+        By primerHotel = By.xpath("//body/div[15]/div/div/ul/li[1]");
+        this.smallWait.until(ExpectedConditions.elementToBeClickable(primerHotel));
+        driver.findElement(primerHotel).click();
         // 6) Ingresa fecha en el campo 'Arribo'
-        driver.findElement(localizadorFechaArribo).click();
-        this.smallWait.until(ExpectedConditions.elementToBeClickable(localizadorFechaElegida));
-        driver.findElement(localizadorFechaElegida).click();
+        driver.findElement(By.xpath("//input[@class=\"input-tag sbox-checkin\"]")).click();
+        By fecha = By.xpath("//body/div[3]/div/div[5]/div[2]/div[4]/span[1]");
+        this.smallWait.until(ExpectedConditions.elementToBeClickable(fecha));
+        driver.findElement(fecha).click();
         // 7) Ingresa horario en el campo 'Hora'
-        Select hora = new Select(driver.findElement(localizadorHora));
+        Select hora = new Select(driver.findElement(By.xpath("//div[@class=\"select-container\"]/select[@class='select-tag sbox-time-arrival']")));
         hora.selectByIndex(30);
         // 8) Clickea boton 'Buscar'
-        driver.findElement(localizadorBuscar).click();
+        driver.findElement(By.xpath("//*[@id=\"sboxContainer-transferspoi\"]/div/div/div[3]/div[2]/div[5]/div")).click();////a[@class='sbox-3-btn -primary -md sbox-search']
         // 9) Espera a que cargue la página
-        this.bigWait.until(ExpectedConditions.elementToBeClickable(localizadorComprar));
+        By botonComprar = By.xpath("//div[@class='search-cluster ng-scope'][1]//button");////div[@class='search-cluster ng-scope'][1]//button
+        this.bigWait.until(ExpectedConditions.elementToBeClickable(botonComprar));
         // 10) Clickea boton 'Comprar'
-        driver.findElement(localizadorComprar).click();
+        driver.findElement(botonComprar).click();
         // 11) Clickea la primer opcion de pago "Transferencia Bancaria"
-        this.bigWait.until(ExpectedConditions.elementToBeClickable(localizadorMetodoDePago));
-        driver.findElement(localizadorMetodoDePago).click();
+        By metodoDePago = By.xpath("//payment-method-selector//li[2]//label");
+        this.bigWait.until(ExpectedConditions.elementToBeClickable(metodoDePago));
+        driver.findElement(metodoDePago).click();
         // 12) Selecciona la primera opción
-        Select banco = new Select(driver.findElement(localizadorBanco));
+        Select banco = new Select(driver.findElement(By.xpath("//*[@id='card-selector-0']")));
         banco.selectByIndex(1);
         // 13) Rellena campos de la seccion comprobante de pago
-        driver.findElement(localizadorNombreYApellidoComprobante).sendKeys("prueba");
-        driver.findElement(localizadorDNI).sendKeys("004340922");
-        driver.findElement(localizadorDireccion).sendKeys("prueba");
+        driver.findElement(By.xpath("//*[@id=\"formData.paymentData.cashPayments[0].invoice.fiscalName\"]//input")).sendKeys("prueba");
+        driver.findElement(By.xpath("//*[@id=\"invoice-fiscal-identification-number-0\"]")).sendKeys("004340922");
+        driver.findElement(By.xpath("//*[@id=\"formData.paymentData.cashPayments[0].invoice.fiscalAddress.street\"]//input")).sendKeys("prueba");
         // 14) Rellena campos de la seccion 'Quiénes viajan?'
-        driver.findElement(localizadorNombre).sendKeys("prueba");
-        driver.findElement(localizadorApellido).sendKeys("prueba");
+        driver.findElement(By.xpath("//*[@id=\"formData.travelers[0].firstName\"]//input")).sendKeys("prueba");
+        driver.findElement(By.xpath("//*[@id=\"formData.travelers[0].lastName\"]//input")).sendKeys("prueba");
         // 15) Rellena campos de la seccion 'Información adicional'
-        WebElement aerolinea = driver.findElement(localizadorAerolinea);
+        WebElement aerolinea = driver.findElement(By.xpath("//*[@id=\"transfer-info-departure-airline-0\"]"));
         aerolinea.sendKeys("aerolineas");
         try {
             Thread.sleep(5000);
@@ -124,22 +106,22 @@ public class ATC04_denegarCompraSinTerminosYCondicionesAceptados {
         }
         aerolinea.sendKeys(Keys.ARROW_DOWN);
         aerolinea.sendKeys(Keys.ENTER);
-        driver.findElement(localizadorNumeroDeVuelo).sendKeys("1");
+        driver.findElement(By.xpath("//*[@id=\"transfer-info-departure-flightNumber-0\"]")).sendKeys("1");
         // 16) Rellena campos de la seccion 'A dónde enviamos tus vouchers?'
-        driver.findElement(localizadorEmail).sendKeys("prueba@gmail.com");
-        driver.findElement(localizadorConfirmarEmail).sendKeys("prueba@gmail.com");
+        driver.findElement(By.xpath("//input[@class='contact-email input-tag ng-untouched ng-pristine ng-invalid']")).sendKeys("prueba@gmail.com");
+        driver.findElement(By.xpath("//*[@id=\"checkout-content\"]//email-address//input-component[2]//input")).sendKeys("prueba@gmail.com");
         // 17) Rellena campos de la seccion 'A qué número podemos llamarte?'
-        driver.findElement(localizadorCodigoDeArea).sendKeys("42");
-        driver.findElement(localizadorNumeroDeTel).sendKeys("32414");
+        driver.findElement(By.xpath("//*[@id=\"formData.contactData.phones[0].areaCode\"]//input")).sendKeys("42");
+        driver.findElement(By.xpath("//*[@id=\"formData.contactData.phones[0].number\"]//input")).sendKeys("32414");
         // 18) Clickea boton 'Comprar'
-        driver.findElement(localizadorComprarTraslado).click();
+        driver.findElement(By.id("buy-button")).click();
         // Valida mensaje de error
-        String msj = driver.findElement(localizadorMensaje).getText();
+        String msj = driver.findElement(By.xpath("//checkbox-component/span/span[2]")).getText();
         assertEquals("Acepta los términos y condiciones", msj);
     }
 
     @After
-    public void clean() {
+    public void cleanup() {
         System.out.println("Clean");
         if (driver != null)
             driver.close();
