@@ -102,22 +102,28 @@ public class VFAlojamientosPage extends SeleniumBase {
         click(aplicarFechasButtonBy);
     }
 
-    public void selectAdultsAmount() {
-        click(findElements(minusButtonsBy).get(0));
-        click(findElements(minusButtonsBy).get(2));
+    public void selectOneAdultPerRoom(int roomAmount) {
+        for (int i = 0; i < roomAmount * 2; i = i + 2) {
+            click(findElements(minusButtonsBy).get(i));
+        }
     }
 
-    public void selectChildrenAmount() {
-        click(findElements(plusButtonsBy).get(1));
-        click(findElements(plusButtonsBy).get(3));
+    public void selectOneChildPerRoom(int roomAmount) {
+
+        for (int i = 1; i < (roomAmount * 2) + 1; i = i + 2) {
+            click(findElements(plusButtonsBy).get(i));
+        }
     }
 
-    public void addRoom() {
+    public void addRoom(int roomAmount) {
         click(habitacionesInputBy);
 
         waitVisibilityOf(btnAñadirHabitacionBy, GENERAL_TIMEOUT_TIME);
 
-        click(btnAñadirHabitacionBy);
+        for (int i = 0; i < roomAmount; i++) {
+            click(btnAñadirHabitacionBy);
+
+        }
 
         waitVisibilityOf(findElements(roomBlocksBy).get(1), GENERAL_TIMEOUT_TIME);
         boolean isSecondRoomDisplayed = isDisplayed(findElements(roomBlocksBy).get(1));

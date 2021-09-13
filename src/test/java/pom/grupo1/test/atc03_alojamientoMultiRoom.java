@@ -18,6 +18,7 @@ public class atc03_alojamientoMultiRoom extends TestBase {
     final String ENTRADA_DAY = "1";
     final String SALIDA_DAY = "15";
     final String CHILDREN_AGE = "10";
+    final int ROOM_AMOUNT = 2;
 
     @Test
     public void atc03() {
@@ -29,14 +30,14 @@ public class atc03_alojamientoMultiRoom extends TestBase {
         alojamientos.selectDestino(DESTINO);
         alojamientos.selectEntradaDates(YEAR_MONTH, ENTRADA_DAY, SALIDA_DAY);
 
-        alojamientos.addRoom();
-        alojamientos.selectAdultsAmount();
-        alojamientos.selectChildrenAmount();
-        alojamientos.setChildrenAge(CHILDREN_AGE, 2);
+        alojamientos.addRoom(ROOM_AMOUNT - 1);
+        alojamientos.selectOneAdultPerRoom(ROOM_AMOUNT);
+        alojamientos.selectOneChildPerRoom(ROOM_AMOUNT);
+        alojamientos.setChildrenAge(CHILDREN_AGE, ROOM_AMOUNT);
 
         alojamientos.makeSearch();
         alojamientos.waitForResultsPage(DESTINO);
 
-        Assert.assertEquals(2, alojamientos.getRoomsAmount());
+        Assert.assertEquals(ROOM_AMOUNT, alojamientos.getRoomsAmount());
     }
 }
