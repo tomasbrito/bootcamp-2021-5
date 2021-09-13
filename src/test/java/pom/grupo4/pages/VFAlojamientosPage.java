@@ -49,7 +49,7 @@ public class VFAlojamientosPage extends SeleniumBase {
     public void ingresarDatosDestino() throws InterruptedException {
         tipear("Santiago", inputDestino);
         Thread.sleep(1000);
-        enter(inputDestino);
+        //enter(inputDestino);
     }
     public void clickearBotonHabitaciones(){
         click(botonHabitaciones);
