@@ -1,7 +1,6 @@
 # gherkin -> lenguaje de especificacion
 # sintaxis, semantica
   Feature: Busqueda en Google
-    #descricion del feature -> HU
     Como usuario web,
     Quiero buscar en Google
     Para reponder mis dudas.

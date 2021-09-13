@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import java.util.List;
 
 
 public class tc_alojamiento {
@@ -31,7 +32,7 @@ public class tc_alojamiento {
 
         //La pagina debe arrojar resultados que solamente se ubiquen en "Viña del Mar"
 
-        WebDriverWait wait=new WebDriverWait(driver,5);
+        WebDriverWait wait = new WebDriverWait(driver, 5);
 
         //Cargar HOME
         driver.get("https://www.viajesfalabella.cl/");
@@ -78,23 +79,11 @@ public class tc_alojamiento {
         //Pero al inspeccionar elementos en los resultados, solo cuento 13
 
         //Validar que resultados se encuentre en "Viña del mar"
-        //List<WebElement> ResultadosViña = driver.findElements(By.className("-eva-3-tc-gray-2"));
+        List<WebElement> resultadosViña = driver.findElements(By.xpath("//span[contains(text(),'Viña del Mar.')]"));
 
-        //String Viña = "Viña del Mar";
-
-        //Assert.assertEquals("Viña del Mar", ResultadosViña.get(0).getText());
-
-        //int count = driver.findElements(By.className("results-cluster-container")).size();
-        //System.out.println(count);
-        /* -eva-3-tc-gray-2
-        for (int i=0;i<count;i++)
-        {
-            String text = driver.findElements(By.x("")).size(i).getAttribute("x");
-            if(text.equals (""))
-            {
-                driver.findElements(By.x("")).get(i).click();
-            }
-        }*/
+        for (int i = 0; i < resultadosViña.size(); i++) {
+            Assert.assertTrue(true);
+        }
 
     }
 
@@ -103,7 +92,7 @@ public class tc_alojamiento {
 
         //La lista de habitaciones no puede estar vacia.
 
-        WebDriverWait wait=new WebDriverWait(driver,5);
+        WebDriverWait wait = new WebDriverWait(driver, 5);
 
         //Cargar HOME
         driver.get("https://www.viajesfalabella.cl/");
@@ -155,8 +144,7 @@ public class tc_alojamiento {
         Thread.sleep(4000);
 
         // Cambio de pestaña
-        for (String winHandle : driver.getWindowHandles())
-        {
+        for (String winHandle : driver.getWindowHandles()) {
             driver.switchTo().window(winHandle);
         }
         // Hacer clic en "Ver habitaciones"
@@ -168,22 +156,19 @@ public class tc_alojamiento {
         // Validar que existen habitaciones
         Boolean listaHabitaciones = driver.findElement(By.xpath("//div[@id='roompacks-container-wrapper']")).isDisplayed();
 
-        if (listaHabitaciones.booleanValue()){
+        if (listaHabitaciones.booleanValue()) {
             Assert.assertTrue(true);
         } else {
             Assert.fail();
         }
     }
 
-    }
-/*
-        @After
+    @After
     public void close() {
 
         if (driver != null) {
             driver.close();
         }
-
     }
-    */
+}
 
