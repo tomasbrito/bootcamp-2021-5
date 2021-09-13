@@ -54,9 +54,21 @@ public class SeleniumBase {
         driver.findElement(locator).click();
     }
 
+    public void click(WebElement element) {
+        element.click();
+    }
+
     public boolean isDisplayed(By locator) {
         try {
             return driver.findElement(locator).isDisplayed();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    public boolean isDisplayed(WebElement element) {
+        try {
+            return element.isDisplayed();
         } catch (NoSuchElementException e) {
             return false;
         }
@@ -102,8 +114,31 @@ public class SeleniumBase {
         }
     }
 
+    public void waitVisibilityOf(WebElement element, int timeout) {
+        WebDriverWait wait = new WebDriverWait(driver, timeout);
+        try {
+            wait.until(ExpectedConditions.invisibilityOf(element));
+        } catch (TimeoutException e) {
+            System.out.println("Error: waitInvisibilityOf");
+        }
+    }
+
+    public void waitVisibilityOf(By selector, int timeout) {
+        WebDriverWait wait = new WebDriverWait(driver, timeout);
+        try {
+            wait.until(ExpectedConditions.invisibilityOf(findElement(selector)));
+        } catch (TimeoutException e) {
+            System.out.println("Error: waitInvisibilityOf");
+        }
+    }
+
     public void selectByValue(By locator, String value){
         Select select = new Select(findElement(locator));
+        select.selectByValue(value);
+    }
+
+    public void selectByValue(WebElement element, String value){
+        Select select = new Select(element);
         select.selectByValue(value);
     }
 }
