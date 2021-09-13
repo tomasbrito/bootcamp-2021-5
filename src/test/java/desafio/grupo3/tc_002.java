@@ -9,7 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class TC_002 {
+public class tc_002 {
     WebDriver driver; // es la instancia a crear del navegador - firefox, chrome, safari
 
     @BeforeClass
@@ -63,18 +63,18 @@ public class TC_002 {
         driver.findElement(By.xpath("//*[@id=\"sboxContainer-hotels\"]/div/div/div[3]/div[2]/div[4]/div/a/em")).click();
         Thread.sleep(4000);
 
-        //Elegimos ver detalle del primer elemento----------------------------------------------------------------------------------------------------------------------------------
+        //Elegimos "ver detalle" del primer elemento----------------------------------------------------------------------------------------------------------------------------------
         driver.findElement(By.xpath("/html/body/aloha-app-root/aloha-results/div/div/div/div[2]/div[2]/aloha-list-view-container/div[2]/div[1]/aloha-cluster-container/div/div/div[2]/aloha-cluster-pricebox-container/div/div[2]/div[2]/aloha-button/button/em")).click();
         Thread.sleep(2000);
-        //aca cambia de ventana:
+        //aca cambia de ventana:--------------------------------------------------------------------------------------------------------------------------------------------------------
         for (String winHandle : driver.getWindowHandles()) {
             driver.switchTo().window(winHandle);
-            Thread.sleep(4000);
+            Thread.sleep(1000);
         }
+        //btn:ver habitaciones----------------------------------------------------------------------------------------------------------------------------------------------------------
+        driver.findElement(By.xpath("/html/body/aloha-app-root/aloha-detail/div/div[2]/div[2]/div/aloha-infobox-container/aloha-infobox-wrapper-container/div/div/div/aloha-infobox-shopping-content/div/div[2]/aloha-button/button/em")).click();
         //btn:Reservar ahora
-        driver.findElement(By.xpath("/html/body/aloha-app-root/aloha-detail/div/div[2]/div[2]/div/aloha-infobox-container/aloha-infobox-wrapper-container/div/div/div/aloha-infobox-shopping-content/div/div[2]/aloha-button/button")).click();
-        //btn: ver habitaciones
-        driver.findElement(By.xpath("//*[@id=\"roompacks-container-wrapper\"]/aloha-roompacks-container/aloha-roompacks-grid-container/div[2]/div[2]/aloha-reservation-summary-container/div/aloha-next-step-button/aloha-button/button/em")).click();
+        driver.findElement(By.xpath("//*[@id=\"roompacks-container-wrapper\"]/aloha-roompacks-container/aloha-roompacks-grid-container/div[2]/div[2]/aloha-reservation-summary-container/div/aloha-next-step-button/aloha-button/button")).click();
         Thread.sleep(4000);
         //btn:siguiente
         driver.findElement(By.xpath("//*[@id=\"pricebox-overlay\"]/div[1]/div/button/em")).click();
@@ -90,7 +90,7 @@ public class TC_002 {
         //Validamos------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         String msj = "Ingresa un valor válido";
         Assert.assertEquals(msj, driver.findElement(By.xpath("//*[@id=\"formData.paymentData.cashPayments[0].payeeIdentification.number\"]/div/div/validation-error/span")).getText());
-    }
+        }
 
     @After
     public void close(){
