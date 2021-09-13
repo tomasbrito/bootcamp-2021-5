@@ -10,6 +10,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import java.util.concurrent.TimeUnit;
 
 public class TestBase {
+
     //contiene las configuraciones basicas de los Test a ejecutar
 
     //atributos
@@ -32,5 +33,4 @@ public class TestBase {
     public void cleanup() {
         if (driver != null) driver.close();
     }
-
 }
