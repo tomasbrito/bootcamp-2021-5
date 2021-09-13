@@ -41,7 +41,7 @@ public class TCP03 {
     6.Seleccionar "Santiago de Chile, Santiago, Chile"
     7. Escribir en el campo Destino "Chile"
     8. Esperar a que cargue la lista de resultados
-    9.Seleccionar "Santiago de Chile, Santiago, Chile"
+    9. Seleccionar "Santiago de Chile, Santiago, Chile"
     10. Seleccionar el campo "Ida" y esperar que cargue un calendario
     11. Selecionar cualquier fecha disponible
     12. Esperar que cargue el calendario de "Vuelta" y seleccionar cualquier fecha disponible
@@ -69,7 +69,7 @@ public class TCP03 {
         //6
         driver.findElement(By.className("item-text")).click();
         //7
-        WebElement destino = driver.findElement(By.xpath("//*[@id=\"sboxContainer-packages\"]/div/div/div[3]/div[2]/div[2]/div[2]/div/div/div/div/input"));
+        WebElement destino = driver.findElement(By.xpath("//*[@id=\"sboxContainer-packages\"] //input[@class=\"input-tag sbox-main-focus sbox-destination sbox-secondary sbox-places-second places-inline\"]"));
         destino.click();
         destino.sendKeys("Chile");
         //9
@@ -87,14 +87,20 @@ public class TCP03 {
         WebElement destino2 = driver.findElement(By.xpath("//*[@id=\"sboxContainer-packages\"]/div/div/div[3]/div[2]/div[7]/div[2]/div[2]/div[1]/div/div/div/div/input"));
         destino2.click();
         destino2.sendKeys("Chile");
-        //17
         driver.findElement(By.className("item-text")).click();
+
+        //17
+        WebElement destino3 = driver.findElement(By.xpath("//*[@id=\"sboxContainer-packages\"] //input[@class=\"input-tag sbox-main-focus sbox-hotel-second-destination sbox-primary undefined\"]"));
+        destino3.click();
+        destino3.sendKeys("Chile");
+        driver.findElement(By.className("item-text")).click();
+
         //18
         driver.findElement(By.xpath("//div[@id='sboxContainer-packages'] //input[@placeholder='Hasta']")).click();
         //19
         driver.findElement(By.xpath("/html/body/div[2]/div/div[5]/div[3]/div[4]/span[14]/span[1]")).click();
         driver.findElement(By.xpath("/html/body/div[2]/div/div[6]/div[2]/button[2]/em")).click();
-        //20
+
         driver.findElement(By.linkText("Buscar")).click();
 
         //resultados esperados

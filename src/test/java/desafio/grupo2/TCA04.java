@@ -56,7 +56,7 @@ public class TCA04 {
     */
 
     @Test
-    public void tca04() throws InterruptedException {
+    public void tca04() throws InterruptedException { //poner nombre
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         //1
         driver.get("https://www.viajesfalabella.cl/");
@@ -83,9 +83,9 @@ public class TCA04 {
         //11
         driver.findElement(By.xpath("//label[contains(text(),'Habitaciones')]")).click();
         //12
-        driver.findElement(By.xpath("//body/div[2]/div[1]/div[1]/div[2]/div[1]/div[2]/div[1]/div[2]/div[1]/a[1]")).click();
+        driver.findElement(By.xpath("//div[@class='_pnlpk-itemBlock'] //a[@class=\"steppers-icon-left sbox-3-icon-minus\"]")).click();
         //13
-        driver.findElement(By.xpath("/html/body/div[2]/div/div[1]/div[2]/div[1]/div[2]/div[2]/div[2]/div/a[2]")).click();
+        driver.findElement(By.xpath("//div[@class='_pnlpk-itemBlock'] //div[@class=\"_pnlpk-itemRow__item _pnlpk-stepper-minors -medium-down-to-lg\"] //a[@class=\"steppers-icon-right sbox-3-icon-plus\"]")).click();
 
         //14
         WebElement dropdown = driver.findElement(By.className("select-tag"));
@@ -105,7 +105,8 @@ public class TCA04 {
         Assert.assertEquals("", driver.findElement(By.xpath("//div[@id='sboxContainer-hotels'] //input[@placeholder='Entrada']")).getText());
         Assert.assertEquals("", driver.findElement(By.xpath("//div[@id='sboxContainer-hotels'] //input[@placeholder='Salida']")).getText());
 
-        //Assert.assertEquals("1 habitación", driver.findElement(By.xpath("//*[@id=\"sboxContainer-hotels\"]/div/div/div[3]/div[2]/div[3]/div/div/div[2]/div/div/div/div[1]")).getText());
+        //Assert.assertEquals("1",driver.findElement(By.xpath("//*[@id=\"sboxContainer-hotels\"] //input[class=\"sbox-distri-tag sbox-rooms\"]")).getSize().toString());
+        //Assert.assertEquals("1",driver.findElement(By.xpath("//*[@id=\"sboxContainer-hotels\"] //input[class=\"sbox-distri-tag sbox-rooms\"]")).getSize().toString());
 
 
 

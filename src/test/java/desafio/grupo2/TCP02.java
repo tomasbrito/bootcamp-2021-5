@@ -65,7 +65,7 @@ public class TCP02 {
         //7
         driver.findElement(By.className("item-text")).click();
         //8
-        WebElement destino = driver.findElement(By.xpath("//*[@id=\"sboxContainer-packages\"]/div/div/div[3]/div[2]/div[2]/div[2]/div/div/div/div/input"));
+        WebElement destino = driver.findElement(By.xpath("//*[@id=\"sboxContainer-packages\"] //input[@class=\"input-tag sbox-main-focus sbox-destination sbox-secondary sbox-places-second places-inline\"]"));
         destino.click();
         //9
         destino.sendKeys("rosario");
