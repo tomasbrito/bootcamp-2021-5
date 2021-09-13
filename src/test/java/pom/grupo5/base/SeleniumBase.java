@@ -1,8 +1,11 @@
-package pom.grupo4.base;
+package pom.grupo5.base;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
@@ -10,10 +13,12 @@ public class SeleniumBase {
 
     //atributos
     WebDriver driver;
+    WebDriverWait wait;
 
     //Constructor
-    public SeleniumBase(WebDriver driver){
+    public SeleniumBase(WebDriver driver, WebDriverWait wait){
         this.driver = driver;
+        this.wait = wait;
     }
 
     //Metodos envolver la tecnologia Selenium -> Wrapper
@@ -27,6 +32,10 @@ public class SeleniumBase {
 
     public String obtenerTexto(By localizador){
         return encontrarElemento(localizador).getText();
+    }
+
+    public String obtenerAtributoValue(By localizador){
+        return encontrarElemento(localizador).getAttribute("value");
     }
 
     public void tipear(String inputText, By locator){
@@ -49,8 +58,19 @@ public class SeleniumBase {
         driver.get(url);
     }
 
-    public String getUrl(){
+    public void ingresarTexto(By localizador,String s){
+        driver.findElement(localizador).sendKeys(s);
+    }
+    public void ingresarEnter(By localizador){
+        driver.findElement(localizador).sendKeys(Keys.ENTER);
+    }
+   // public void waitUrlContains(String s){ wait.until(ExpectedConditions.urlContains(s));}
+    public String obtenerUrl(){
+       return driver.getCurrentUrl();
+    }
 
-        return driver.getCurrentUrl();
+
+    public void esperarUrlContains(String s) {
+        wait.until(ExpectedConditions.urlContains(s));
     }
 }

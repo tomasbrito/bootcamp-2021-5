@@ -1,4 +1,4 @@
-package pom.grupo4.base;
+package pom.grupo2.base;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.After;
@@ -9,11 +9,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.concurrent.TimeUnit;
 
+//configuraciones basicos de los test
 public class TestBase {
 
-    //contiene las configuraciones basicas de los Test a ejecutar
-
-    //atributos
     protected WebDriver driver;
 
     @BeforeClass
@@ -31,6 +29,8 @@ public class TestBase {
 
     @After
     public void cleanup() {
-        if (driver != null) driver.close();
+            if (driver != null)
+                driver.close();
     }
+
 }
