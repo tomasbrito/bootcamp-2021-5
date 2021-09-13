@@ -70,4 +70,7 @@ public class SeleniumBase {
     public void waitUrlContains(String s) {
         wait.until(ExpectedConditions.urlContains(s));
     }
+    public void waitElementClickable(By locator) {
+        wait.until(ExpectedConditions.elementToBeClickable(locator));
+    }
 }

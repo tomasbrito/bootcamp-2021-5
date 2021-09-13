@@ -9,39 +9,84 @@ import pom.grupo5.base.SeleniumBase;
 import java.util.List;
 
 public class VFHomePaquetes extends SeleniumBase {
-    final static String Ida = "ida";
+    public final static String Ida = "ida";
     final static String Vuelta = "vuelta";
+    final static String Destino1Desde = "desdeDestino1";
+    final static String Destino2Desde = "desdeDestino2";
+    final static String Destino1Hasta = "hastaDestino1";
+    final static String Destino2Hasta = "hastaDestino2";
+
     By origen = By.xpath("//input[contains(@class,'sbox-places-first sbox-origin-container')]");
     By destino = By.xpath("//input[contains(@class,'sbox-places-second')]");
+    By segundoDestino = By.xpath("//input[contains(@class,'sbox-hotel-second-destination')]");
     By localizadorOpcion = By.xpath("//body/div[11]/div[1]/div[1]/ul[1]/li[1]");
     By btnBuscar = By.xpath("//a[contains(@class, 'sbox-search')]");
     By checkbox = By.xpath("//*[contains(@class, 'switch-container')]");
     By fechaIda = By.xpath("//input[@placeholder='Ida']");
+    By fechaDesdeDestino1 = By.xpath("//input[contains(@class,'sbox-hotel-first-checkin-date')]");
+    By fechaDesdeDestino2 = By.xpath("//input[contains(@class,'sbox-hotel-second-checkin-date')]");
     By fechaVuelta = By.xpath("//input[@placeholder='Vuelta']");
+    By fechaHastaDestino1 = By.xpath("//input[contains(@class,'sbox-hotel-first-checkout-date')]");
+    By fechaHastaDestino2 = By.xpath("//input[contains(@class,'sbox-hotel-second-checkout-date')]");
     By btnVueloMasAuto = By.xpath("//input[@value='va']");
+    By btnDosAlojamientos = By.xpath("//input[@value='vhh']");
     By btnNextCalendario = By.xpath("//body/div[5]/div[1]/div[2]/div[2]");
     By btnApicarCalendario = By.xpath("/html/body/div[7]/div/div[6]/div[2]/button[2]");
+    By btnApicarCalendarioDosAlojamientos = By.xpath("//body/div[2]/div[1]/div[6]/div[2]/button[2]");
+    By btnVerResumen = By.xpath("//body[1]/div[13]/div[1]/div[3]/div[1]/div[2]/div[1]/div[2]");
+    By resumen = By.xpath("//*[@id=\"pkg-wizard\"]/div/div[4]");
+    By headerResumen = By.xpath("//body/div[@id='pkg-wizard']/div[1]/div[4]/div[1]/div[1]/div[1]");
+
 
     public VFHomePaquetes(WebDriver driver, WebDriverWait wait) {
         super(driver,wait);
     }
+
     public String ingresarCiudadOrigen(String ciudad) {
         setText(origen, ciudad);
         String textOrigen = findElement(localizadorOpcion).getText();
         setKeyEnter(origen);
         return textOrigen;
     }
-    public String ingresarCiudadDestino(String ciudad) {
-        setText(destino, ciudad);
-        String textDestino = findElement(localizadorOpcion).getText();
-        setKeyEnter(destino);
+
+    public String ingresarCiudadDestino(String ciudad, int nDestino) {
+        String textDestino ="";
+        switch (nDestino){
+            case 1:
+                setText(destino, ciudad);
+                textDestino = findElement(localizadorOpcion).getText();
+                setKeyEnter(destino);
+            case 2:
+                setText(segundoDestino, ciudad);
+                textDestino = findElement(localizadorOpcion).getText();
+                setKeyEnter(segundoDestino);
+        }
         return textDestino;
     }
+
     public void realizarBusqueda() {
-        findElement(btnBuscar).click();  }
-    public void seleccionarTodaviaNoElegiFecha() { findElement(checkbox).click(); }
-    public void seleccionVueloMasAuto() { findElement(btnVueloMasAuto).click();}
+        findElement(btnBuscar).click();
+    }
+
+    public void seleccionarBtn(String elemento) {
+        switch (elemento){
+            case "TodaviaNoElegiFecha": findElement(checkbox).click();
+                break;
+            case "VueloMasAuto": findElement(btnVueloMasAuto).click();
+                break;
+            case "DosAlojamientos": findElement(btnDosAlojamientos).click();
+                break;
+            case "VerResumen":
+                waitElementClickable(btnVerResumen);
+                findElement(btnVerResumen).click();
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + elemento);
+        }
+    }
+
     public boolean urlContains(String s) {return getUrl().contains(s);}
+
     public String seleccionarFecha(String tipoFecha,String dd, String mm, String aaaa) {
         switch (tipoFecha){
             case Ida:
@@ -50,12 +95,35 @@ public class VFHomePaquetes extends SeleniumBase {
                 return getAttributeValue(fechaIda);
             case Vuelta:
                 selectDate(2,dd,mm,aaaa);
-                aplicarFecha();
+                aplicarFecha(btnApicarCalendario);
                 return getAttributeValue(fechaVuelta);
+            case Destino1Desde:
+                return getAttributeValue(fechaDesdeDestino1);
+            case Destino2Desde:
+                return getAttributeValue(fechaDesdeDestino2);
+            case Destino1Hasta:
+                findElement(fechaHastaDestino1).click();
+                selectDate(4,dd,mm,aaaa);
+                aplicarFecha(btnApicarCalendarioDosAlojamientos);
+            case Destino2Hasta:
+                return getAttributeValue(fechaHastaDestino2);
             default:
                 throw new IllegalStateException("Unexpected value: " + tipoFecha);
         }
     }
+
+    public String seleccionarFechaVuelta(String dd, String mm, String aaaa) {
+        findElement(fechaVuelta).click();
+        return getAttributeValue(fechaVuelta);
+    }
+
+    public String getResumenText(){
+       return findElement(resumen).findElement(headerResumen).getText();
+    }
+    private void aplicarFecha(By locator){
+        findElement(locator).click();
+    }
+
     private void selectDate(int nCalendar, String dd, String mm, String aaaa) {
         By actualM = By.xpath("//div[contains(@class,'_dpmg2--month-active')]");
         List<WebElement> actualMonth = findElements(actualM);
@@ -73,11 +141,6 @@ public class VFHomePaquetes extends SeleniumBase {
             }
         }
     }
-    public String seleccionarFechaVuelta(String dd, String mm, String aaaa) {
-        findElement(fechaVuelta).click();
-        return getAttributeValue(fechaVuelta);
-    }
-    public void aplicarFecha(){
-        findElement(btnApicarCalendario).click();
-    }
+
+
 }
