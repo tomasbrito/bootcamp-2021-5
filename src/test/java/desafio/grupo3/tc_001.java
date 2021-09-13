@@ -9,7 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class TC_001 {
+public class tc_001 {
     WebDriver driver; // es la instancia a crear del navegador - firefox, chrome, safari
 
     @BeforeClass
@@ -28,7 +28,7 @@ public class TC_001 {
 
     @Test
     public void tc001() throws InterruptedException {
-        System.out.println("---Reserva alojamiento---");
+        System.out.println("---Reserva alojamiento---");//Happy path - Alojamiento
         driver.get("https://www.viajesfalabella.cl/hoteles/");
 
         //Seleccionar el destino---------------------------------------------------------------------------------------------------------------------------
@@ -77,18 +77,19 @@ public class TC_001 {
         //aca cambia de ventana:
         for (String winHandle : driver.getWindowHandles()) {
             driver.switchTo().window(winHandle);
-            Thread.sleep(4000);
+            Thread.sleep(1000);
         }
         //btn: ver habitaciones
         driver.findElement(By.xpath("/html/body/aloha-app-root/aloha-detail/div/div[2]/div[2]/div/aloha-infobox-container/aloha-infobox-wrapper-container/div/div/div/aloha-infobox-shopping-content/div/div[2]/aloha-button/button")).click();
         //obtenemos precio por noche y descuento
-        //int precioXNoche = Integer.parseInt(driver.findElement(By.xpath("//*[@id=\"roompacks-container-wrapper\"]/aloha-roompacks-container/aloha-roompacks-grid-container/div[2]/div[1]/aloha-roompacks-group-container/div[2]/aloha-roompack-container/div[2]/aloha-roompack-price-container/aloha-summary-price/div/span[2]")).getText());
         String precioXNoche = driver.findElement(By.xpath("//*[@id=\"roompacks-container-wrapper\"]/aloha-roompacks-container/aloha-roompacks-grid-container/div[2]/div[1]/aloha-roompacks-group-container/div[2]/aloha-roompack-container/div[2]/aloha-roompack-price-container/aloha-summary-price/div/span[2]")).getText();
         //btn: ver habitaciones
         driver.findElement(By.xpath("//*[@id=\"roompacks-container-wrapper\"]/aloha-roompacks-container/aloha-roompacks-grid-container/div[2]/div[2]/aloha-reservation-summary-container/div/aloha-next-step-button/aloha-button/button/em")).click();
         Thread.sleep(4000);
-        //capturo la ubicacion
-        String ubicacionHotel = driver.findElement(By.xpath("/html/body/aloha-app-root/aloha-detail/div/aloha-re-search-container/aloha-re-search/div/div[1]/div/ul/li[2]/span/span")).getText();
+        String ubicacionHotel = driver.findElement(By.xpath("/html/body/aloha-app-root/aloha-detail/div/aloha-re-search-container/aloha-re-search/div/div[1]/div/ul/li[2]/span/span")).getText();//capturo la ubicacion
+        //btn:Reservar ahora
+        driver.findElement(By.xpath("//*[@id=\"roompacks-container-wrapper\"]/aloha-roompacks-container/aloha-roompacks-grid-container/div[2]/div[2]/aloha-reservation-summary-container/div/aloha-next-step-button/aloha-button/button")).click();
+        Thread.sleep(4000);
         //btn:siguiente
         driver.findElement(By.xpath("//*[@id=\"pricebox-overlay\"]/div[1]/div/button/em")).click();
         Thread.sleep(5000);
@@ -96,13 +97,14 @@ public class TC_001 {
         //VALIDAMOS ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         String msjPersonas = "Alojamiento para 4 personas";
         double totalEsperado = Double.parseDouble(precioXNoche) * 15;
-        double totalActual = Double.parseDouble(driver.findElement(By.xpath("//*[@id=\"chk-total-price\"]/div[2]/money/div/span[3]")).getText());
-
+        String totalA = driver.findElement(By.xpath("//*[@id=\"chk-total-price\"]/div[2]/money/div/span[3]")).getText();
+        double totalActual = Double.parseDouble(totalA);
         String cantPersonas = driver.findElement(By.xpath("//*[@id=\"pricebox-list-detail\"]/ul/div[1]/div[1]/p/span")).getText();
-        /*
-        if (totalEsperado == totalActual &&  cantPersonas ==){
 
-        }*/
+        if (totalEsperado == totalActual && cantPersonas.equals(msjPersonas)  ){
+            Assert.assertTrue(true);
+        }else
+            Assert.fail();
 
     }
 
