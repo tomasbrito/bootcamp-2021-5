@@ -11,6 +11,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.List;
 
 
 public class Paquetes {
@@ -189,14 +190,15 @@ public class Paquetes {
         driver.get("https://www.viajesfalabella.cl/");
 
         // 2- Seleccionar paquete “Montevideo saliendo de Santiago de Chile” de los paquetes sugeridos en la página.
-        WebElement paqueteMVD = driver.findElement(By.xpath("//body/app-root[1]/div[1]/app-offers[1]/div[1]/div[2]/div[2]/div[1]/swipper[1]/div[1]/div[1]/div[2]"));
+        List<WebElement> ofertaPaquete = driver.findElements(By.xpath("//a[contains(@class,'offer-href')]"));
+        WebElement paqueteMVD = ofertaPaquete.get(6);
         paqueteMVD.click();
         wait.until(ExpectedConditions.urlContains("trip/accommodations/results/"));
         Assert.assertTrue(driver.getCurrentUrl().contains("trip/accommodations/results/"));
 
         WebElement fechaIda = driver.findElement(By.xpath("//input[@placeholder='Ida']"));
         WebElement fechaVuelta = driver.findElement(By.xpath("//input[@placeholder='Vuelta']"));
-        WebElement habitaciones = driver.findElement(By.xpath("//body/aloha-app-root[1]/aloha-results[1]/div[1]/div[1]/div[2]/div[1]/aloha-old-research[1]/div[1]/div[1]/div[1]/div[3]/div[2]/div[5]/div[1]/div[1]"));
+        WebElement habitaciones = driver.findElement(By.xpath("//div[contains(@class,'sbox-ui-rooms-container sbox-passengers-picker-container')]"));
 
         // 4- Seleccionar fecha desde 6 dic 2021
         fechaIda.click();
@@ -213,8 +215,11 @@ public class Paquetes {
         habitaciones.click();
         // 8- Seleccionar 1 adulto.
         WebElement personas = driver.findElement(By.xpath("//body/div[4]/div[1]/div[1]/div[2]/div[1]/div[2]/div[1]/div[2]/div[1]/input[1]"));
-        driver.findElement(By.xpath("//body/div[4]/div[1]/div[1]/div[2]/div[1]/div[2]/div[1]/div[2]/div[1]/a[1]")).click();
-        driver.findElement(By.xpath("//body/div[4]/div[1]/div[2]/a[1]")).click();
+        By adultos = By.xpath("//*[@class='_pnlpk-itemRow'][3]");
+        driver.findElement(adultos).findElement(By.xpath("//a[@class='steppers-icon-left sbox-3-icon-minus']")).click();
+        By aplicarHabitaciones = By.xpath("//body[1]/div[4]/div[1]/div[2]/a[1]");
+//        driver.findElement(By.xpath("//body/div[4]/div[1]/div[1]/div[2]/div[1]/div[2]/div[1]/div[2]/div[1]/a[1]")).click();
+        driver.findElement(aplicarHabitaciones).click();
         Assert.assertEquals("1",personas.getAttribute("value"));
 
         driver.findElement(By.xpath("//*[@class='sbox-button-container']")).click();
