@@ -151,8 +151,6 @@ public class tc_alojamiento {
         WebElement VerHabitaciones = driver.findElement(By.xpath("//em[contains(text(),'Ver habitaciones')]"));
         VerHabitaciones.click();
 
-        // Esperar a que se redirija hacia la lista de habitaciones
-
         // Validar que existen habitaciones
         Boolean listaHabitaciones = driver.findElement(By.xpath("//div[@id='roompacks-container-wrapper']")).isDisplayed();
 

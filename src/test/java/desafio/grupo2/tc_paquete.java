@@ -1,10 +1,7 @@
 package desafio.grupo2;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -66,8 +63,15 @@ public class tc_paquete {
         WebElement ordenarPor = driver.findElement(By.xpath("//select[@id='jr-eva-select']"));
         Select s = new Select(ordenarPor);
         s.selectByVisibleText("Menor puntaje");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@class='eva-3-rating -md -bad']")));
 
         //VALIDACION -> Deben mostrarse primero los puntajes de menor valor
+
+        String valor = driver.findElement(By.xpath("//span[@class='eva-3-rating -md -bad']")).getText();
+        Double valorMenor = Double.parseDouble (valor);
+
+        //GUARDAR ELEMENTOS EN ARRAY Y ORDENARLO
+
     }
 
     @Test
