@@ -1,8 +1,12 @@
 package pom.grupo3.base;
 
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
@@ -10,10 +14,12 @@ public class SeleniumBase {
 
     //atributos
     WebDriver driver;
+    WebDriverWait wait;
 
     //Constructor
     public SeleniumBase(WebDriver driver){
         this.driver = driver;
+        this.wait = new WebDriverWait(driver,10);
     }
 
     //Metodos envolver la tecnologia Selenium -> Wrapper
@@ -33,8 +39,14 @@ public class SeleniumBase {
         driver.findElement(locator).sendKeys(inputText);
     }
 
-    public void click(By locator){
+    public void enter(By locator) { driver.findElement(locator).sendKeys(Keys.ENTER);  }
+
+    public void click(By  locator){
         driver.findElement(locator).click();
+    }
+
+    public void exwait (By locator){
+        wait.until(ExpectedConditions.elementToBeClickable(locator));
     }
 
     public Boolean estaDesplegado(By locator) {
@@ -50,5 +62,5 @@ public class SeleniumBase {
     }
 
 
-
 }
+
