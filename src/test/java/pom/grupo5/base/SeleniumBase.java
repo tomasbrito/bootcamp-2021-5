@@ -73,4 +73,8 @@ public class SeleniumBase {
     public void esperarUrlContains(String s) {
         wait.until(ExpectedConditions.urlContains(s));
     }
+
+    public void waitForElementAndClick(By localizador){
+        wait.until(ExpectedConditions.elementToBeClickable(localizador)).click();
+    }
 }
