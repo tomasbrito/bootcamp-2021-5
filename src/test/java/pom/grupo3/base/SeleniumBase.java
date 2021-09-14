@@ -49,6 +49,8 @@ public class SeleniumBase {
         driver.get(url);
     }
 
-
+    public String getCurrentUrl() {
+        return driver.getCurrentUrl();
+    }
 
 }
