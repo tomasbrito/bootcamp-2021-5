@@ -14,39 +14,31 @@ public class SeleniumBase {
 
     //atributos
     WebDriver driver;
-    WebDriverWait wait;
 
     //Constructor
-    public SeleniumBase(WebDriver driver){
+    public SeleniumBase(WebDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver,10);
     }
 
     //Metodos envolver la tecnologia Selenium -> Wrapper
-    public WebElement encontrarElemento(By localizador){
+    public WebElement encontrarElemento(By localizador) {
         return driver.findElement(localizador);
     }
 
-    public List<WebElement> encontrarElementos (By localizador){
+    public List<WebElement> encontrarElementos(By localizador) {
         return driver.findElements(localizador);
     }
 
-    public String obtenerTexto(By localizador){
+    public String obtenerTexto(By localizador) {
         return encontrarElemento(localizador).getText();
     }
 
-    public void tipear(String inputText, By locator){
+    public void tipear(String inputText, By locator) {
         driver.findElement(locator).sendKeys(inputText);
     }
 
-    public void enter(By locator) { driver.findElement(locator).sendKeys(Keys.ENTER);  }
-
-    public void click(By  locator){
+    public void click(By locator) {
         driver.findElement(locator).click();
-    }
-
-    public void exwait (By locator){
-        wait.until(ExpectedConditions.elementToBeClickable(locator));
     }
 
     public Boolean estaDesplegado(By locator) {
@@ -57,16 +49,11 @@ public class SeleniumBase {
         }
     }
 
-    public void goToUrl(String url){
+    public void goToUrl(String url) {
         driver.get(url);
     }
 
-<<<<<<< HEAD
-/*    public String getCurrentUrl() {
-        return driver.getCurrentUrl();
-    }*/
-=======
->>>>>>> a5a1307696fb753bbbace1311fdcf110e9c0690b
+a5a1307696fb753bbbace1311fdcf110e9c0690b
 
 }
 
