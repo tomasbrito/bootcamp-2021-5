@@ -6,7 +6,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import pom.grupo1.base.SeleniumBase;
 
 import java.util.ArrayList;
@@ -18,7 +17,7 @@ public class VFAlojamientosPage extends SeleniumBase {
         super(driver);
     }
 
-    final int GENERAL_TIMEOUT_TIME = 3;
+    final int GENERAL_TIMEOUT_TIME = 5;
 
     //test1
     By btnBuscarBy = By.linkText("Buscar");
@@ -45,6 +44,16 @@ public class VFAlojamientosPage extends SeleniumBase {
     By roomBlocksBy = By.xpath("//div[@class=\"_pnlpk-itemBlock\"]");
     By btnHabitacionesAplicar = By.linkText("Aplicar");
     By accommodationRoomBlocksBy = By.className("stepper__room");
+    //test4
+    By hotelsListBy = By.className("results-cluster-container");
+    By hotelNameBy = By.xpath("//span[contains(@class,\"accommodation-name\")]");
+    By btnVerDetalleBy = By.tagName("button");
+    By hotelPageTitleBy = By.xpath("//div[@class=\"main-info\"]//h1");
+    By btnReservarAhoraBy = By.xpath("//em[text()=\"Reservar ahora\"]");
+    By roomDetailsFetchingBy = By.xpath("//aloha-infobox-skeleton");
+    By btnSiguienteBy = By.xpath("//em[text()=\"Siguiente\"]");
+    By checkoutSpinnerBy = By.xpath("//div[@id=\"loading-init\"]");
+    By checkoutMsgBy = By.tagName("h2");
 
 
     public void makeSearch() {
@@ -171,5 +180,46 @@ public class VFAlojamientosPage extends SeleniumBase {
 
     public int getRoomsAmount() {
         return findElements(accommodationRoomBlocksBy).size();
+    }
+
+    public String getFirstHotelName() {
+        List<WebElement> hotelsList = findElements(hotelsListBy);
+        return getText(findChildElement(hotelNameBy, hotelsList.get(0)));
+    }
+
+    public void selectFirstHotel() {
+        List<WebElement> hotelsList = findElements(hotelsListBy);
+        click(findChildElement(btnVerDetalleBy, hotelsList.get(0)));
+    }
+
+    public void switchToHotelTab(String expectedUrl) {
+        switchTab(1);
+        waitUrlContains(expectedUrl, GENERAL_TIMEOUT_TIME);
+        Assert.assertTrue(getCurrentUrl().contains(expectedUrl));
+    }
+
+    public String getHotelTitle() {
+        return getText(hotelPageTitleBy);
+    }
+
+    public void bookFirstVacant(String expectedUrl) {
+        waitInvisibilityOf(roomDetailsFetchingBy, GENERAL_TIMEOUT_TIME);
+
+        waitElementToBeClickable(btnReservarAhoraBy, GENERAL_TIMEOUT_TIME);
+        click(btnReservarAhoraBy);
+
+        waitUrlContains(expectedUrl, GENERAL_TIMEOUT_TIME);
+
+    }
+
+    public void reviewAndConfirmHotel(String expectedMsg, String expectedUrl) {
+        waitPresenceOfElementLocated(btnSiguienteBy, GENERAL_TIMEOUT_TIME);
+        click(btnSiguienteBy);
+
+        waitUrlContains(expectedUrl, GENERAL_TIMEOUT_TIME);
+        waitInvisibilityOf(checkoutSpinnerBy, GENERAL_TIMEOUT_TIME);
+
+        waitPresenceOfElementLocated(checkoutMsgBy, GENERAL_TIMEOUT_TIME);
+        Assert.assertEquals(expectedMsg, getText(checkoutMsgBy) );
     }
 }
