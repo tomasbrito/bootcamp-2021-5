@@ -1,5 +1,6 @@
 package pom.grupo5.pages;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -15,7 +16,10 @@ public class VFHomePaquetes extends SeleniumBase {
     final static String Destino2Desde = "desdeDestino2";
     final static String Destino1Hasta = "hastaDestino1";
     final static String Destino2Hasta = "hastaDestino2";
+    final static String IdaCalendarioLateral = "idaCalendarioLateral";
+    final static String VueltaCalendarioLateral = "vueltaCalendarioLateral";
 
+    // Localizadores
     By origen = By.xpath("//input[contains(@class,'sbox-places-first sbox-origin-container')]");
     By destino = By.xpath("//input[contains(@class,'sbox-places-second')]");
     By segundoDestino = By.xpath("//input[contains(@class,'sbox-hotel-second-destination')]");
@@ -35,7 +39,9 @@ public class VFHomePaquetes extends SeleniumBase {
     By btnVerResumen = By.xpath("//body[1]/div[13]/div[1]/div[3]/div[1]/div[2]/div[1]/div[2]");
     By resumen = By.xpath("//*[@id=\"pkg-wizard\"]/div/div[4]");
     By headerResumen = By.xpath("//body/div[@id='pkg-wizard']/div[1]/div[4]/div[1]/div[1]/div[1]");
+    By ofertasPaquete = By.xpath("//a[contains(@class,'offer-href')]");
 
+    //  Keyword Driven
 
     public VFHomePaquetes(WebDriver driver, WebDriverWait wait) {
         super(driver,wait);
@@ -111,12 +117,24 @@ public class VFHomePaquetes extends SeleniumBase {
                 return getAttributeValue(fechaDesdeDestino2);
             case Destino2Hasta:
                 return getAttributeValue(fechaHastaDestino2);
+            case IdaCalendarioLateral:
+                findElement(fechaIda).click();
+                selectDate(4,dd,mm,aaaa);
+                return getAttributeValue(fechaIda);
+            case VueltaCalendarioLateral:
+                selectDate(4,dd,mm,aaaa);
+                aplicarFecha(4);
+                return getAttributeValue(fechaVuelta);
             default:
                 throw new IllegalStateException("Unexpected value: " + tipoFecha);
         }
     }
 
     public void seleccionarOferta(int i) {
+        WebElement paquete = findElements(ofertasPaquete).get(i);
+        paquete.click();
+        waitUrlContains("trip/accommodations/results/");
+        Assert.assertTrue(urlContains("trip/accommodations/results/"));
     }
 
     public String getResumenText(){
