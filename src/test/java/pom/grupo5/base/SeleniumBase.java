@@ -16,30 +16,29 @@ public class SeleniumBase {
     WebDriverWait wait;
 
     //Constructor
-    public SeleniumBase(WebDriver driver, WebDriverWait wait){
+    public SeleniumBase(WebDriver driver, WebDriverWait wait) {
         this.driver = driver;
         this.wait = wait;
     }
 
     //Metodos envolver la tecnologia Selenium -> Wrapper
-    public WebElement findElement(By localizador){
+    public WebElement findElement(By localizador) {
         return driver.findElement(localizador);
     }
 
-    public List<WebElement> findElements(By localizador){
+    public List<WebElement> findElements(By localizador) {
         return driver.findElements(localizador);
     }
 
-    public String getText(By localizador){
+    public String getText(By localizador) {
         return findElement(localizador).getText();
     }
 
-    public String getAttributeValue(By localizador){
+    public String getAttributeValue(By localizador) {
         return findElement(localizador).getAttribute("value");
     }
 
-
-    public void click(By locator){
+    public void click(By locator) {
         driver.findElement(locator).click();
     }
 
@@ -51,25 +50,27 @@ public class SeleniumBase {
         }
     }
 
-    public void goToUrl(String url){
+    public void goToUrl(String url) {
         driver.get(url);
     }
 
-    public void setText(By localizador, String s){
+    public void setText(By localizador, String s) {
         driver.findElement(localizador).sendKeys(s);
     }
-    public void setKeyEnter(By localizador){
+
+    public void setKeyEnter(By localizador) {
         driver.findElement(localizador).sendKeys(Keys.ENTER);
     }
-   // public void waitUrlContains(String s){ wait.until(ExpectedConditions.urlContains(s));}
-    public String getUrl(){
-       return driver.getCurrentUrl();
-    }
 
+    public String getUrl() {
+        return driver.getCurrentUrl();
+
+    }
 
     public void waitUrlContains(String s) {
         wait.until(ExpectedConditions.urlContains(s));
     }
+
     public void waitElementClickable(By locator) {
         wait.until(ExpectedConditions.elementToBeClickable(locator));
     }

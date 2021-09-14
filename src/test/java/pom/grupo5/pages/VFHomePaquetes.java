@@ -31,8 +31,7 @@ public class VFHomePaquetes extends SeleniumBase {
     By btnVueloMasAuto = By.xpath("//input[@value='va']");
     By btnDosAlojamientos = By.xpath("//input[@value='vhh']");
     By btnNextCalendario = By.xpath("//body/div[5]/div[1]/div[2]/div[2]");
-    By btnApicarCalendario = By.xpath("/html/body/div[7]/div/div[6]/div[2]/button[2]");
-    By btnApicarCalendarioDosAlojamientos = By.xpath("//body/div[2]/div[1]/div[6]/div[2]/button[2]");
+    By btnApicarCalendario = By.xpath("//button[contains(@class,'_dpmg2--desktopFooter-button-apply')]");
     By btnVerResumen = By.xpath("//body[1]/div[13]/div[1]/div[3]/div[1]/div[2]/div[1]/div[2]");
     By resumen = By.xpath("//*[@id=\"pkg-wizard\"]/div/div[4]");
     By headerResumen = By.xpath("//body/div[@id='pkg-wizard']/div[1]/div[4]/div[1]/div[1]/div[1]");
@@ -56,10 +55,14 @@ public class VFHomePaquetes extends SeleniumBase {
                 setText(destino, ciudad);
                 textDestino = findElement(localizadorOpcion).getText();
                 setKeyEnter(destino);
+            break;
             case 2:
                 setText(segundoDestino, ciudad);
                 textDestino = findElement(localizadorOpcion).getText();
                 setKeyEnter(segundoDestino);
+            break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + nDestino);
         }
         return textDestino;
     }
@@ -95,7 +98,7 @@ public class VFHomePaquetes extends SeleniumBase {
                 return getAttributeValue(fechaIda);
             case Vuelta:
                 selectDate(2,dd,mm,aaaa);
-                aplicarFecha(btnApicarCalendario);
+                aplicarFecha(4);
                 return getAttributeValue(fechaVuelta);
             case Destino1Desde:
                 return getAttributeValue(fechaDesdeDestino1);
@@ -103,8 +106,9 @@ public class VFHomePaquetes extends SeleniumBase {
                 return getAttributeValue(fechaDesdeDestino2);
             case Destino1Hasta:
                 findElement(fechaHastaDestino1).click();
-                selectDate(4,dd,mm,aaaa);
-                aplicarFecha(btnApicarCalendarioDosAlojamientos);
+                selectDate(1,dd,mm,aaaa);
+                aplicarFecha(1);
+                return getAttributeValue(fechaDesdeDestino2);
             case Destino2Hasta:
                 return getAttributeValue(fechaHastaDestino2);
             default:
@@ -112,16 +116,13 @@ public class VFHomePaquetes extends SeleniumBase {
         }
     }
 
-    public String seleccionarFechaVuelta(String dd, String mm, String aaaa) {
-        findElement(fechaVuelta).click();
-        return getAttributeValue(fechaVuelta);
-    }
 
     public String getResumenText(){
        return findElement(resumen).findElement(headerResumen).getText();
     }
-    private void aplicarFecha(By locator){
-        findElement(locator).click();
+    private void aplicarFecha(int indice){
+        List<WebElement> btnApply = findElements(btnApicarCalendario);
+        btnApply.get(indice).click();
     }
 
     private void selectDate(int nCalendar, String dd, String mm, String aaaa) {
