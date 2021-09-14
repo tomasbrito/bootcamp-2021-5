@@ -50,6 +50,10 @@ public class SeleniumBase {
         driver.findElement(locator).sendKeys(text);
     }
 
+    public void type(Keys key, By locator) {
+        driver.findElement(locator).sendKeys(key);
+    }
+
     public void click(By locator) {
         driver.findElement(locator).click();
     }
@@ -130,6 +134,23 @@ public class SeleniumBase {
         } catch (TimeoutException e) {
             System.out.println("Error: waitInvisibilityOf");
         }
+    }
+
+    public void waitToBeClickable(By selector, int timeout) {
+        WebDriverWait wait = new WebDriverWait(driver, timeout);
+        try {
+            wait.until(ExpectedConditions.elementToBeClickable(selector));
+        } catch (TimeoutException e) {
+            System.out.println("Error: waitToBeClickable");
+        }
+    }
+
+    public void goBack() {
+        driver.navigate().back();
+    }
+
+    public void acceptAlert() {
+        driver.switchTo().alert().accept();
     }
 
     public void selectByValue(By locator, String value){

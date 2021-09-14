@@ -13,8 +13,10 @@ public class VFHomePage extends SeleniumBase {
 
     final String BASE_URL = "https://www.viajesfalabella.cl/";
     final String ALOJAMIENTOS_URL = "https://www.viajesfalabella.cl/hoteles/";
+    final String VUELOS_URL = "https://www.viajesfalabella.cl/vuelos/";
 
     By btnAlojamientos = By.xpath("//a[@product=\"HOTELS\"]");
+    By btnVuelos = By.xpath("//a[@product=\"FLIGHTS\"]");
 
     public void goToHome(){
         goToUrl(BASE_URL);
@@ -24,6 +26,11 @@ public class VFHomePage extends SeleniumBase {
     public void goToAlojamientos(){
         click(btnAlojamientos);
         Assert.assertEquals(ALOJAMIENTOS_URL, getCurrentUrl());
+    }
+
+    public void goToVuelos(){
+        click(btnVuelos);
+        Assert.assertEquals(VUELOS_URL, getCurrentUrl());
     }
 
 }
