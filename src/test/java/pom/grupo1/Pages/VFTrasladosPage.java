@@ -1,10 +1,12 @@
 package pom.grupo1.Pages;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import pom.grupo1.base.SeleniumBase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class VFTrasladosPage extends SeleniumBase {
@@ -25,6 +27,8 @@ public class VFTrasladosPage extends SeleniumBase {
     By arriboInput = By.xpath("//input[@placeholder=\"Arribo\"]");
     By spanTagBy = By.tagName("span");
     By aplicarFechasButtonBy = By.xpath("(//button/*[text()=\"Aplicar\"])[2]");
+    By resultContainerBy = By.xpath("//div[@class=\"results-cluster-container\"]");
+    By pointsDescriptionListBy = By.xpath("//div[@class=\"points-description\"]/ul/li");
 
 
 //    //test1
@@ -32,7 +36,6 @@ public class VFTrasladosPage extends SeleniumBase {
 //    By fechaTooltipsBy = By.className("validation-msg");
 //    //test2
 //    By noHeDecididoFechaCheckboxBy = By.xpath("//label[text()=\"Todavía no he decidido la fecha\"]");
-//    By resultContainerBy = By.xpath("//div[@class=\"results-cluster-container\"]");
 //    By currencySelectBy = By.xpath("//select[@name=\"currency\"]");
 //    By pricesListBy = By.className("landing-inline");
 //    By loadingSpinnerBy = By.id("fullLoader");
@@ -105,6 +108,18 @@ public class VFTrasladosPage extends SeleniumBase {
         }
 
         click(aplicarFechasButtonBy);
+    }
+
+    public void waitForResultsPage(String expectedUrl) {
+        waitUrlContains(expectedUrl, GENERAL_TIMEOUT_TIME);
+        waitElementsToBeMoreThan(0, resultContainerBy, GENERAL_TIMEOUT_TIME);
+    }
+
+    public boolean isTrasladoInfoCorrect(String airportName, String hotelName) {
+        List<WebElement> infoList = findElements(pointsDescriptionListBy);
+
+        return getText(infoList.get(0)).contains(airportName) &&
+                getText(infoList.get(2)).contains(hotelName);
     }
 
 

@@ -18,11 +18,13 @@ public class atc01_busquedaTrasladoSimple extends TestBase {
     final String YEAR_MONTH = "2021-10"; // aaaa-mm
     final String ARRIBO_DAY = "1";
     final String PARTIDA_DAY = "15";
-    final String CHILDREN_AGE = "10";
-    final int ROOM_AMOUNT = 2;
+    final String RESULTADO_BUSQUEDA_URL = "www.viajesfalabella.cl/transfer/shopping/#!/search/roundtrip/airport/";
+    final String AIRPORT_NAME = "Aeropuerto Arturo Merino Benitez";
+    final String HOTEL_NAME = "Hotel W Santiago";
+
 
     @Test
-    public void atc03() {
+    public void atc01() {
         VFHomePage home = new VFHomePage(driver);
         home.goToHome();
         home.goToTraslados();
@@ -33,16 +35,9 @@ public class atc01_busquedaTrasladoSimple extends TestBase {
         traslados.selectHasta(HOTEL);
 
         traslados.selectDates(YEAR_MONTH, ARRIBO_DAY, PARTIDA_DAY);
+        traslados.makeSearch();
+        traslados.waitForResultsPage(RESULTADO_BUSQUEDA_URL);
 
-//
-//        alojamientos.addRoom(ROOM_AMOUNT - 1);
-//        alojamientos.selectOneAdultPerRoom(ROOM_AMOUNT);
-//        alojamientos.selectOneChildPerRoom(ROOM_AMOUNT);
-//        alojamientos.setChildrenAge(CHILDREN_AGE, ROOM_AMOUNT);
-//
-//        alojamientos.makeSearch();
-//        alojamientos.waitForResultsPage(DESTINO);
-//
-//        Assert.assertEquals(ROOM_AMOUNT, alojamientos.getRoomsAmount());
+        assertTrue(traslados.isTrasladoInfoCorrect(AIRPORT_NAME, HOTEL_NAME));
     }
 }
