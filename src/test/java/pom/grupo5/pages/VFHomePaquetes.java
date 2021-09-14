@@ -116,6 +116,8 @@ public class VFHomePaquetes extends SeleniumBase {
         }
     }
 
+    public void seleccionarOferta(int i) {
+    }
 
     public String getResumenText(){
        return findElement(resumen).findElement(headerResumen).getText();
@@ -142,6 +144,7 @@ public class VFHomePaquetes extends SeleniumBase {
             }
         }
     }
+
 
 
 }
