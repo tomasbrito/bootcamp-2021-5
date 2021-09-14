@@ -11,7 +11,7 @@ public class atc09_restablecerFechaDeIda extends TestBase {
     final String valorEsperado = "26";
 
     @Test
-    public void atc09(){
+    public void atc09() throws InterruptedException {
         System.out.println("atc 09");
         VFAlojamientosPage alojamientosPage = new VFAlojamientosPage(driver);
         alojamientosPage.goToUrl(BASE_URL);

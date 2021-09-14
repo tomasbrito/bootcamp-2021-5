@@ -11,7 +11,7 @@ public class atc01_prohibirBusquedaDePaquete extends TestBase {
     final String entradaMsg = "Ingresa una fecha de partida.";
     final String salidaMsg = "Ingresa una fecha de regreso.";
 
-/*
+
     @Test
     public void atc01() throws InterruptedException {
         System.out.println("atc01");
@@ -24,8 +24,7 @@ public class atc01_prohibirBusquedaDePaquete extends TestBase {
         Assert.assertEquals(entradaMsg,homePage.obtenerMensajeFechaEntrada());
         Assert.assertEquals(salidaMsg,homePage.obtenerMensajeFechaSalida());
 
-
     }
-    */
+
 
 }
