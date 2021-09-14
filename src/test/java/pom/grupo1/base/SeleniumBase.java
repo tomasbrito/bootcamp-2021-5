@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.sql.Time;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SeleniumBase {
@@ -101,7 +102,16 @@ public class SeleniumBase {
         try {
             wait.until(ExpectedConditions.urlContains(expectedUrl));
         } catch (TimeoutException e) {
-            System.out.println("Error: waitTitleContains");
+            System.out.println("Error waitUrlContains: " + expectedUrl);
+        }
+    }
+
+    public void waitInvisibilityOf(WebElement element, int timeout) {
+        WebDriverWait wait = new WebDriverWait(driver, timeout);
+        try {
+            wait.until(ExpectedConditions.invisibilityOf(element));
+        } catch (TimeoutException e) {
+            System.out.println("Error: waitInvisibilityOf");
         }
     }
 
@@ -132,6 +142,33 @@ public class SeleniumBase {
         }
     }
 
+    public void waitElementToBeClickable(By selector, int timeout) {
+        WebDriverWait wait = new WebDriverWait(driver, timeout);
+        try {
+            wait.until(ExpectedConditions.elementToBeClickable(findElement(selector)));
+        } catch (TimeoutException e) {
+            System.out.println("Error: waitElementToBeClickable");
+        }
+    }
+
+    public void waitElementToBeClickable(WebElement element, int timeout) {
+        WebDriverWait wait = new WebDriverWait(driver, timeout);
+        try {
+            wait.until(ExpectedConditions.elementToBeClickable(element));
+        } catch (TimeoutException e) {
+            System.out.println("Error: waitElementToBeClickable");
+        }
+    }
+
+    public void waitPresenceOfElementLocated(By selector, int timeout) {
+        WebDriverWait wait = new WebDriverWait(driver, timeout);
+        try {
+            wait.until(ExpectedConditions.presenceOfElementLocated(selector));
+        } catch (TimeoutException e) {
+            System.out.println("Error: waitPresenceOfElementLocated");
+        }
+    }
+
     public void selectByValue(By locator, String value){
         Select select = new Select(findElement(locator));
         select.selectByValue(value);
@@ -140,5 +177,10 @@ public class SeleniumBase {
     public void selectByValue(WebElement element, String value){
         Select select = new Select(element);
         select.selectByValue(value);
+    }
+
+    public void switchTab(int tabNum){
+        ArrayList<String> browserTabs = new ArrayList<>(driver.getWindowHandles());
+        driver.switchTo().window(browserTabs.get(tabNum));
     }
 }
