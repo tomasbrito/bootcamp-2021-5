@@ -21,18 +21,19 @@ public class VFHomePage extends SeleniumBase {
     By formulario = By.className("sbox-dates");
     By tooltip = By.className("validation-msg");
 
+    //keyword driven
+
     public void irAlojamiento(){
         click(btnAlojamiento);
-        click(btnBuscar);
     }
 
     public String obtenerMensajeFechaEntrada(){
-        List<WebElement> validacion= encontrarElemento(formulario).findElements(tooltip);
+        List<WebElement> validacion= findElement(formulario).findElements(tooltip);
         return validacion.get(0).getText();
     }
 
     public String obtenerMensajeFechaSalida(){
-        List<WebElement> validacion=encontrarElemento(formulario).findElements(tooltip);
+        List<WebElement> validacion=findElement(formulario).findElements(tooltip);
         return validacion.get(1).getText();
     }
 

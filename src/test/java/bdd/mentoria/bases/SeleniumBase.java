@@ -1,11 +1,9 @@
-package pom.grupo5.base;
+package bdd.mentoria.bases;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
@@ -13,12 +11,10 @@ public class SeleniumBase {
 
     //atributos
     WebDriver driver;
-    WebDriverWait wait;
 
     //Constructor
-    public SeleniumBase(WebDriver driver, WebDriverWait wait){
+    public SeleniumBase(WebDriver driver){
         this.driver = driver;
-        this.wait = wait;
     }
 
     //Metodos envolver la tecnologia Selenium -> Wrapper
@@ -26,7 +22,7 @@ public class SeleniumBase {
         return driver.findElement(localizador);
     }
 
-    public List<WebElement> findElements(By localizador){
+    public List<WebElement> findElements (By localizador){
         return driver.findElements(localizador);
     }
 
@@ -34,10 +30,12 @@ public class SeleniumBase {
         return findElement(localizador).getText();
     }
 
-    public String getAttributeValue(By localizador){
-        return findElement(localizador).getAttribute("value");
+    public void type(String inputText, By locator){
+        driver.findElement(locator).sendKeys(inputText);
     }
-
+    public void typeKey(Keys key, By locator){
+        driver.findElement(locator).sendKeys(key);
+    }
 
     public void click(By locator){
         driver.findElement(locator).click();
@@ -55,23 +53,19 @@ public class SeleniumBase {
         driver.get(url);
     }
 
-    public void setText(By localizador, String s){
-        driver.findElement(localizador).sendKeys(s);
+    public WebDriver getDriver(){
+        return driver;
     }
-    public void setKeyEnter(By localizador){
-        driver.findElement(localizador).sendKeys(Keys.ENTER);
-    }
-   // public void waitUrlContains(String s){ wait.until(ExpectedConditions.urlContains(s));}
-    public String getUrl(){
+
+    public String getCurrentUrl(){
        return driver.getCurrentUrl();
     }
 
-
-    public void waitUrlContains(String s) {
-        wait.until(ExpectedConditions.urlContains(s));
+    public String getCurrentTitle(){
+        return driver.getTitle();
     }
 
-    public void waitForElementAndClick(By localizador){
-        wait.until(ExpectedConditions.elementToBeClickable(localizador)).click();
-    }
+
+
+
 }
