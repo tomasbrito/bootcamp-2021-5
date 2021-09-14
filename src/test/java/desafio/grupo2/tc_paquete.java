@@ -10,6 +10,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import java.util.Arrays;
+import java.util.List;
 
 public class tc_paquete {
 
@@ -69,6 +71,7 @@ public class tc_paquete {
 
         String valor = driver.findElement(By.xpath("//span[@class='eva-3-rating -md -bad']")).getText();
         Double valorMenor = Double.parseDouble (valor);
+        System.out.println(valorMenor);
 
         //GUARDAR ELEMENTOS EN ARRAY Y ORDENARLO
 
@@ -76,6 +79,8 @@ public class tc_paquete {
 
     @Test
     public void TC_P04 () throws InterruptedException{
+
+        WebDriverWait wait=new WebDriverWait(driver,3);
 
         //1.Cargar HOME
         driver.get("https://www.viajesfalabella.cl/");
@@ -111,6 +116,8 @@ public class tc_paquete {
         Fechas.click();
 
         //10.Desplazarse a Noviembre
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='_dpmg2--controls-next']")));
+        List <WebElement> btnNext = driver.findElements(By.xpath("//div[@class='_dpmg2--controls-next']"));
 
         //11. Seleccionar 10 de Noviembre
 

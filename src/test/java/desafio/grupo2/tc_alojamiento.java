@@ -75,9 +75,6 @@ public class tc_alojamiento {
         //Esperar a que cargue la pagina los resultados
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("results-cluster-container")));
 
-        //DUDA * al usar el xpath //div[@class='results-cluster-container'] en chropath para conocer la cantidad de elementos me tira 18
-        //Pero al inspeccionar elementos en los resultados, solo cuento 13
-
         //Validar que resultados se encuentre en "Viña del mar"
         List<WebElement> resultadosViña = driver.findElements(By.xpath("//span[contains(text(),'Viña del Mar.')]"));
 
