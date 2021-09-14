@@ -17,7 +17,7 @@ public class VFHomeTraslados extends SeleniumBase {
     By btnSearch = By.xpath("//em[contains(text(),'Buscar')]");
     By btnSumarAdultos = By.xpath("//body/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/a[2]");
     //Keyword Driven
-    public void enterDataFieldFrom(By fieldFrom, String place, By placeSelected, String placeComplete){
+  /*  public void enterDataFieldFrom(By fieldFrom, String place, By placeSelected, String placeComplete){
         click(fieldFrom);
         tipear(place, fieldFrom);
         waitForElementAndClick(placeSelected);
@@ -52,4 +52,6 @@ public class VFHomeTraslados extends SeleniumBase {
         Assert.assertEquals(quant,obtenerAtributoValue(fieldPassengers));
         click(btnSearch);
     }
+    */
+
 }

@@ -17,9 +17,10 @@ public class tc002_busquedaSimple extends TestBase {
     By localizadorTo = By.xpath("//span[contains(text(),'Cecil Hotel, South Main Street, Los Ángeles, Calif')]");
     By FechaElegida = By.xpath("//body/div[3]/div[1]/div[5]/div[1]/div[4]/span[21]/span[1]");
 
+    /*
     @Test
     public void test02() {
-        VFHomeTraslados trasladosPage = new VFHomeTraslados(driver, wait);
+     VFHomeTraslados trasladosPage = new VFHomeTraslados(driver, wait);
         trasladosPage.goToUrl(TRASLADOS_URL);
 
         trasladosPage.enterDataFieldFrom(fieldFrom,"Cali",localizadorFrom,placeFromComplete);
@@ -28,5 +29,5 @@ public class tc002_busquedaSimple extends TestBase {
         trasladosPage.enterPassengersAdultsAndSearch(2);
         trasladosPage.esperarUrlContains("search");
 
-    }
+    }*/
 }

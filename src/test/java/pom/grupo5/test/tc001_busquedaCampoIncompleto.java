@@ -15,6 +15,7 @@ public class tc001_busquedaCampoIncompleto extends TestBase{
     By FechaElegida = By.xpath("//body/div[3]/div[1]/div[5]/div[1]/div[4]/span[21]/span[1]");
     By localizadorAlerta = By.xpath("//span[contains(text(),'Ingresa un origen.')]");
 
+    /*
     @Test
     public void atc01(){
         VFHomeTraslados trasladosPage = new VFHomeTraslados(driver, wait);
@@ -24,5 +25,5 @@ public class tc001_busquedaCampoIncompleto extends TestBase{
 
         Assert.assertEquals("https://www.viajesfalabella.cl/traslados",driver.getCurrentUrl());
         Assert.assertEquals("Ingresa un origen.", driver.findElement(localizadorAlerta).getText());
-    }
+    }*/
 }
