@@ -18,7 +18,7 @@ public class tc009_busquedaPaqueteSinFecha extends TestBase {
         Assert.assertEquals("Isla de Pascua, Valparaíso, Chile",homePagePaquetes.ingresarCiudadDestino(destino));
         homePagePaquetes.seleccionarTodaviaNoElegiFecha();
         homePagePaquetes.realizarBusqueda();
-        homePagePaquetes.esperarUrlContains("paquetes-a-isla-de-pascua-desde-buenos-aires");
+        homePagePaquetes.waitUrlContains("paquetes-a-isla-de-pascua-desde-buenos-aires");
         Assert.assertTrue(homePagePaquetes.urlContains("paquetes-a-isla-de-pascua-desde-buenos-aires"));
     }
 

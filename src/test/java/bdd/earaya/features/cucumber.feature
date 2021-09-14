@@ -1,10 +1,11 @@
 # gherkin -> lenguaje de especificacion
 # sintaxis, semantica
   Feature: Busqueda en Google
-    #descricion del feature -> HU
     Como usuario web,
     Quiero buscar en Google
     Para reponder mis dudas.
+
+  @test
   Scenario: Busqueda Simple con barra Google
     Given estoy en un navegador con la pagina inicial de google
     When introduzco la palabra "arbol" en la barra

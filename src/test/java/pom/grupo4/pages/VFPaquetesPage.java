@@ -28,6 +28,8 @@ public class VFPaquetesPage extends SeleniumBase {
     By textoErrorRegreso = By.xpath("//span[contains(text(),'Ingresa una fecha de regreso.')]");
 
     //Keyword Driven
+
+    /*
     public void irAPaquetes(){
         click(btnAlojamiento);
     }
@@ -53,5 +55,5 @@ public class VFPaquetesPage extends SeleniumBase {
         return encontrarElemento(textoErrorRegreso).getText();
     }
 
-
+*/
 }
