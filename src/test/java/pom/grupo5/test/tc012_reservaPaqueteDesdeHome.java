@@ -18,10 +18,12 @@ public class tc012_reservaPaqueteDesdeHome extends TestBase {
         Assert.assertEquals("Jue, 16 dic 2021",homePagePaquetes.seleccionarFecha("vueltaCalendarioLateral","16","12","2021"));
         Thread.sleep(2000);
         homePagePaquetes.seleccionarCantidadDeAdultos(1);
-        Thread.sleep(2000);
+        homePagePaquetes.realizarBusqueda();
+        //Thread.sleep(2000);
         homePagePaquetes.seleccionarAlojamientoSugerido();
         Thread.sleep(2000);
         String urlNuevaPestaña = homePagePaquetes.getUrl();
+        System.out.println(urlNuevaPestaña);
         //cleanup();
         //Cambio Pestaña
         //setupBrowser();

@@ -172,16 +172,17 @@ public class VFHomePaquetes extends SeleniumBase {
         findElement(habitaciones).click();
         int clicks;
         if(cant < 2){
-            clicks = 1;
-            for (int i=0; i< clicks; i++) findElement(adultos).findElement(btnMenosPersonas).click();
+             findElement(btnMenosPersonas).click();
         }else if(cant > 2){
-            clicks = cant -2;
+            //clicks = cant -2;
+           // for (int i=0; i< clicks; i++)
             // Falta implementar para sumar + de 2 personas
         }
         findElement(aplicarHabitaciones).click();
     }
 
     public void seleccionarAlojamientoSugerido() {
-        findElement(alojamientoPaquete).findElement(alojamientoSiguiente).click();
+        waitElementClickable(alojamientoSiguiente);
+        findElement(alojamientoSiguiente).click();
     }
 }
