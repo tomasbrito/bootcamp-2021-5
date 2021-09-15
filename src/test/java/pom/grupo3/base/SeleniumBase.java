@@ -61,6 +61,12 @@ public class SeleniumBase {
         driver.get(url);
     }
 
+    public void cambiarANuevaPestaña(){
+        wait.until(ExpectedConditions.numberOfWindowsToBe(2));
+        for(String winHandle : driver.getWindowHandles()){
+            driver.switchTo().window(winHandle);
+        }
+    }
 
 }
 

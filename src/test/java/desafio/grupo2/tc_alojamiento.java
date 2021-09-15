@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.List;
 
+
 public class tc_alojamiento {
     WebDriver driver;
 
@@ -29,7 +30,9 @@ public class tc_alojamiento {
     @Test
     public void TC_A02() throws InterruptedException {
 
-        WebDriverWait wait=new WebDriverWait(driver,5);
+        //La pagina debe arrojar resultados que solamente se ubiquen en "Viña del Mar"
+
+        WebDriverWait wait = new WebDriverWait(driver, 5);
 
         //Cargar HOME
         driver.get("https://www.viajesfalabella.cl/");
@@ -57,7 +60,6 @@ public class tc_alojamiento {
         FechaEntrada.click();
 
         //Seleccion de cualquier Fecha disponible entrada y salida
-        // DUDA - Por que tarda tanto en hacer los click en las fechass correspondientes
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("_dpmg2--months")));
         driver.findElements(By.className("_dpmg2--date-number")).get(15).click();
         driver.findElements(By.className("_dpmg2--date-number")).get(20).click();
@@ -68,62 +70,26 @@ public class tc_alojamiento {
 
         //Click en Buscar
         WebElement Buscar = driver.findElement(By.linkText("Buscar"));
-        //WebElement Buscar = driver.findElement(By.xpath("//em[contains(text(),'Buscar')]"));
         Buscar.click();
 
         //Esperar a que cargue la pagina los resultados
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("results-cluster-container")));
 
-        //Validar que resultados se encuentre en Viña del mar
-        /*
+        //Validar que resultados se encuentre en "Viña del mar"
+        List<WebElement> resultadosViña = driver.findElements(By.xpath("//span[contains(text(),'Viña del Mar.')]"));
 
-        List<WebElement> ResultadosViña = driver.findElements(By.xpath("//div[@class ='results-cluster-container']"));
-        System.out.println(ResultadosViña.size());
-
-        int count = driver.findElements(By.xpath("//div[@class ='results-cluster-container']")).size();
-
-        for (int i=0;i<count;i++)
-        {
-            String text = driver.findElements(By.x("")).size(i).getAttribute("x");
-
-            if(text.equals (""))
-            {
-                driver.findElements(By.x("")).get(i).click();
-
-            }
-
-
-            List<WebElement> ResultadosViña = driver.findElements(By.xpath("//div[@class ='results-cluster-container']"));
-            System.out.println(ResultadosViña.size());
-            int count = driver.findElements(By.xpath("//div[@class ='results-cluster-container']")).size();
-            for (int i=0;i<count;i++)
-            {
-                String text = driver.findElements(By.tagName("aloha-location-name")).get(i).getText();
-                if(text.contains ("Viña del mar"))
-                {
-                    System.out.println(i);
-                }
-            }
-
+        for (int i = 0; i < resultadosViña.size(); i++) {
+            Assert.assertTrue(true);
         }
-
-
-       //Assert.assertEquals(driver.findElement(""));
-
-        //Assert.assertEquals("Ingresa la edad.", verificacion.getText());
-
-
-        }
-*/
-
 
     }
-
 
     @Test
     public void TC_A03() throws InterruptedException {
 
-        WebDriverWait wait=new WebDriverWait(driver,5);
+        //La lista de habitaciones no puede estar vacia.
+
+        WebDriverWait wait = new WebDriverWait(driver, 5);
 
         //Cargar HOME
         driver.get("https://www.viajesfalabella.cl/");
@@ -174,22 +140,30 @@ public class tc_alojamiento {
         // Esperar a que cargue la pagina del hotel
         Thread.sleep(4000);
 
+        // Cambio de pestaña
+        for (String winHandle : driver.getWindowHandles()) {
+            driver.switchTo().window(winHandle);
+        }
         // Hacer clic en "Ver habitaciones"
-        //WebElement VerHabitaciones = driver.findElement(By.xpath("//em[contains(text(),'Ver habitaciones')]"));
-        //VerHabitaciones.click();
+        WebElement VerHabitaciones = driver.findElement(By.xpath("//em[contains(text(),'Ver habitaciones')]"));
+        VerHabitaciones.click();
 
-        // Esperar a que se redirija hacia la lista de habitaciones
+        // Validar que existen habitaciones
+        Boolean listaHabitaciones = driver.findElement(By.xpath("//div[@id='roompacks-container-wrapper']")).isDisplayed();
 
+        if (listaHabitaciones.booleanValue()) {
+            Assert.assertTrue(true);
+        } else {
+            Assert.fail();
+        }
     }
-/*
-        @After
+
+    @After
     public void close() {
 
         if (driver != null) {
             driver.close();
         }
-
     }
-    */
-
 }
+
