@@ -40,9 +40,13 @@ public class VFHomePaquetes extends SeleniumBase {
     By resumen = By.xpath("//*[@id=\"pkg-wizard\"]/div/div[4]");
     By headerResumen = By.xpath("//body/div[@id='pkg-wizard']/div[1]/div[4]/div[1]/div[1]/div[1]");
     By ofertasPaquete = By.xpath("//a[contains(@class,'offer-href')]");
-
+    By habitaciones = By.xpath("//div[contains(@class,'sbox-ui-rooms-container sbox-passengers-picker-container')]");
+    By adultos = By.xpath("//*[@class='_pnlpk-itemRow'][3]");
+    By btnMenosPersonas = By.xpath("//a[@class='steppers-icon-left sbox-3-icon-minus']");
+    By aplicarHabitaciones = By.xpath("//body[1]/div[4]/div[1]/div[2]/a[1]");
+    By alojamientoPaquete = By.xpath("//body/aloha-app-root[1]/aloha-results[1]/div[1]/div[1]/div[2]/div[2]/div[2]/aloha-list-view-container[1]/div[2]/aloha-cluster-container[1]/div[1]");
+    By alojamientoSiguiente = By.xpath("//*[@class='eva-3-btn -md -primary -eva-3-fwidth']");
     //  Keyword Driven
-
     public VFHomePaquetes(WebDriver driver, WebDriverWait wait) {
         super(driver,wait);
     }
@@ -164,5 +168,20 @@ public class VFHomePaquetes extends SeleniumBase {
     }
 
 
+    public void seleccionarCantidadDeAdultos(int cant) {
+        findElement(habitaciones).click();
+        int clicks;
+        if(cant < 2){
+            clicks = 1;
+            for (int i=0; i< clicks; i++) findElement(adultos).findElement(btnMenosPersonas).click();
+        }else if(cant > 2){
+            clicks = cant -2;
+            // Falta implementar para sumar + de 2 personas
+        }
+        findElement(aplicarHabitaciones).click();
+    }
 
+    public void seleccionarAlojamientoSugerido() {
+        findElement(alojamientoPaquete).findElement(alojamientoSiguiente).click();
+    }
 }
