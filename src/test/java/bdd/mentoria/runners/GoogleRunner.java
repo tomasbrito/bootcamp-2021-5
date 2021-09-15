@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
         features = {"src/test/java/bdd/mentoria/features"},
         glue = {"bdd.mentoria.steps","bdd.mentoria.bases"},
         plugin = {"pretty"},
-        tags = "@testfalso"
+        tags = "@test"
 )
 public class GoogleRunner {
 }
