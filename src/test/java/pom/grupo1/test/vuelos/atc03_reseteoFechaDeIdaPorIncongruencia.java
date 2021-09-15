@@ -1,4 +1,4 @@
-package pom.grupo1.test;
+package pom.grupo1.test.vuelos;
 
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
@@ -8,7 +8,7 @@ import pom.grupo1.base.TestBase;
 
 import static org.junit.Assert.assertEquals;
 
-public class atc03Vuelos_reseteoFechaDeIdaPorIncongruencia extends TestBase {
+public class atc03_reseteoFechaDeIdaPorIncongruencia extends TestBase {
 
     @Test
     public void atc03() {
