@@ -12,7 +12,7 @@ public class atc012_filtrarAlquileresVacacionales extends TestBase {
     final String valorEsperado = "26";
 
     @Test
-    public void atc09() throws InterruptedException {
+    public void atc012() throws InterruptedException {
         System.out.println("atc 012");
         VFAlojamientosPage alojamientosPage = new VFAlojamientosPage(driver);
         alojamientosPage.goToUrl(BASE_URL);
