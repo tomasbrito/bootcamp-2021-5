@@ -1,32 +1,39 @@
-package pom.grupo1.base;
+package bdd.earaya.bases;
 
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-
 import java.util.concurrent.TimeUnit;
 
-public class TestBase {
-    protected WebDriver driver;
+public class AppHook {
 
-    @BeforeClass
+    //atributos
+    protected static WebDriver driver;
+
+
+    @Before(order = 0)
     public static void initialiseBrowser() {
         WebDriverManager.chromedriver().setup();
     }
 
-    @Before
+    @Before(order = 1)
     public void setupBrowser() {
         driver = new ChromeDriver();
         driver.manage().deleteAllCookies();
         driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
     @After
     public void cleanup() {
         if (driver != null) driver.close();
+    }
+
+    public static WebDriver getDriver(){
+        return driver;
     }
 
 }

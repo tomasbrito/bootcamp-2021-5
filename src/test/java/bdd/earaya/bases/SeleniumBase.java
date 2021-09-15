@@ -1,12 +1,9 @@
-package pom.grupo3.base;
-
+package bdd.earaya.bases;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
@@ -14,42 +11,37 @@ public class SeleniumBase {
 
     //atributos
     WebDriver driver;
-    WebDriverWait wait;
 
     //Constructor
     public SeleniumBase(WebDriver driver){
         this.driver = driver;
-        this.wait = new WebDriverWait(driver,10);
     }
 
     //Metodos envolver la tecnologia Selenium -> Wrapper
-    public WebElement encontrarElemento(By localizador){
+    public WebElement findElement(By localizador){
         return driver.findElement(localizador);
     }
 
-    public List<WebElement> encontrarElementos (By localizador){
+    public List<WebElement> findElements (By localizador){
         return driver.findElements(localizador);
     }
 
-    public String obtenerTexto(By localizador){
-        return encontrarElemento(localizador).getText();
+    public String getText(By localizador){
+        return findElement(localizador).getText();
     }
 
-    public void tipear(String inputText, By locator){
+    public void type(String inputText, By locator){
         driver.findElement(locator).sendKeys(inputText);
     }
+    public void typeKey(Keys key, By locator){
+        driver.findElement(locator).sendKeys(key);
+    }
 
-    public void enter(By locator) { driver.findElement(locator).sendKeys(Keys.ENTER);  }
-
-    public void click(By  locator){
+    public void click(By locator){
         driver.findElement(locator).click();
     }
 
-    public void exwait (By locator){
-        wait.until(ExpectedConditions.elementToBeClickable(locator));
-    }
-
-    public Boolean estaDesplegado(By locator) {
+    public Boolean isDisplayed(By locator) {
         try {
             return driver.findElement(locator).isDisplayed();
         } catch (org.openqa.selenium.NoSuchElementException e) {
@@ -61,6 +53,11 @@ public class SeleniumBase {
         driver.get(url);
     }
 
+    public WebDriver getDriver(){
+        return driver;
+    }
+
+
+
 
 }
-

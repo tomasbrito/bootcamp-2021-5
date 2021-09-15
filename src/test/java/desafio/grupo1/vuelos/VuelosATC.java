@@ -217,6 +217,10 @@ public class VuelosATC {
     }
 
     private void irASeccionCompra() {
+        // Declaro localizadores para poder aprovechar después que se espere hasta que sean clickeables
+        By inputOrigenLocalizador = By.xpath("//input[@class='input-tag sbox-main-focus sbox-bind-reference-flight-roundtrip-origin-input sbox-primary sbox-places-first places-inline']");
+        By botonSiguiente = By.xpath("//*[@id=\"clusters\"]/span[1]/div/span/reduced-cluster/div/div/div/div/div[2]/span[3]/div/span");
+
         this.irASeccionVuelos();
         this.smallWait.until(ExpectedConditions.elementToBeClickable(localizadorInputOrigen));
         // Valida ubicacion en la seccion 'Vuelos'

@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.sql.Time;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SeleniumBase {
@@ -20,6 +21,10 @@ public class SeleniumBase {
 
     public WebElement findElement(By locator) {
         return driver.findElement(locator);
+    }
+
+    public WebElement getElementFromAList(int index, List<WebElement> list) {
+        return list.get(index);
     }
 
     public List<WebElement> findElements(By locator) {
@@ -42,12 +47,29 @@ public class SeleniumBase {
         return findElement(locator).getText();
     }
 
+    public String getValue(By locator) {
+        return findElement(locator).getAttribute("value");
+    }
+
+    public WebElement findElementByItsTextFromAList(String text, By locator) {
+        List<WebElement> list = findElements(locator);
+        for (WebElement element:list) {
+            if (element.getText().equals(text))
+                return element;
+        }
+        return null;
+    }
+
     public void type(String text, WebElement element) {
         element.sendKeys(text);
     }
 
     public void type(String text, By locator) {
         driver.findElement(locator).sendKeys(text);
+    }
+
+    public void type(Keys key, By locator) {
+        driver.findElement(locator).sendKeys(key);
     }
 
     public void click(By locator) {
@@ -101,7 +123,16 @@ public class SeleniumBase {
         try {
             wait.until(ExpectedConditions.urlContains(expectedUrl));
         } catch (TimeoutException e) {
-            System.out.println("Error: waitTitleContains");
+            System.out.println("Error waitUrlContains: " + expectedUrl);
+        }
+    }
+
+    public void waitInvisibilityOf(WebElement element, int timeout) {
+        WebDriverWait wait = new WebDriverWait(driver, timeout);
+        try {
+            wait.until(ExpectedConditions.invisibilityOf(element));
+        } catch (TimeoutException e) {
+            System.out.println("Error: waitInvisibilityOf");
         }
     }
 
@@ -132,6 +163,43 @@ public class SeleniumBase {
         }
     }
 
+    public void goBack() {
+        driver.navigate().back();
+    }
+
+    public void acceptAlert() {
+        driver.switchTo().alert().accept();
+    }
+
+        public void waitElementToBeClickable(By selector, int timeout) {
+        WebDriverWait wait = new WebDriverWait(driver, timeout);
+        try {
+            wait.until(ExpectedConditions.elementToBeClickable(selector));
+        } catch (TimeoutException e) {
+            System.out.println("Error: waitElementToBeClickable");
+        }
+    }
+
+    /*public void waitElementToBeClickable(WebElement element, int timeout) {
+        WebDriverWait wait = new WebDriverWait(driver, timeout);
+        try {
+            wait.until(ExpectedConditions.elementToBeClickable(element));
+        } catch (TimeoutException e) {
+            System.out.println("Error: waitElementToBeClickable");
+        }
+    }
+
+     */
+
+    public void waitPresenceOfElementLocated(By selector, int timeout) {
+        WebDriverWait wait = new WebDriverWait(driver, timeout);
+        try {
+            wait.until(ExpectedConditions.presenceOfElementLocated(selector));
+        } catch (TimeoutException e) {
+            System.out.println("Error: waitPresenceOfElementLocated");
+        }
+    }
+
     public void selectByValue(By locator, String value){
         Select select = new Select(findElement(locator));
         select.selectByValue(value);
@@ -141,4 +209,10 @@ public class SeleniumBase {
         Select select = new Select(element);
         select.selectByValue(value);
     }
+
+    public void switchTab(int tabNum){
+        ArrayList<String> browserTabs = new ArrayList<>(driver.getWindowHandles());
+        driver.switchTo().window(browserTabs.get(tabNum));
+    }
+
 }
