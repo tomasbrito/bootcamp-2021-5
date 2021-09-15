@@ -1,4 +1,4 @@
-package pom.grupo1.test;
+package pom.grupo1.test.alojamientos;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -11,17 +11,20 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class atc03_alojamientoMultiRoom extends TestBase {
+public class atc04_confirmacionDePago extends TestBase {
 
     final String DESTINO = "santiago";
     final String YEAR_MONTH = "2021-10"; // aaaa-mm
     final String ENTRADA_DAY = "1";
     final String SALIDA_DAY = "15";
-    final String CHILDREN_AGE = "10";
-    final int ROOM_AMOUNT = 2;
+    final String HOTEL_DETAILS_URL = "www.viajesfalabella.cl/accommodations/detail";
+    final String TRIPS_URL = "www.viajesfalabella.cl/trips";
+    final String CHECKOUT_URL = "www.viajesfalabella.cl/checkout";
+    final String CHECKOUT_MSG = "¡Falta poco! Completa tus datos y finaliza tu compra";
+
 
     @Test
-    public void atc03() {
+    public void atc04()  {
         VFHomePage home = new VFHomePage(driver);
         home.goToHome();
         home.goToAlojamientos();
@@ -30,14 +33,19 @@ public class atc03_alojamientoMultiRoom extends TestBase {
         alojamientos.selectDestino(DESTINO);
         alojamientos.selectEntradaDates(YEAR_MONTH, ENTRADA_DAY, SALIDA_DAY);
 
-        alojamientos.addRoom(ROOM_AMOUNT - 1);
-        alojamientos.selectOneAdultPerRoom(ROOM_AMOUNT);
-        alojamientos.selectOneChildPerRoom(ROOM_AMOUNT);
-        alojamientos.setChildrenAge(CHILDREN_AGE, ROOM_AMOUNT);
-
         alojamientos.makeSearch();
         alojamientos.waitForResultsPage(DESTINO);
 
-        Assert.assertEquals(ROOM_AMOUNT, alojamientos.getRoomsAmount());
+        String firstHotelName = alojamientos.getFirstHotelName();
+        alojamientos.selectFirstHotel();
+
+        alojamientos.switchToHotelTab(HOTEL_DETAILS_URL);
+
+        String hotelPageTitle = alojamientos.getHotelTitle();
+        assertEquals(firstHotelName, hotelPageTitle);
+
+        alojamientos.bookFirstVacant(TRIPS_URL);
+
+        alojamientos.reviewAndConfirmHotel(CHECKOUT_MSG, CHECKOUT_URL);
     }
 }

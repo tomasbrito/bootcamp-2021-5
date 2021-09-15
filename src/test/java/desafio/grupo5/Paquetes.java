@@ -99,22 +99,10 @@ public class Paquetes {
         By locMes = By.xpath("//*[@data-month='"+ yearMonth + "']");
         List<WebElement> month = driver.findElements(locMes);
         List<WebElement> days = month.get(2).findElements(By.tagName("span"));
-        for (WebElement day : days) {
-            if(day.getText().equals(desde)){
-                day.click();
-                break;
-            }
-        }
-        for (WebElement day : days) {
-            if(day.getText().equals(hasta)){
-                day.click();
-                break;
-            }
-        }
         WebElement btnNext = driver.findElement(By.xpath("//body/div[5]/div[1]/div[2]/div[2]"));
         for (int i =1;i<=2;i++) btnNext.click();
-        //driver.findElement(By.xpath("//body/div[5]/div[1]/div[5]/div[4]/div[4]/span[6]")).click();
-        //driver.findElement(By.xpath("//body/div[5]/div[1]/div[5]/div[4]/div[4]/span[16]")).click();
+        driver.findElement(By.xpath("//body/div[5]/div[1]/div[5]/div[4]/div[4]/span[6]")).click();
+        driver.findElement(By.xpath("//body/div[5]/div[1]/div[5]/div[4]/div[4]/span[16]")).click();
         driver.findElement(By.xpath("/html/body/div[7]/div/div[6]/div[2]/button[2]")).click();
         Assert.assertEquals("Lun, 6 dic 2021",fechaIda.getAttribute("value"));
         Assert.assertEquals("Jue, 16 dic 2021",fechaVuelta.getAttribute("value"));

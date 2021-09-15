@@ -16,8 +16,7 @@ public class TCA04_vaciadoCamposAlojamiento extends TestBase {
         VFAlojamientoPage alojamientoPage= new VFAlojamientoPage(driver);
         homePage.goToUrl(BASE_URL);
         homePage.irAlojamiento();
-        alojamientoPage.escribirEnOrigen("San Martin de los Andes");
-        alojamientoPage.seleccionarPrimeraSugerencia();
+        alojamientoPage.escribirEnOrigenYSeleccionar("San Martin de los Andes");
         alojamientoPage.seleccionarFechas();
         alojamientoPage.modificarPersonas();
         alojamientoPage.selectEdadMenor("11");
