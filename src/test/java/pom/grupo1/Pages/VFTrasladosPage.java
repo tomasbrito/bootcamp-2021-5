@@ -1,12 +1,11 @@
 package pom.grupo1.Pages;
 
-import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 import pom.grupo1.base.SeleniumBase;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class VFTrasladosPage extends SeleniumBase {
@@ -26,9 +25,17 @@ public class VFTrasladosPage extends SeleniumBase {
     By hastaInputBy = By.xpath("//*[@placeholder=\"Ingresa un hotel o dirección adónde quieras ir\"]");
     By arriboInput = By.xpath("//input[@placeholder=\"Arribo\"]");
     By spanTagBy = By.tagName("span");
-    By aplicarFechasButtonBy = By.xpath("(//button/*[text()=\"Aplicar\"])[2]");
+    By btnAplicarFechasBy = By.xpath("(//button/*[text()=\"Aplicar\"])[2]");
     By resultContainerBy = By.xpath("//div[@class=\"results-cluster-container\"]");
     By pointsDescriptionListBy = By.xpath("//div[@class=\"points-description\"]/ul/li");
+    //test2
+    By fechaHoursBy = By.xpath("//option[@value=\"30\"]/parent::*");
+    By plusButtonBy = By.xpath("(//a[contains(@class,\"steppers-icon-right\")])[2]");
+    By roomBlocksBy = By.xpath("//div[@class=\"_pnlpk-itemBlock\"]");
+    By selectTagBy = By.tagName("select");
+    By btnHabitacionesAplicar = By.linkText("Aplicar");
+    By pasajerosInputBy = By.xpath("//label[text()=\"Pasajeros\"]/parent::div");
+    By searchParametersListBy = By.xpath("//ul[@class=\"re-search-container\"]/*/span");
 
 
 //    //test1
@@ -40,13 +47,9 @@ public class VFTrasladosPage extends SeleniumBase {
 //    By pricesListBy = By.className("landing-inline");
 //    By loadingSpinnerBy = By.id("fullLoader");
 //    //test3
-//    By selectTagBy = By.tagName("select");
 //    By habitacionesInputBy = By.xpath("//label[text()=\"Habitaciones\"]");
 //    By minusButtonsBy = By.xpath("//a[contains(@class,\"steppers-icon-left\")]");
-//    By plusButtonsBy = By.xpath("//a[contains(@class,\"steppers-icon-right\")]");
 //    By btnAñadirHabitacionBy = By.xpath("//a[text()=\"Añadir habitación\"]");
-//    By roomBlocksBy = By.xpath("//div[@class=\"_pnlpk-itemBlock\"]");
-//    By btnHabitacionesAplicar = By.linkText("Aplicar");
 //    By accommodationRoomBlocksBy = By.className("stepper__room");
 //    //test4
 //    By hotelsListBy = By.className("results-cluster-container");
@@ -107,20 +110,52 @@ public class VFTrasladosPage extends SeleniumBase {
             }
         }
 
-        click(aplicarFechasButtonBy);
+        click(btnAplicarFechasBy);
     }
 
     public void waitForResultsPage(String expectedUrl) {
         waitUrlContains(expectedUrl, GENERAL_TIMEOUT_TIME);
-        waitElementsToBeMoreThan(0, resultContainerBy, GENERAL_TIMEOUT_TIME);
+        waitElementsToBeMoreThan(0, pointsDescriptionListBy, GENERAL_TIMEOUT_TIME);
     }
 
-    public boolean isTrasladoInfoCorrect(String airportName, String hotelName) {
+    public void selectHoursAndDates(String trasladoHour, String yearMonth,
+                                    String arriboDay, String partidaDay) {
+
+        List<WebElement> fechaHoras = findElements(fechaHoursBy);
+
+        for (WebElement hora : fechaHoras) {
+            Select horaSelect = new Select(hora);
+            horaSelect.selectByVisibleText(trasladoHour);
+        }
+
+        selectDates(yearMonth, arriboDay, partidaDay);
+
+    }
+
+    public void addChild(String childAge) {
+        click(pasajerosInputBy);
+        click(plusButtonBy);
+
+        WebElement ageList = findChildElement(selectTagBy, findElement(roomBlocksBy));
+        selectByValue(ageList, childAge);
+
+        click(btnHabitacionesAplicar);
+    }
+
+    public boolean isDestinoInfoCorrect(String airportName, String hotelName) {
         List<WebElement> infoList = findElements(pointsDescriptionListBy);
 
         return getText(infoList.get(0)).contains(airportName) &&
                 getText(infoList.get(2)).contains(hotelName);
     }
+
+    public boolean isHourAndPersonsInfoCorrect(String trasladoHour, String persons) {
+        List<WebElement> infoList = findElements(searchParametersListBy);
+
+        return getText(infoList.get(1)).contains(trasladoHour) &&
+                getText(infoList.get(2)).contains(persons);
+    }
+
 
 
 //    public void waitForResultsPage(String expectedUrl) {
@@ -150,13 +185,8 @@ public class VFTrasladosPage extends SeleniumBase {
 //        }
 //    }
 //
-//    public void selectOneChildPerRoom(int roomAmount) {
-//
-//        for (int i = 1; i < (roomAmount * 2) + 1; i = i + 2) {
-//            click(findElements(plusButtonsBy).get(i));
-//        }
-//    }
-//
+
+
 //    public void addRoom(int roomAmount) {
 //        click(habitacionesInputBy);
 //
