@@ -78,4 +78,10 @@ public class SeleniumBase {
     public void waitVisibilityElementLocated(By locator) {
        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
+    public void switchWindows(){
+        driver.close();
+        for (String winHandle : driver.getWindowHandles()) {
+            driver.switchTo().window(winHandle);
+        }
+    }
 }

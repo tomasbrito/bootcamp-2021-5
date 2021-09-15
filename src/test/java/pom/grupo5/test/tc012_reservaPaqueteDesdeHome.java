@@ -19,16 +19,13 @@ public class tc012_reservaPaqueteDesdeHome extends TestBase {
         Thread.sleep(2000);
         homePagePaquetes.seleccionarCantidadDeAdultos(1);
         homePagePaquetes.realizarBusqueda();
-        //Thread.sleep(2000);
+        Thread.sleep(2000);
         homePagePaquetes.seleccionarAlojamientoSugerido();
         Thread.sleep(2000);
+        homePagePaquetes.switchWindows();
         String urlNuevaPestaña = homePagePaquetes.getUrl();
         System.out.println(urlNuevaPestaña);
-        //cleanup();
-        //Cambio Pestaña
-        //setupBrowser();
         VFReservaPaquetes pageReservaPaquetes = new VFReservaPaquetes(driver,wait);
-        //pageReservaPaquetes.goToUrl(urlNuevaPestaña);
         Thread.sleep(2000);
         Assert.assertEquals("Esplendor by Wyndham Cervantes", driver.getTitle());
         pageReservaPaquetes.seleccionarHabitacionSugerida();
