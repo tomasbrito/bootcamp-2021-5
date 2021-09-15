@@ -31,20 +31,10 @@ public class VFAlojamientoPage extends SeleniumBase {
     By btnAplicar = By.linkText("Aplicar");
 
 
-    public void escribirEnOrigen(String mensaje){
-        type(mensaje, origen);
-    }
-
-    public void esribirEnDestino(String mensaje){
-        type(mensaje, destino);
-    }
+    public void escribirEnOrigen(String mensaje) { type(mensaje, origen); }
 
     public void buscar(){
         click(btnBuscar);
-    }
-
-    public void espera(){
-        exwait(listaSugeridaOrigen);
     }
 
     public String obtenerMensajeListaSugeridaOrigen(){
@@ -63,14 +53,20 @@ public class VFAlojamientoPage extends SeleniumBase {
         return getText(fechaSalida);
     }
 
+    public void esribirEnDestino(String mensaje){
+        type(mensaje, destino);
+    }
+
+    public void escribirEnOrigenYSeleccionar(String mensaje){
+        type(mensaje, origen);
+        exwait(listaSugeridaOrigen);
+        click(primeraSugerencia);
+    }
+
     public void seleccionarFechas(){
         click(calendario);
         click(fecha1);
         click(fecha2);
-    }
-
-    public void seleccionarPrimeraSugerencia(){
-        click(primeraSugerencia);
     }
 
     public void selectEdadMenor(String value){
