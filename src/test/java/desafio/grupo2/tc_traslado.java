@@ -91,9 +91,8 @@ public class tc_traslado {
         btnBuscar.click();
 
         //En el banner de google maps, se deben visualizar el Aeropuerto y el Hotel seleccionados previamente
-
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='eva-3-row flex-desktop']")));
         WebElement contenedorMaps = driver.findElement(By.xpath("//div[@class='eva-3-row flex-desktop']"));
-        wait.until(ExpectedConditions.visibilityOf(contenedorMaps));
 
         //VALIDACION
         String Aeropuerto = "Aeropuerto Buenos Aires Ministro Pistarini Ezeiza";
@@ -174,23 +173,21 @@ public class tc_traslado {
         btnBuscar.click();
 
         //15.Seleccionar Moneda
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//select[@id='currency-select']")));
         WebElement selecMoneda = driver.findElement(By.xpath("//select[@id='currency-select']"));
-        wait.until(ExpectedConditions.visibilityOf(selecMoneda));
 
         //16. Elegir Dolares
         Select moneda = new Select(selecMoneda);
         moneda.selectByValue("string:USD");
 
         //El valor mostrado en DESDE coincide con el valor minimo de los resultados obtenidos
-        //String precioDesde = driver.findElement(By.xpath("//p[@ng-show='model.lowestPrice.private' and 'pricebox-big-text ng-binding']")).getText();
+
         List <WebElement> precioDesde = driver.findElements(By.xpath("//p[@ng-show='model.lowestPrice.private'] //span[@class='ng-binding']"));
         List <WebElement> precio = driver.findElements(By.xpath("//span[@class='pricebox-big-text ng-binding']"));
-
-        //NO TOMA EL PRECIO ACTUAL PARA COMPARAR
-        Assert.assertEquals(precioDesde.get(1).getText(), precio.get(0).getText());
-
+        //Elemento 5, corresponde al primer resultado mostrado
+        Assert.assertEquals(precioDesde.get(1).getText(), precio.get(5).getText());
     }
-/*
+
     @After
     public void close() {
 
@@ -198,7 +195,7 @@ public class tc_traslado {
             driver.close();
         }
 
-    }*/
+    }
 
 
 }
