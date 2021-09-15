@@ -182,11 +182,12 @@ public class tc_traslado {
         moneda.selectByValue("string:USD");
 
         //El valor mostrado en DESDE coincide con el valor minimo de los resultados obtenidos
-        String precioDesde = driver.findElement(By.xpath("//p[@ng-show='model.lowestPrice.private' and 'pricebox-big-text ng-binding']")).getText();
-
+        //String precioDesde = driver.findElement(By.xpath("//p[@ng-show='model.lowestPrice.private' and 'pricebox-big-text ng-binding']")).getText();
+        List <WebElement> precioDesde = driver.findElements(By.xpath("//p[@ng-show='model.lowestPrice.private'] //span[@class='ng-binding']"));
         List <WebElement> precio = driver.findElements(By.xpath("//span[@class='pricebox-big-text ng-binding']"));
 
-        Assert.assertEquals(precioDesde, precio.get(0).getText());
+        //NO TOMA EL PRECIO ACTUAL PARA COMPARAR
+        Assert.assertEquals(precioDesde.get(1).getText(), precio.get(0).getText());
 
     }
 /*
