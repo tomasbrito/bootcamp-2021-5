@@ -31,7 +31,10 @@ public class VFAlojamientoPage extends SeleniumBase {
     By btnAplicar = By.linkText("Aplicar");
 
 
-    public void escribirEnOrigen(String mensaje) { type(mensaje, origen); }
+    public void escribirEnOrigen(String mensaje) throws InterruptedException {
+        type(mensaje, origen);
+        Thread.sleep(1000);
+    }
 
     public void buscar(){
         click(btnBuscar);

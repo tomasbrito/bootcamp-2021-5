@@ -5,6 +5,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
@@ -25,13 +26,15 @@ public class SeleniumBase {
         return driver.findElements(localizador);
     }
 
-    public String getText(WebElement element) {
-        return element.getText();
+    public String getText(WebElement localizador) {
+        return localizador.getText();
     }
 
     public String getText(By localizador) {
         return findElement(localizador).getText();
     }
+
+    public String getTagName(By localizador){ return driver.findElement(localizador).getTagName();}
 
     public void type(String text, By localizador) {
         driver.findElement(localizador).sendKeys(text);
@@ -57,9 +60,9 @@ public class SeleniumBase {
         return driver.getCurrentUrl();
     }
 
-    public void exwait(By element){
+    public void exwait(By localizador){
         WebDriverWait exwait= new WebDriverWait(driver, 1);
-        exwait.until(ExpectedConditions.elementToBeClickable(element));
+        exwait.until(ExpectedConditions.elementToBeClickable(localizador));
     }
 
     public void get(By localizador, int num){
@@ -68,5 +71,11 @@ public class SeleniumBase {
 
     public void back(){
         driver.navigate().back();
+    }
+
+    public void selectByValue(By localizador, String value){
+        WebElement drop= driver.findElement(localizador);
+        Select dropdown= new Select(drop);
+        dropdown.selectByValue(value);
     }
 }

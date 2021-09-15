@@ -15,6 +15,7 @@ public class VFHomePage extends SeleniumBase {
     }
 
     By btnAlojamiento = By.xpath("//a[@product=\"HOTELS\"]");
+    By btnTraslado = By.xpath("//a[@product=\"TRANSFERS\"]");
     By btnBuscar = By.linkText("Buscar");
     By vueloAuto = By.xpath("//*[@id=\"sboxContainer-packages\"] //input[@value='va']");
     By vuelo2Alojamientos = By.xpath("//*[@id=\"sboxContainer-packages\"] //input[@value='vhh']");
@@ -76,6 +77,8 @@ public class VFHomePage extends SeleniumBase {
     public void irAlojamiento(){
         click(btnAlojamiento);
     }
+
+    public void irTraslado() {click(btnTraslado);}
 
     public void irVueloAuto(){
         click(vueloAuto);
