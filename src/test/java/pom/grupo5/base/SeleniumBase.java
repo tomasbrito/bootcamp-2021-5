@@ -71,6 +71,15 @@ public class SeleniumBase {
         return driver.getCurrentUrl();
 
     }
+    public void waitVisibilityElementLocated(By locator) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+    public void switchWindows(){
+        driver.close();
+        for (String winHandle : driver.getWindowHandles()) {
+            driver.switchTo().window(winHandle);
+        }
+    }
 
     public void waitUrlContains(String s) {
         wait.until(ExpectedConditions.urlContains(s));
@@ -83,5 +92,4 @@ public class SeleniumBase {
     public Select getSelect(By locator){
         return new Select(driver.findElement(locator));
     }
-
 }
