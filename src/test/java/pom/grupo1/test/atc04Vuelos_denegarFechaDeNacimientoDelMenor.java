@@ -6,29 +6,25 @@ import pom.grupo1.Pages.VFHomePage;
 import pom.grupo1.Pages.VFVuelosPage;
 import pom.grupo1.base.TestBase;
 
-
-public class atc02Vuelos_noGuardarDatosDeCompra extends TestBase {
+public class atc04Vuelos_denegarFechaDeNacimientoDelMenor extends TestBase {
 
     final String ORIGIN = "Santiago";
     final String DESTINATION = "México";
     final String VUELOS_URL = "https://www.viajesfalabella.cl/vuelos/";
-    final String NAME = "prueba";
 
     @Test
-    public void atc02() {
+    public void atc04() {
         VFHomePage home = new VFHomePage(driver);
         home.goToHome();
         home.goToVuelos();
 
         VFVuelosPage vuelos = new VFVuelosPage(driver);
         Assert.assertEquals(VUELOS_URL, vuelos.getCurrentUrl());
+        vuelos.setTypeOfFlight("Solo ida");
         vuelos.setOriginAndDestination(ORIGIN, DESTINATION);
         vuelos.dontSetDates();
-        vuelos.selectTheFirstOption();
-        vuelos.setNameInBuySection(NAME);
-        vuelos.goBack();
-        vuelos.selectTheFirstOption();
-        vuelos.validateEmptyNameInput();
+        vuelos.selectTheFirstOptionWithAChild("6");
+        vuelos.setChildAgeInBuySection();
     }
 
 }
