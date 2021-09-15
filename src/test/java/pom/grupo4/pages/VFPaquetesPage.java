@@ -29,7 +29,7 @@ public class VFPaquetesPage extends SeleniumBase {
 
     //Keyword Driven
 
-    /*
+
     public void irAPaquetes(){
         click(btnAlojamiento);
     }
@@ -55,5 +55,5 @@ public class VFPaquetesPage extends SeleniumBase {
         return encontrarElemento(textoErrorRegreso).getText();
     }
 
-*/
+
 }

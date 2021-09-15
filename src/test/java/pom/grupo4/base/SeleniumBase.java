@@ -1,6 +1,7 @@
 package pom.grupo4.base;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -50,7 +51,9 @@ public class SeleniumBase {
     }
 
     public String getUrl(){
-
         return driver.getCurrentUrl();
+    }
+    public void enter(By localizador){
+        driver.findElement(localizador).sendKeys(Keys.ENTER);
     }
 }

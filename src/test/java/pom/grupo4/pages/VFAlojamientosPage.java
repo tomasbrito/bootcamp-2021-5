@@ -25,13 +25,17 @@ public class VFAlojamientosPage extends SeleniumBase {
         super(driver);
     }
 
-    public void clickearInputFecha(){
+    public void clickearInputFecha() throws InterruptedException {
+        Thread.sleep(500);
         click(botonFechaIda);
     }
-    public void clickearFechaIdaTC009(){
+    public void clickearFechaIdaTC009() throws InterruptedException {
+        Thread.sleep(500);
+
         click(campoFechaIdaTC009);
     }
-    public void clickearFechaVueltaTC009(){
+    public void clickearFechaVueltaTC009() throws InterruptedException {
+        Thread.sleep(500);
         click(campoFechaVueltaTC009);
     }
     public void clickearFechaIdaTC012(){
@@ -46,10 +50,11 @@ public class VFAlojamientosPage extends SeleniumBase {
     public String getFechaVueltaValue(){
         return encontrarElemento(campoFechaVueltaTC009).getText();
     }
+
     public void ingresarDatosDestino() throws InterruptedException {
         tipear("Santiago", inputDestino);
         Thread.sleep(1000);
-        //enter(inputDestino);
+        enter(inputDestino);
     }
     public void clickearBotonHabitaciones(){
         click(botonHabitaciones);
