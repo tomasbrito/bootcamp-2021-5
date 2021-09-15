@@ -33,9 +33,6 @@ public class TestBase {
     }
 
     @After
-    public void cleanup() {
-        if (driver != null) driver.close();
-    }
-
+    public void cleanup() {if (driver != null) driver.close();}
 
 }

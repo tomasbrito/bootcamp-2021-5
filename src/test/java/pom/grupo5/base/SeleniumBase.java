@@ -5,6 +5,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
@@ -38,7 +39,11 @@ public class SeleniumBase {
         return findElement(localizador).getAttribute("value");
     }
 
-    public void click(By locator) {
+
+    public String getAttributeClass(By localizador){ return findElement(localizador).getAttribute("class");}
+
+    public void click(By locator){
+
         driver.findElement(locator).click();
     }
 
@@ -75,4 +80,8 @@ public class SeleniumBase {
         wait.until(ExpectedConditions.elementToBeClickable(locator));
 
     }
+    public Select getSelect(By locator){
+        return new Select(driver.findElement(locator));
+    }
+
 }
