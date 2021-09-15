@@ -6,7 +6,7 @@ import pom.grupo1.Pages.VFHomePage;
 import pom.grupo3.base.TestBase;
 import pom.grupo3.pages.VFAlojamientoG3;
 
-public class tc01_G3 extends TestBase {
+public class TC01_ReservaAlojamiento extends TestBase {
 
     final String DESTINO = "miami";
     final String YEAR_MONTH = "2021-10"; // aaaa-mm
