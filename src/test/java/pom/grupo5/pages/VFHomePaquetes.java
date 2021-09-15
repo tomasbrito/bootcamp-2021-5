@@ -23,7 +23,6 @@ public class VFHomePaquetes extends SeleniumBase {
     By origen = By.xpath("//input[contains(@class,'sbox-places-first sbox-origin-container')]");
     By destino = By.xpath("//input[contains(@class,'sbox-places-second')]");
     By segundoDestino = By.xpath("//input[contains(@class,'sbox-hotel-second-destination')]");
-    By localizadorOpcion = By.xpath("//body/div[11]/div[1]/div[1]/ul[1]/li[1]");
     By btnBuscar = By.xpath("//a[contains(@class, 'sbox-search')]");
     By checkbox = By.xpath("//*[contains(@class, 'switch-container')]");
     By fechaIda = By.xpath("//input[@placeholder='Ida']");
@@ -34,19 +33,16 @@ public class VFHomePaquetes extends SeleniumBase {
     By fechaHastaDestino2 = By.xpath("//input[contains(@class,'sbox-hotel-second-checkout-date')]");
     By btnVueloMasAuto = By.xpath("//input[@value='va']");
     By btnDosAlojamientos = By.xpath("//input[@value='vhh']");
-    //By btnNextCalendario = By.xpath("//body/div[5]/div[1]/div[2]/div[2]");
     By btnApicarCalendario = By.xpath("//button[contains(@class,'_dpmg2--desktopFooter-button-apply')]");
-    By btnVerResumen = By.xpath("//body[1]/div[13]/div[1]/div[3]/div[1]/div[2]/div[1]/div[2]");
     By resumen = By.xpath("//*[@id=\"pkg-wizard\"]/div/div[4]");
-    By headerResumen = By.xpath("//body/div[@id='pkg-wizard']/div[1]/div[4]/div[1]/div[1]/div[1]");
     By ofertasPaquete = By.xpath("//a[contains(@class,'offer-href')]");
     By habitaciones = By.xpath("//div[contains(@class,'sbox-ui-rooms-container sbox-passengers-picker-container')]");
-  //  By adultos = By.xpath("//*[@class='_pnlpk-itemRow'][3]");
     By btnMenosPersonas = By.xpath("//a[@class='steppers-icon-left sbox-3-icon-minus']");
-    By aplicarHabitaciones = By.xpath("//body[1]/div[4]/div[1]/div[2]/a[1]");
-//    By alojamientoPaquete = By.xpath("//body/aloha-app-root[1]/aloha-results[1]/div[1]/div[1]/div[2]/div[2]/div[2]/aloha-list-view-container[1]/div[2]/aloha-cluster-container[1]/div[1]");
     By alojamientoSiguiente = By.xpath("//*[@class='eva-3-btn -md -primary -eva-3-fwidth']");
-
+    By localizadorOpcion = By.xpath("//body/div[11]/div[1]/div[1]/ul[1]/li[1]");
+    By aplicarHabitaciones = By.xpath("//body[1]/div[4]/div[1]/div[2]/a[1]");
+    By btnVerResumen = By.xpath("//body[1]/div[13]/div[1]/div[3]/div[1]/div[2]/div[1]/div[2]");
+    By headerResumen = By.xpath("//body/div[@id='pkg-wizard']/div[1]/div[4]/div[1]/div[1]/div[1]");
     //  Keyword Driven
     public VFHomePaquetes(WebDriver driver, WebDriverWait wait) {
         super(driver,wait);
