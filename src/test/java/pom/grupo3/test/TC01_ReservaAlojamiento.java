@@ -19,7 +19,7 @@ public class TC01_ReservaAlojamiento extends TestBase {
 
 
     @Test
-    public void atc01(){
+    public void test01(){
         System.out.println("tc_01");
 
         VFHomePage home = new VFHomePage(driver);

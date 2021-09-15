@@ -26,6 +26,9 @@ public class SeleniumBase {
     public String obtenerTexto(By localizador){
         return encontrarElemento(localizador).getText();
     }
+    public String getCurrentUrl() {
+        return driver.getCurrentUrl();
+    }
     public void tipear(String inputText, By locator){
         driver.findElement(locator).sendKeys(inputText);
     }
