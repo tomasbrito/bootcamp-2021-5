@@ -31,7 +31,12 @@ public class TestBase {
 
     @After
     public void cleanup() {
-        if (driver != null) driver.close();
+        if (driver != null){
+            for(String handle : driver.getWindowHandles()) {
+                driver.switchTo().window(handle);
+                driver.close();
+            }
+        }
     }
 
 

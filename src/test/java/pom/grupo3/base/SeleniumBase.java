@@ -19,7 +19,7 @@ public class SeleniumBase {
     //Constructor
     public SeleniumBase(WebDriver driver){
         this.driver = driver;
-        this.wait = new WebDriverWait(driver,10);
+        this.wait = new WebDriverWait(driver,15);
     }
 
     //Metodos envolver la tecnologia Selenium -> Wrapper
