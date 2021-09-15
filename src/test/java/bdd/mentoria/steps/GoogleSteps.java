@@ -1,30 +1,34 @@
-package bdd.earaya.steps;
+package bdd.mentoria.steps;
 
 
-import bdd.earaya.bases.AppHook;
-import bdd.earaya.pages.GoogleHomePage;
-import io.cucumber.java.en.*;
+import bdd.mentoria.bases.Hook;
+import bdd.mentoria.pages.GHomePage;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.junit.Assert;
 
 public class GoogleSteps {
 
-   //atributos
-    GoogleHomePage gHomePage;
+    //atributos
+    GHomePage gHomePage;
+
 
     @Given("estoy en un navegador con la pagina inicial de google")
     public void estoy_en_un_navegador_con_la_pagina_inicial_de_google() {
-        gHomePage = new GoogleHomePage(AppHook.getDriver());
-        gHomePage.entrarAHomePage();
+        gHomePage = new GHomePage(Hook.getDriver());
+        gHomePage.IngresarAGoogleHomePage();
+
     }
 
     @When("introduzco la palabra {string} en la barra")
     public void introduzco_la_palabra_en_la_barra(String string) {
-        gHomePage.busquedaSimpleBarraGoogle(string);
+        gHomePage.ingresarPalabraABuscarEnBarraGoogle(string);
     }
 
     @When("realizo la busqueda con Enter")
     public void realizo_la_busqueda_con_enter() {
-        gHomePage.presionarEnterABarraGoogle();
+        gHomePage.busquedaConBotonEnterEnBarraDeGoogle();
     }
 
     @Then("el navegador me muestra los resultados")
@@ -37,6 +41,4 @@ public class GoogleSteps {
         // Write code here that turns the phrase above into concrete actions
         throw new io.cucumber.java.PendingException();
     }
-
-
 }
