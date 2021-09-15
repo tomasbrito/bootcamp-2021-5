@@ -200,6 +200,11 @@ public class SeleniumBase {
         }
     }
 
+    public void selectByIndex(By locator, int index) {
+        Select select = new Select(findElement(locator));
+        select.selectByIndex(index);
+    }
+
     public void selectByValue(By locator, String value){
         Select select = new Select(findElement(locator));
         select.selectByValue(value);
