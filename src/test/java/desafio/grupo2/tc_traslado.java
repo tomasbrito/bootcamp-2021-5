@@ -82,8 +82,8 @@ public class tc_traslado {
         AplicarFecha.click();
 
         //10. Click en Hora y seleccionar 10:00
-        WebElement selecHora = driver.findElement(By.xpath("//select[@class='select-tag sbox-time-arrival']"));
-        Select s = new Select(selecHora);
+        WebElement horaLlegada = driver.findElement(By.xpath("//select[@class='select-tag sbox-time-arrival']"));
+        Select s = new Select(horaLlegada);
         s.selectByValue("600");
 
         //11. Click en Buscar
@@ -107,26 +107,86 @@ public class tc_traslado {
     @Test
     public void TC_T04 (){
 
-        //El valor mostrado en DESDE coincide con el valor minimo de los resultados obtenidos
+        WebDriverWait wait = new WebDriverWait(driver, 5);
 
         //1.Cargar HOME
-        //2.Seleccionar Traslados
-        //3.Seleccionar "Hacia el aeropuerto"
-        //4.Click en DESDE
-        //5.Ingresar "Sheraton Mar del Plata"
-        //6.Seleccionar Primera Opcion
-        //7.Click en HASTA
-        //8.Ingresar "EZEIZA"
-        //9.Seleccionar Unica Opcion
-        //10.Click en Fecha
-        //11. Seleccionar 21 de Septiembre
-        //12. Click en Aplicar
-        //13.Click en Hora
-        //14. Seleccionar 12:00
-        //15.Click Buscar
-        //16.Seleccionar Moneda
-        //17. Elegir Dolares
+        driver.get("https://www.viajesfalabella.cl/");
 
+        //2.Seleccionar Traslados
+        String Traslado_url = "https://www.viajesfalabella.cl/traslados/";
+        WebElement btnTraslado = driver.findElement(By.xpath("//a[@title='Traslados']"));
+        btnTraslado.click();
+        Assert.assertEquals(Traslado_url, driver.getCurrentUrl());
+
+        //3.Seleccionar "Hacia el aeropuerto"
+        List <WebElement> btnDesdeHacia = driver.findElements(By.xpath("//i[@class='radio-circle sbox-radio-circle']"));
+        btnDesdeHacia.get(1).click();
+
+        //4.Click en DESDE
+        WebElement ingresarOrigen = driver.findElement(By.xpath("//input[@type='text' and @placeholder='Ingresa un hotel o dirección adónde quieras ir']"));
+        ingresarOrigen.click();
+
+        //5.Ingresar "Sheraton Mar del Plata"
+        ingresarOrigen.sendKeys("Sheraton Mar del Plata");
+
+        //6.Seleccionar Primera Opcion
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(),'Sheraton, Leandro N. Alem, Mar del Plata, Provinci')]")));
+        WebElement resultado_1 = driver.findElement(By.xpath("//span[contains(text(),'Sheraton, Leandro N. Alem, Mar del Plata, Provinci')]"));
+        resultado_1.click();
+
+        //7.Click en HASTA
+        WebElement ingresarDestino = driver.findElement(By.xpath("//input[@type='text' and @placeholder='Ingresa un aeropuerto']"));
+        ingresarDestino.click();
+
+        //8.Ingresar "EZEIZA"
+        ingresarDestino.sendKeys("EZEIZA");
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@class='item-text']")));
+
+        //9.Seleccionar Unica Opcion
+        ingresarDestino.sendKeys(Keys.ENTER);
+
+        //10.Click en Fecha
+        WebElement fecha = driver.findElement(By.xpath("//input[@type='text' and @placeholder='Partida']"));
+        fecha.click();
+
+        //11. Seleccionar 21 de Septiembre
+        WebElement MesActual = driver.findElement(By.xpath("//div[@data-month='2021-09']"));
+        List <WebElement> listaDias = MesActual.findElements(By.xpath("//span[@class='_dpmg2--date _dpmg2--available']"));
+
+        for (WebElement day : listaDias) {
+            if (day.getText().equals("21")) {
+                day.click();
+                break;
+            }
+        }
+
+        //12. Click en Aplicar
+        WebElement AplicarFecha = driver.findElement(By.xpath("//button[@ class='_dpmg2--desktopFooter-button _dpmg2--desktopFooter-button-apply sbox-3-btn -lg -primary']"));
+        AplicarFecha.click();
+
+        //13.Click en Hora y seleccionar 12:00
+        WebElement horaPartida = driver.findElement(By.xpath("//select[@class='select-tag sbox-time-departure']"));
+        Select s = new Select(horaPartida);
+        s.selectByVisibleText("12:00");
+
+        //14.Click Buscar
+        WebElement btnBuscar = driver.findElement(By.xpath("//div[@class='sbox-button'] "));
+        btnBuscar.click();
+
+        //15.Seleccionar Moneda
+        WebElement selecMoneda = driver.findElement(By.xpath("//select[@id='currency-select']"));
+        wait.until(ExpectedConditions.visibilityOf(selecMoneda));
+
+        //16. Elegir Dolares
+        Select moneda = new Select(selecMoneda);
+        moneda.selectByValue("string:USD");
+
+        //El valor mostrado en DESDE coincide con el valor minimo de los resultados obtenidos
+        String precioDesde = driver.findElement(By.xpath("//p[@ng-show='model.lowestPrice.private' and 'pricebox-big-text ng-binding']")).getText();
+
+        List <WebElement> precio = driver.findElements(By.xpath("//span[@class='pricebox-big-text ng-binding']"));
+
+        Assert.assertEquals(precioDesde, precio.get(0).getText());
 
     }
 /*
