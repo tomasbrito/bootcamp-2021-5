@@ -1,12 +1,9 @@
-package pom.grupo2.pages;
+package bdd.gozimisa.pages;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import pom.grupo2.base.SeleniumBase;
-
-import java.util.List;
 
 public class VFHomePage extends SeleniumBase {
 

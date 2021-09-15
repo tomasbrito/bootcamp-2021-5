@@ -19,7 +19,6 @@ public class TCA01_sugerenciaNoDisponible extends TestBase {
     homePage.goToUrl(BASE_URL);
     homePage.irAlojamiento();
     alojamientoPage.escribirEnOrigen("la");
-    alojamientoPage.espera();
 
     Assert.assertEquals(ventanaMsg, alojamientoPage.obtenerMensajeListaSugeridaOrigen());
     }

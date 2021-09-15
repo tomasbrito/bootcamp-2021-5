@@ -1,4 +1,4 @@
-package pom.grupo1.test;
+package pom.grupo1.test.alojamientos;
 
 import org.junit.Test;
 import pom.grupo1.Pages.VFAlojamientosPage;

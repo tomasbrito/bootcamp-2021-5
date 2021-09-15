@@ -18,6 +18,7 @@ public class VFHomePage extends SeleniumBase {
 
     By btnAlojamientos = By.xpath("//a[@product=\"HOTELS\"]");
     By btnVuelos = By.xpath("//a[@product=\"FLIGHTS\"]");
+
     By btnTraslados = By.xpath("//a[@product=\"TRANSFERS\"]");
 
     public void goToHome(){
