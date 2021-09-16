@@ -3,6 +3,7 @@ package pom.grupo3.pages;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import pom.grupo3.base.SeleniumBase;
 
@@ -27,6 +28,11 @@ public class VFTrasladosPage extends SeleniumBase {
     By btnBuscar = By.linkText("Buscar");
     By moneda = By.xpath("(//span[@class='pricebox-currency ng-binding'])[5]");
     By select = By.id("currency-select");
+    By botonComprar = By.xpath("(//button[contains(@class,'eva-3-btn -md')])[5]");
+    By puntollegada = By.xpath("//p[@class='eva-3-p eva-3-body-2']");
+    By puntoPartida = By.id("transfer-pickup-T0");
+    By botonConfirmarCompra = By.xpath("//em[contains(text(),'Comprar')]");
+    By mensajeError = By.xpath("//span[contains(text(),'Acepta los términos y condiciones')]");
 
 
     public void llenarFieldDesde(String texto) {
@@ -72,5 +78,23 @@ public class VFTrasladosPage extends SeleniumBase {
     public void cambiarMonedaADolares() {
         Select dropDown = new Select(encontrarElemento(select));
         dropDown.selectByValue("string:USD");
+    }
+
+    public void seleccionarAutoYComprar() {
+        exwait(botonComprar);
+        click(botonComprar);
+    }
+
+    public boolean comparar(String desde, String hasta) {
+        WebElement partida = encontrarElemento(puntoPartida);
+        WebElement llegada = encontrarElemento(puntollegada);
+        return partida.getText().contains(desde)|| llegada.getText().contains(hasta);
+    }
+
+    public String confirmarCompra() {
+        exwait(botonConfirmarCompra);
+        click(botonConfirmarCompra);
+        return obtenerTexto(mensajeError);
+
     }
 }
