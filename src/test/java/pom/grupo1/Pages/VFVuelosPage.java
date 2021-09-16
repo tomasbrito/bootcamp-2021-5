@@ -72,15 +72,15 @@ public class VFVuelosPage extends SeleniumBase {
 
     public void setOriginAndDestination(String origin, String destination) {
         type(origin, originInput);
-        waitElementToBeClickable(originFirstOption, 88);
+        waitPresenceOfElementLocated(originFirstOption, 5);
         type(Keys.TAB, originInput);
         type(destination, destinationInput);
-        waitElementToBeClickable(destinationFirstOption, 88);
+        waitPresenceOfElementLocated(destinationFirstOption, 5);
         type(Keys.ENTER, destinationInput);
     }
 
     public void selectTheFirstOption() {
-        waitElementToBeClickable(resultsTitle, 15);
+        waitElementToBeClickable(resultsTitle, 5);
         assertTrue(getText(resultsTitle).contains("Vuelos a"));
         click(nextButton);
         click(continueButton);
@@ -90,10 +90,10 @@ public class VFVuelosPage extends SeleniumBase {
         assertTrue(getText(resultsTitle).contains("Vuelos a"));
         click(nextButton);
         click(addAChild);
-        waitElementToBeClickable(childAge, 4);
+        waitPresenceOfElementLocated(childAge, 4);
         selectByValue(childAge, age);
         click(continueButton);
-        waitElementToBeClickable(buyButton, 30);
+        waitPresenceOfElementLocated(buyButton, 30);
     }
 
     public void setChildAgeInBuySection() {
@@ -108,7 +108,7 @@ public class VFVuelosPage extends SeleniumBase {
     public void dontSetDates() {
         click(dateCheckbox);
         click(searchButton);
-        waitElementToBeClickable(nextButton, 18);
+        waitPresenceOfElementLocated(nextButton, 5);
     }
 
     public void setDatesFromToday(int goingDay, int comingDay, String goingDayExpected) {
@@ -120,23 +120,23 @@ public class VFVuelosPage extends SeleniumBase {
     }
 
     public void setNameInBuySection(String name) {
-        waitElementToBeClickable(nameInput, 30);
+        waitPresenceOfElementLocated(nameInput, 30);
         type(name, nameInput);
     }
 
     public void validateEmptyNameInput() {
-        waitElementToBeClickable(nameInput, 15);
+        waitPresenceOfElementLocated(nameInput, 15);
         assertEquals("", getText(nameInput));
     }
 
     public void goBack() {
         super.goBack();
         acceptAlert();
-        waitElementToBeClickable(nextButton, 15);
+        waitPresenceOfElementLocated(nextButton, 15);
     }
 
     public void clickBuyButtonAndValidateAllToolTips() {
-        waitElementToBeClickable(buyButton, 30);
+        waitPresenceOfElementLocated(buyButton, 10);
         click(buyButton);
         assertEquals(cardToolTipExpected, getText(cardToolTip));
         assertEquals(fisrtNameToolTipExpected, getText(firstNameToolTip));// Valida mensaje de error en nombre

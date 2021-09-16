@@ -69,7 +69,7 @@ public class VFTrasladosPage extends SeleniumBase {
 //    By checkoutMsgBy = By.tagName("h2");
     // Test 3
     By airportInput = By.xpath("//input[@class='input-tag sbox-main-focus sbox-origin sbox-primary sbox-places-first places-inline']");
-    By firstOption = By.xpath("//li[@class='item'][1]");
+    By firstOption = By.xpath("//li[@class=\"item -active\"]");
     By hotelInput = By.xpath("//div[@class='sbox-places']//input[@class='input-tag sbox-main-focus sbox-destination sbox-secondary sbox-places-second places-inline']");
     By directionLabels = By.xpath("//label[@class=\"radio-label-container\"]");
     // Test 4
@@ -94,10 +94,10 @@ public class VFTrasladosPage extends SeleniumBase {
 
     public void setAirportAndHotel(String airport, String hotel) {
         type(airport, airportInput);
-        waitElementToBeClickable(firstOption, 4);
+        waitPresenceOfElementLocated(firstOption, 4);
         click(firstOption);
         type(hotel, hotelInput);
-        waitElementToBeClickable(firstOption, 4);
+        waitPresenceOfElementLocated(firstOption, 4);
         click(firstOption);
     }
 
@@ -133,7 +133,7 @@ public class VFTrasladosPage extends SeleniumBase {
     }
 
     public void selectTransferMethod() {
-        waitElementToBeClickable(transferMethod, 8);
+        waitPresenceOfElementLocated(transferMethod, 8);
         click(transferMethod);
         waitElementToBeClickable(bankSelect, 8);
         selectByIndex(bankSelect, 1);
