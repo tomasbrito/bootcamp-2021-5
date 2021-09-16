@@ -1,12 +1,11 @@
 package pom.grupo1.Pages;
 
-import org.junit.Assert;
+import static org.junit.Assert.*;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import pom.grupo1.base.SeleniumBase;
-
-import java.util.ArrayList;
+import org.openqa.selenium.WebElement;
 import java.util.List;
 
 public class VFTrasladosPage extends SeleniumBase {
@@ -29,7 +28,6 @@ public class VFTrasladosPage extends SeleniumBase {
     By aplicarFechasButtonBy = By.xpath("(//button/*[text()=\"Aplicar\"])[2]");
     By resultContainerBy = By.xpath("//div[@class=\"results-cluster-container\"]");
     By pointsDescriptionListBy = By.xpath("//div[@class=\"points-description\"]/ul/li");
-
 
 //    //test1
 //    By alojamientosFormBy = By.className("sbox-dates");
@@ -58,7 +56,112 @@ public class VFTrasladosPage extends SeleniumBase {
 //    By btnSiguienteBy = By.xpath("//em[text()=\"Siguiente\"]");
 //    By checkoutSpinnerBy = By.xpath("//div[@id=\"loading-init\"]");
 //    By checkoutMsgBy = By.tagName("h2");
+    // Test 3
+    By airportInput = By.xpath("//input[@class='input-tag sbox-main-focus sbox-origin sbox-primary sbox-places-first places-inline']");
+    By firstOption = By.xpath("//li[@class='item'][1]");
+    By hotelInput = By.xpath("//div[@class='sbox-places']//input[@class='input-tag sbox-main-focus sbox-destination sbox-secondary sbox-places-second places-inline']");
+    By directionLabels = By.xpath("//label[@class=\"radio-label-container\"]");
+    // Test 4
+    By hourSelect = By.xpath("//div[@class=\"select-container\"]/select[@class='select-tag sbox-time-arrival']");
+    By firstVehicle = By.xpath("//div[@class='search-cluster ng-scope'][1]//button");
+    By transferMethod = By.xpath("//payment-method-selector//li[3]//label");
+    By bankSelect = By.xpath("//*[@id='card-selector-0']");
+    By fiscalNameInput = By.xpath("//*[@id=\"formData.paymentData.cashPayments[0].invoice.fiscalName\"]//input");
+    By ruitNumberInput = By.xpath("//*[@id=\"invoice-fiscal-identification-number-0\"]");
+    By directionInput = By.xpath("//*[@id=\"formData.paymentData.cashPayments[0].invoice.fiscalAddress.street\"]//input");
+    By firstNameInput = By.xpath("//*[@id=\"formData.travelers[0].firstName\"]//input");
+    By lastNameInput = By.xpath("//*[@id=\"formData.travelers[0].lastName\"]//input");
+    By airlineInput = By.xpath("//*[@id=\"transfer-info-departure-airline-0\"]");
+    By flightNumberInput = By.xpath("//*[@id=\"transfer-info-departure-flightNumber-0\"]");
+    By emailInput = By.xpath("//input[@class='contact-email input-tag ng-untouched ng-pristine ng-invalid']");
+    By confirmEmailInput = By.xpath("//*[@id=\"checkout-content\"]//email-address//input-component[2]//input");
+    By phoneAreaInput = By.xpath("//*[@id=\"formData.contactData.phones[0].areaCode\"]//input");
+    By phoneNumberInput = By.xpath("//*[@id=\"formData.contactData.phones[0].number\"]//input");
+    By buyTranslateButton = By.id("buy-button");
+    By termsToolTip = By.xpath("//checkbox-component/span/span[2]");
 
+
+    public void setAirportAndHotel(String airport, String hotel) {
+        type(airport, airportInput);
+        waitElementToBeClickable(firstOption, 4);
+        click(firstOption);
+        type(hotel, hotelInput);
+        waitElementToBeClickable(firstOption, 4);
+        click(firstOption);
+    }
+
+    public void setArriboDate(String yearMonth, String arriboDay) {
+        click(arriboInput);
+
+        WebElement arriboMonth = findElement(By.xpath("(//div[@data-month='" + yearMonth + "'])[2]"));
+        List<WebElement> daysList = findChildrenElements(spanTagBy, arriboMonth);
+
+        for (WebElement day : daysList) {
+            if (day.getText().equals(arriboDay)) {
+                day.click();
+                break;
+            }
+        }
+    }
+
+    public void setHour(String hour) {
+        selectByValue(hourSelect, hour);
+    }
+
+    public void setDirection(String direction) {
+        String from = getText(airportInput);
+        String to = getText(hotelInput);
+        click(findElementByItsTextFromAList(direction, directionLabels));
+        assertEquals(from, getText(hotelInput));
+        assertEquals(to, getText(airportInput));
+    }
+
+    public void selectFirstVehicleOption() {
+        waitElementToBeClickable(firstVehicle, 8);
+        click(firstVehicle);
+    }
+
+    public void selectTransferMethod() {
+        waitElementToBeClickable(transferMethod, 8);
+        click(transferMethod);
+        waitElementToBeClickable(bankSelect, 8);
+        selectByIndex(bankSelect, 1);
+    }
+
+    public void setProofOfPayment(String fiscalName, String fiscalNumberRuit, String direction) {
+        type(fiscalName, fiscalNameInput);
+        type(fiscalNumberRuit, ruitNumberInput);
+        type(direction, directionInput);
+    }
+
+    public void setWhoTravels(String firstName, String lastName) {
+        type(firstName, firstNameInput);
+        type(lastName, lastNameInput);
+    }
+
+    public void setAditionalInformation(String airline, String flightNumber) {
+        type(airline, airlineInput);
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        type(Keys.ARROW_DOWN, airlineInput);
+        type(Keys.ENTER, airlineInput);
+        type(flightNumber, flightNumberInput);
+    }
+
+    public void setEmailVouchers(String email) {
+        type(email, emailInput);
+        type(email, confirmEmailInput);
+    }
+
+    public void setPhoneNumberAndBuy(String areaCode, String phoneNumber) {
+        type(areaCode, phoneAreaInput);
+        type(phoneNumber, phoneNumberInput);
+        click(buyTranslateButton);
+        assertEquals("Acepta los términos y condiciones", getText(termsToolTip));
+    }
 
     public void makeSearch() {
         click(btnBuscarBy);
