@@ -3,9 +3,11 @@ package pom.grupo3.base;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 public class SeleniumBase {
     //atributos
@@ -26,7 +28,10 @@ public class SeleniumBase {
     public String obtenerTexto(By localizador){
         return encontrarElemento(localizador).getText();
     }
-    public String getCurrentUrl() {
+    public String obtenerTexto(WebElement localizador){
+        return localizador.getText();
+    }
+    public String URLactual() {
         return driver.getCurrentUrl();
     }
     public void tipear(String inputText, By locator){
@@ -83,6 +88,19 @@ public class SeleniumBase {
             wait.until(ExpectedConditions.urlContains(expectedUrl));
         } catch (TimeoutException e) {
             System.out.println("Error waitUrlContains: " + expectedUrl);
+        }
+    }
+    public void elmentoVisible(String cadena) {
+        Select edad = new Select(driver.findElement(By.xpath("/html/body/div[2]/div/div[1]/div[2]/div[1]/div[2]/div[3]/div[1]/div[2]/div/div/select")));
+        edad.selectByVisibleText(cadena);
+    }
+
+    public void cambioPestaña(int tabNum){
+        /*ArrayList<String> pestaña = new ArrayList<>(driver.getWindowHandles());
+        driver.switchTo().window(pestaña.get(tabNum));*/
+        for (String winHandle : driver.getWindowHandles()) {
+            driver.switchTo().window(winHandle);
+            //Thread.sleep(1000);
         }
     }
 }

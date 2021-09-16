@@ -3,10 +3,7 @@ package pom.grupo3.pages;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import pom.grupo3.base.SeleniumBase;
-
-import java.util.List;
 
 public class VFHomePageG3 extends SeleniumBase {
 
@@ -21,12 +18,12 @@ public class VFHomePageG3 extends SeleniumBase {
 
     public void goToHome(){
         goToUrl(PPL_URL);
-        Assert.assertEquals(PPL_URL, getCurrentUrl());
+        Assert.assertEquals(PPL_URL, URLactual());
     }
 
     public void goToAlojamientos(){
         click(btnAlojamientos);
-        Assert.assertEquals(ALOJAMIENTOS_URL, getCurrentUrl());
+        Assert.assertEquals(ALOJAMIENTOS_URL, URLactual());
     }
 
 
