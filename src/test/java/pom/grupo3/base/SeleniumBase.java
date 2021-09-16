@@ -1,11 +1,11 @@
 package pom.grupo3.base;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 import java.util.List;
 public class SeleniumBase {
     //atributos
@@ -32,12 +32,26 @@ public class SeleniumBase {
     public void tipear(String inputText, By locator){
         driver.findElement(locator).sendKeys(inputText);
     }
+    public void tipear(String text, WebElement element) {
+        element.sendKeys(text);
+    }
     public void enter(By locator) { driver.findElement(locator).sendKeys(Keys.ENTER);  }
     public void click(By  locator){
         driver.findElement(locator).click();
     }
     public void exwait (By locator){
         wait.until(ExpectedConditions.elementToBeClickable(locator));
+    }
+
+    public void waitElementsToBeMoreThan(int amount, By locator, int timeout) {
+        FluentWait<WebDriver> fluentWait = new FluentWait<>(driver)
+                .withTimeout(Duration.ofSeconds(timeout))
+                .pollingEvery(Duration.ofMillis(500));
+        try {
+            fluentWait.until(ExpectedConditions.numberOfElementsToBeMoreThan(locator, amount));
+        } catch (TimeoutException e) {
+            System.out.println("Error: waitElementsToBeMoreThan");
+        }
     }
     public Boolean estaDesplegado(By locator) {
         try {
@@ -46,13 +60,29 @@ public class SeleniumBase {
             return false;
         }
     }
+
     public void goToUrl(String url){
         driver.get(url);
+    }
+    public List<WebElement> findChildrenElements(By locator, WebElement parent) {
+        return parent.findElements(locator);
     }
     public void cambiarANuevaPestaña(){
         wait.until(ExpectedConditions.numberOfWindowsToBe(2));
         for(String winHandle : driver.getWindowHandles()){
             driver.switchTo().window(winHandle);
+        }
+    }
+    public WebElement elementoHijo(By locator, WebElement parent) {
+        return parent.findElement(locator);
+    }
+    public void waitUrlContains(String expectedUrl, int timeout) {
+
+        WebDriverWait wait = new WebDriverWait(driver, timeout);
+        try {
+            wait.until(ExpectedConditions.urlContains(expectedUrl));
+        } catch (TimeoutException e) {
+            System.out.println("Error waitUrlContains: " + expectedUrl);
         }
     }
 }

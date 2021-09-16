@@ -60,4 +60,8 @@ public class VFPaquetesPage extends SeleniumBase {
     public String obtenerTextoVentanaDetalle() {
         return obtenerTexto(ofrece);
     }
+
+    public void seleccionarFechas() {
+
+    }
 }

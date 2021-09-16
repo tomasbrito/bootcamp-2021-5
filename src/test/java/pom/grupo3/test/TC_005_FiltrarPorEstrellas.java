@@ -13,6 +13,16 @@ public class TC_005_FiltrarPorEstrellas extends TestBase {
 
     @Test
     public void test005(){
+        System.out.println("tc-005: Filtrar por estrellas");
+        //una pagina
+        VFHomePage homePage = new VFHomePage(driver);
+        homePage.goToUrl(BASE_URL);
+        homePage.irAPaquetes();
+
+        VFPaquetesPage paquetesPage = new VFPaquetesPage(driver);
+        paquetesPage.llenarFieldDesde(DESDE);
+        paquetesPage.llenarFieldHasta(HASTA);
+        paquetesPage.seleccionarFechas();
 
 
 
