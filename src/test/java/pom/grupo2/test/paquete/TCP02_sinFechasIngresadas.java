@@ -1,4 +1,4 @@
-package pom.grupo2.test;
+package pom.grupo2.test.paquete;
 
 import org.junit.Test;
 import pom.grupo2.base.TestBase;

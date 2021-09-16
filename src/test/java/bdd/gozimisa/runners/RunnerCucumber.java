@@ -6,8 +6,8 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        features = {"src/test/java/bdd/earaya/features"},
-        glue = {"bdd.earaya.steps","bdd.earaya.bases"},
+        features = {"src/test/java/bdd/gozimisa/features"},
+        glue = {"bdd.gozimisa.steps","bdd.gozimisa.bases"},
         plugin = {"pretty"},
         tags = "@test"
 )
