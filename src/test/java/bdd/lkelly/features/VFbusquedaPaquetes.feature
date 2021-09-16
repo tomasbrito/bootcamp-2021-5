@@ -18,7 +18,7 @@ Feature: Busqueda en Google
     When selecciono boton "VueloMasAuto"
     And introduzco "Buenos Aires" en el campo origen
     And  introduzco solo 1 destino "Bariloche" en el campo destino
-    And seleccionar fecha ida "4" del "10" de "2021"
-    And seleccionar fecha vuelta "16" del "10" de "2021"
+    And seleccionar fecha ida "6" del "12" de "2021"
+    And seleccionar fecha vuelta "16" del "12" de "2021"
     And realizo la busqueda presionando el boton Buscar
     Then el navegador me muestra los resultados de vuelos disponibles

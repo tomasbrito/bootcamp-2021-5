@@ -37,6 +37,24 @@ public class Paquetes {
             driver.close();
         }
     }
+    final static String Ida = "ida";
+    final static String Vuelta = "vuelta";
+    final static String Destino1Desde = "desdeDestino1";
+    final static String Destino2Desde = "desdeDestino2";
+    final static String Destino1Hasta = "hastaDestino1";
+    final static String Destino2Hasta = "hastaDestino2";
+    final static String IdaCalendarioLateral = "idaCalendarioLateral";
+    final static String VueltaCalendarioLateral = "vueltaCalendarioLateral";
+
+    //localizadores
+    By fechaIda = By.xpath("//input[@placeholder='Ida']");
+    By fechaDesdeDestino1 = By.xpath("//input[contains(@class,'sbox-hotel-first-checkin-date')]");
+    By fechaDesdeDestino2 = By.xpath("//input[contains(@class,'sbox-hotel-second-checkin-date')]");
+    By fechaVuelta = By.xpath("//input[@placeholder='Vuelta']");
+    By fechaHastaDestino1 = By.xpath("//input[contains(@class,'sbox-hotel-first-checkout-date')]");
+    By fechaHastaDestino2 = By.xpath("//input[contains(@class,'sbox-hotel-second-checkout-date')]");
+    By btnApicarCalendario = By.xpath("//button[contains(@class,'_dpmg2--desktopFooter-button-apply')]");
+
 
     @Test // Búsqueda de Paquete sin fecha definida
     public void tc009_busquedaPaqueteSinFecha() {
@@ -93,19 +111,8 @@ public class Paquetes {
         Assert.assertEquals("San Carlos de Bariloche, Rio Negro, Argentina",textDestino);
 
         // 7- Seleccionar campo fecha desde.  8- Seleccionar fecha 6 dic 2021.
-        fechaIda.click();
-        String desde = "6";
-        String hasta = "16";
-        By locMes = By.xpath("//*[@data-month='"+ yearMonth + "']");
-        List<WebElement> month = driver.findElements(locMes);
-        List<WebElement> days = month.get(2).findElements(By.tagName("span"));
-        WebElement btnNext = driver.findElement(By.xpath("//body/div[5]/div[1]/div[2]/div[2]"));
-        for (int i =1;i<=2;i++) btnNext.click();
-        driver.findElement(By.xpath("//body/div[5]/div[1]/div[5]/div[4]/div[4]/span[6]")).click();
-        driver.findElement(By.xpath("//body/div[5]/div[1]/div[5]/div[4]/div[4]/span[16]")).click();
-        driver.findElement(By.xpath("/html/body/div[7]/div/div[6]/div[2]/button[2]")).click();
-        Assert.assertEquals("Lun, 6 dic 2021",fechaIda.getAttribute("value"));
-        Assert.assertEquals("Jue, 16 dic 2021",fechaVuelta.getAttribute("value"));
+        Assert.assertEquals("Lun, 6 dic 2021",seleccionarFecha("ida","6","12","2021"));
+        Assert.assertEquals("Jue, 16 dic 2021",seleccionarFecha("vuelta","16","12","2021"));
 
         // 11- Hacer click en el botón Buscar.
          btnBuscar.click();
@@ -140,37 +147,27 @@ public class Paquetes {
         Assert.assertEquals("Isla Mujeres, Quintana Roo, México",textDestino1);
 
         //8- Seleccionar fecha ida “ 4 oct 2021”. 10- Seleccionar fecha vuelta “ 16 oct 2021”.
-        fechaIda.click();
 
-        driver.findElement(By.xpath("/html/body/div[5]/div/div[5]/div[2]/div[4]/span[4]")).click(); // Seleccionamos fecha ida
-        driver.findElement(By.xpath("/html/body/div[5]/div/div[5]/div[2]/div[4]/span[16]")).click(); // Seleccionamos fecha vuelta
-        driver.findElement(By.xpath("/html/body/div[7]/div/div[6]/div[2]/button[2]")).click();
-
-        Assert.assertEquals("Lun, 4 oct 2021",fechaIda.getAttribute("value"));
-        Assert.assertEquals("Sáb, 16 oct 2021",fechaVuelta.getAttribute("value"));
+        Assert.assertEquals("Lun, 4 oct 2021",seleccionarFecha("ida","4","10","2021"));
+        Assert.assertEquals("Sáb, 16 oct 2021",seleccionarFecha("vuelta","16","10","2021"));
 
         //13-  Seleccionar campo fecha desde. 14- Seleccionar fecha desde “ 4 oct 2021”.
         // 15-  Seleccionar campo fecha hasta. 16- Seleccionar fecha hasta “ 9 oct 2021”.
-        WebElement fechaDesde1 = driver.findElement(By.xpath("//input[contains(@class,'sbox-hotel-first-checkin-date')]"));
-        WebElement fechaHasta1 = driver.findElement(By.xpath("//input[contains(@class,'sbox-hotel-first-checkout-date')]"));
-        fechaHasta1.click();
-        driver.findElement(By.xpath("//body/div[2]/div[1]/div[5]/div[2]/div[4]/span[9]")).click();
-        driver.findElement(By.xpath("//body/div[2]/div[1]/div[6]/div[2]/button[2]")).click();
 
-        Assert.assertEquals("Lun, 4 oct 2021",fechaIda.getAttribute("value"));
-        Assert.assertEquals("Lun, 4 oct 2021",fechaDesde1.getAttribute("value"));
-        Assert.assertEquals("Sáb, 9 oct 2021",fechaHasta1.getAttribute("value"));
+        Assert.assertEquals("Lun, 4 oct 2021",seleccionarFecha("desdeDestino1","4","10","2021"));
+        Assert.assertEquals("Sáb, 9 oct 2021",seleccionarFecha("hastaDestino1","9","10","2021"));
 
         //  17- Seleccionar campo Segundo destino. 18- Introducir "Cancún" en el campo Segundo destino de la sección Elige donde alojarte y presionar la tecla enter.
-        WebElement segundoDestino = driver.findElement(By.xpath("//input[contains(@class,'sbox-hotel-second-destination')]"));
-
+       /*
         WebElement fechaDesde2 = driver.findElement(By.xpath("//input[contains(@class,'sbox-hotel-second-checkin-date')]"));
         WebElement fechaHasta2 = driver.findElement(By.xpath("//input[contains(@class,'sbox-hotel-second-checkout-date')]"));
+*/      WebElement segundoDestino = driver.findElement(By.xpath("//input[contains(@class,'sbox-hotel-second-destination')]"));
+
         String textDestino2 =seleccionarCiudadBusqueda(segundoDestino,localizadorOpcion,destino2);
 
         Assert.assertEquals("Cancún, Quintana Roo, México",textDestino2);
-        Assert.assertEquals("Sáb, 9 oct 2021",fechaDesde2.getAttribute("value"));
-        Assert.assertEquals("Sáb, 16 oct 2021",fechaHasta2.getAttribute("value"));
+        Assert.assertEquals("Sáb, 9 oct 2021",seleccionarFecha("desdeDestino2","9","10","2021"));
+        Assert.assertEquals("Sáb, 16 oct 2021",seleccionarFecha("hastaDestino2","16","10","2021"));
 
         //  19- Hacer click en el botón Buscar.
         btnBuscar.click();
@@ -186,101 +183,116 @@ public class Paquetes {
 
     @Test // Proceso reserva de paquete seleccionado desde el home
     public void tc012_reservaPaqueteDesdeHome() throws InterruptedException {
+        By locStepperContainer = By.xpath("//*[@class='wizard-stepper-container']");
+        By locResumenViaje = By.xpath("//*[@class='sheet-container']");
+        By adicionales = By.xpath("//*[@class='xs-card-component -eva-3-shadow-1 TRANSFER']");
+        By btnConfirmarTraslado = By.xpath("//a[@class='eva-3-btn-ghost -lg -primary']");
+        By btnVerViajeLocator = By.xpath("//a[@class='button -md eva-3-btn -primary']");
+        By tituloVerViaje = By.className("texts");
+        By checkboxHabitaciones = By.tagName("aloha-roompack-selection");
+        By btnSiguienteHabitaciones = By.xpath("//*[@class='eva-3-btn -md -primary -eva-3-fwidth']");
+        By btnSiguienteVuelo = By.xpath("//a[@class='-md eva-3-btn -primary']");
+        By localizadorVuelo = By.xpath("//div[@class='itineraries']");
+        By localizadorAviso = By.xpath(" //*[@class='eva-3-message eva-3-message--toast -eva-3-shadow-static -success -loading']");
+        By locAvisoText = By.xpath("//h5[@class='message-title']");
+        By quitarTrasladoDefault = By.xpath("//div[@class='remove-container -eva-3-tc-gray-0']");
+        By btnQuitarTraslado = By.xpath("//button[@class='eva-3-btn -md -primary']");
+        By habitaciones = By.xpath("//div[contains(@class,'sbox-ui-rooms-container sbox-passengers-picker-container')]");
+        By btnMenosPersonas = By.xpath("//a[@class='steppers-icon-left sbox-3-icon-minus']");
+        By aplicarHabitaciones = By.xpath("//body[1]/div[4]/div[1]/div[2]/a[1]");
+        By btnBuscar = By.xpath("//a[contains(@class, 'sbox-search')]");
+        By alojamientoSiguiente = By.xpath("//*[@class='eva-3-btn -md -primary -eva-3-fwidth']");
+
+
         driver.get("https://www.viajesfalabella.cl/");
 
         // 2- Seleccionar paquete “Montevideo saliendo de Santiago de Chile” de los paquetes sugeridos en la página.
-        List<WebElement> ofertaPaquete = driver.findElements(By.xpath("//a[contains(@class,'offer-href')]"));
-        WebElement paqueteMVD = ofertaPaquete.get(6);
-        paqueteMVD.click();
+        By ofertasPaquete = By.xpath("//a[contains(@class,'offer-href')]");
+
+        WebElement paquete = driver.findElements(ofertasPaquete).get(6);
+        paquete.click();
+
         wait.until(ExpectedConditions.urlContains("trip/accommodations/results/"));
         Assert.assertTrue(driver.getCurrentUrl().contains("trip/accommodations/results/"));
 
         WebElement fechaIda = driver.findElement(By.xpath("//input[@placeholder='Ida']"));
         WebElement fechaVuelta = driver.findElement(By.xpath("//input[@placeholder='Vuelta']"));
-        WebElement habitaciones = driver.findElement(By.xpath("//div[contains(@class,'sbox-ui-rooms-container sbox-passengers-picker-container')]"));
 
         // 4- Seleccionar fecha desde 6 dic 2021
-        fechaIda.click();
-        driver.findElement(By.xpath("//body/div[7]/div[1]/div[5]/div[4]/div[4]/span[6]")).click();
-        // 6- Seleccionar fecha hasta 16 dic 2021
-        driver.findElement(By.xpath("//body/div[7]/div[1]/div[5]/div[4]/div[4]/span[16]")).click();
-        Thread.sleep(1000);
-        driver.findElement(By.xpath("//body/div[7]/div[1]/div[6]/div[2]/button[2]")).click();
-        Assert.assertEquals("Lun, 6 dic 2021",fechaIda.getAttribute("value"));
-        Assert.assertEquals("Jue, 16 dic 2021",fechaVuelta.getAttribute("value"));
+        Assert.assertEquals("Lun, 6 dic 2021",seleccionarFecha("idaCalendarioLateral","6","12","2021"));
+        Assert.assertEquals("Jue, 16 dic 2021",seleccionarFecha("vueltaCalendarioLateral","16","12","2021"));
         Thread.sleep(2000);
 
         // 7- Hacer click en  "habitaciones".
-        habitaciones.click();
+        driver.findElement(habitaciones).click();
         // 8- Seleccionar 1 adulto.
-        WebElement personas = driver.findElement(By.xpath("//body/div[4]/div[1]/div[1]/div[2]/div[1]/div[2]/div[1]/div[2]/div[1]/input[1]"));
-        By adultos = By.xpath("//*[@class='_pnlpk-itemRow'][3]");
-        driver.findElement(adultos).findElement(By.xpath("//a[@class='steppers-icon-left sbox-3-icon-minus']")).click();
-        By aplicarHabitaciones = By.xpath("//body[1]/div[4]/div[1]/div[2]/a[1]");
-//        driver.findElement(By.xpath("//body/div[4]/div[1]/div[1]/div[2]/div[1]/div[2]/div[1]/div[2]/div[1]/a[1]")).click();
+        driver.findElement(btnMenosPersonas).click();
         driver.findElement(aplicarHabitaciones).click();
+        WebElement personas = driver.findElement(By.xpath("//body/div[4]/div[1]/div[1]/div[2]/div[1]/div[2]/div[1]/div[2]/div[1]/input[1]"));
+
         Assert.assertEquals("1",personas.getAttribute("value"));
 
-        driver.findElement(By.xpath("//*[@class='sbox-button-container']")).click();
+        driver.findElement(btnBuscar).click();
 
         Thread.sleep(2000);
 
         // 9- Seleccionar el alojamiento sugerido.  10- Hacer click en el botón siguiente.
-        WebElement alojamiento = driver.findElement(By.xpath("//body/aloha-app-root[1]/aloha-results[1]/div[1]/div[1]/div[2]/div[2]/div[2]/aloha-list-view-container[1]/div[2]/aloha-cluster-container[1]/div[1]"));
-        alojamiento.findElement(By.xpath("//*[@class='eva-3-btn -md -primary -eva-3-fwidth']")).click();
-
+        WebElement alojamientoSig = driver.findElement(alojamientoSiguiente);
+        wait.until(ExpectedConditions.elementToBeClickable(alojamientoSig));
+        alojamientoSig.click();
        Thread.sleep(2000);
 
         // CAMBIO PESTAÑA
+        driver.close();
         for (String winHandle : driver.getWindowHandles()) {
             driver.switchTo().window(winHandle);
         }
 
         Thread.sleep(2000);
-
+        String urlNuevaPestaña = driver.getCurrentUrl();
+        Assert.assertTrue(urlNuevaPestaña.contains("trip/accommodations/detail"));
         Assert.assertEquals("Esplendor by Wyndham Cervantes", driver.getTitle());
+
         // 11- Seleccionar habitación “Habitación Doble Estándar con Minibar”.
-        driver.findElement(By.xpath("//*[@id=\"roompacks-container-wrapper\"]/aloha-roompacks-container/aloha-roompacks-grid-container/div[2]/div[1]/aloha-roompacks-group-container[2]/div[2]/aloha-roompack-container[1]/div[4]/aloha-roompack-selection")).click();
         //12- Hacer click en el botón siguiente.
-        driver.findElement(By.xpath("//body[1]/aloha-app-root[1]/aloha-detail[1]/div[1]/div[4]/div[1]/div[2]/aloha-roompacks-container[1]/aloha-roompacks-grid-container[1]/div[2]/div[2]/aloha-reservation-summary-container[1]/div[1]/aloha-next-step-button[1]/aloha-button[1]")).click();
-        By localizadorVuelo = By.xpath("//body/div[@id='flights-container-wrapper']/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/div[1]/span[3]/trips-cluster-selected[1]/span[1]/cluster[1]/div[1]/div[1]");
+        List<WebElement> habitacionesDisponibles = driver.findElements(checkboxHabitaciones);
+        WebElement habitacionElegida = habitacionesDisponibles.get(2);
+        habitacionElegida.click();
+        driver.findElement(btnSiguienteHabitaciones).click();
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(localizadorVuelo));
 
         //13- Seleccionar vuelo sugerido como primer resultado de busqueda.
         WebElement vuelo = driver.findElement(localizadorVuelo);
         //14- Hacer click en el botón siguiente.
-        vuelo.findElement(By.xpath("//body/div[@id='flights-container-wrapper']/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/div[1]/span[3]/trips-cluster-selected[1]/span[1]/cluster[1]/div[1]/div[1]/div[2]/fare[1]/span[1]/span[1]/div[2]/buy-button[1]/a[1]")).click();
-
-        By locStepperContainer = By.xpath("//*[@class='wizard-stepper-container']");
+        List<WebElement> vuelos = driver.findElements(localizadorVuelo);
+        vuelos.get(1).findElement(btnSiguienteVuelo).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(locStepperContainer));
 
 
-        By localizadorAviso = By.xpath("//body/app-root[1]/app-toasts-container[1]/div[1]");
         //15- Seleccionar quitar traslado compartido.
-        driver.findElement(By.xpath("//body/app-root[1]/div[1]/div[3]/div[1]/app-highlighted-products[1]/div[1]/div[2]/div[2]/div[1]/app-transfer[1]/div[1]/div[1]/div[2]/span[1]/div[1]/a[1]")).click();
         //16- Presionar botón quitar.
-        driver.findElement(By.xpath("//body/app-root[1]/div[1]/app-confirm-delete-modal[1]/div[1]/div[3]/button[1]")).click();
+        driver.findElement(quitarTrasladoDefault).click();
+        driver.findElement(btnQuitarTraslado).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(localizadorAviso));
-        String aviso = driver.findElement(By.xpath("//body/app-root[1]/app-toasts-container[1]/div[1]/div[1]/app-toast[1]/div[1]/div[2]")).getText();
+        String aviso = driver.findElement(locAvisoText).getText();
         Assert.assertEquals("Quitaste el transfer de tu paquete",aviso);
 
 
         //Thread.sleep(4000);
         // 17- Seleccionar agregar “Auto Premium”.
-        driver.findElement(By.xpath("//body/app-root[1]/div[1]/div[3]/div[2]/div[2]/app-products-carousel[1]/div[2]/app-carousel[1]/div[1]/swiper[1]/div[1]/div[2]")).click();
         // 18- Presionar botón agregar.
-        driver.findElement(By.xpath("//body/app-root[1]/div[1]/app-transfer-modal[1]/div[1]/div[3]/app-modal-pricebox-sticky[1]/div[1]/div[2]/a[1]")).click();
+        List<WebElement> adds = driver.findElements(adicionales);
+        adds.get(2).click();
+        driver.findElement(btnConfirmarTraslado).click();
 
         Thread.sleep(2000);
         // 19- Hacer click en botón ver viaje.
-        WebElement btnVerViaje = driver.findElement(By.xpath("//body/app-root[1]/div[1]/div[1]/app-wizard-ab[1]/wizard[1]/div[1]/div[2]/wizard-step[3]/div[1]/div[1]/div[1]/a[1]"));
-        By locResumenViaje = By.xpath("//*[@class='sheet-container']");
-
+        WebElement btnVerViaje = driver.findElement(btnVerViajeLocator);
         btnVerViaje.click();
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(locResumenViaje));
-        String titulos = driver.findElement(By.xpath("//body/app-root[1]/div[1]/div[1]/app-wizard-ab[1]/wizard[1]/wizard-modal[1]/div[1]/div[1]/div[1]")).getText();
+        String titulos = driver.findElement(tituloVerViaje).getText();
         String titulo = titulos.split("\n")[0];
         Assert.assertEquals("Tu itinerario de viaje",titulo);
 
@@ -293,6 +305,61 @@ public class Paquetes {
         String text= driver.findElement(localizador).getText();
         element.sendKeys(Keys.ENTER);
         return text;
+    }
+   private String seleccionarFecha(String tipoFecha,String dd, String mm, String aaaa) {
+        switch (tipoFecha){
+            case Ida:
+                driver.findElement(fechaIda).click();
+                selectDate(2,dd,mm,aaaa);
+                return driver.findElement(fechaIda).getAttribute("value");
+            case Vuelta:
+                selectDate(2,dd,mm,aaaa);
+                aplicarFecha(4);
+                return driver.findElement(fechaVuelta).getAttribute("value");
+            case Destino1Desde:
+                return driver.findElement(fechaDesdeDestino1).getAttribute("value");
+            case Destino2Desde:
+                return driver.findElement(fechaDesdeDestino2).getAttribute("value");
+            case Destino1Hasta:
+                driver.findElement(fechaHastaDestino1).click();
+                selectDate(1,dd,mm,aaaa);
+                aplicarFecha(1);
+                return driver.findElement(fechaHastaDestino1).getAttribute("value");
+            case Destino2Hasta:
+                return driver.findElement(fechaHastaDestino2).getAttribute("value");
+            case IdaCalendarioLateral:
+                driver.findElement(fechaIda).click();
+                selectDate(4,dd,mm,aaaa);
+                return driver.findElement(fechaIda).getAttribute("value");
+            case VueltaCalendarioLateral:
+                selectDate(4,dd,mm,aaaa);
+                aplicarFecha(4);
+                return driver.findElement(fechaVuelta).getAttribute("value");
+            default:
+                throw new IllegalStateException("Unexpected value: " + tipoFecha);
+        }
+    }
+
+    private void selectDate(int nCalendar, String dd, String mm, String aaaa) {
+        By actualM = By.xpath("//div[contains(@class,'_dpmg2--month-active')]");
+        List<WebElement> actualMonth = driver.findElements(actualM);
+        int actual = Integer.parseInt(actualMonth.get(nCalendar).getAttribute("data-month").substring(5));
+        int clicks =  Integer.parseInt(mm)- actual;
+        WebElement btnNext = driver.findElement(By.xpath("//body/div[5]/div[1]/div[2]/div[2]"));
+        for (int i =1;i<=clicks;i++) btnNext.click();
+        By locMes = By.xpath("//*[@data-month='"+ aaaa +"-"+ mm + "']");
+        List<WebElement> month = driver.findElements(locMes);
+        List<WebElement> days = month.get(nCalendar).findElements(By.tagName("span"));
+        for (WebElement day : days) {
+            if(day.getText().equals(dd)){
+                day.click();
+                break;
+            }
+        }
+    }
+    private void aplicarFecha(int indice){
+        List<WebElement> btnApply = driver.findElements(btnApicarCalendario);
+        btnApply.get(indice).click();
     }
 
 

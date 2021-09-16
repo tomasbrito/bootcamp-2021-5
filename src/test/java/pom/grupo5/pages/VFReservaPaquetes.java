@@ -32,11 +32,6 @@ public class VFReservaPaquetes extends SeleniumBase {
         By btnQuitarTraslado = By.xpath("//button[@class='eva-3-btn -md -primary']");
 
 
-        //TODO FALTA MEJORAR XPATH
-        //By quitarTrasladoDefault = By.xpath("//body/app-root[1]/div[1]/div[3]/div[1]/app-highlighted-products[1]/div[1]/div[2]/div[2]/div[1]/app-transfer[1]/div[1]/div[1]/div[2]/span[1]/div[1]/a[1]");
-        //By btnQuitarTraslado =By.xpath("//body/app-root[1]/div[1]/app-confirm-delete-modal[1]/div[1]/div[3]/button[1]");
-        //By locAvisoText = By.xpath("//body/app-root[1]/app-toasts-container[1]/div[1]/div[1]/app-toast[1]/div[1]/div[2]");
-
 
 
         //  Keyword Driven
@@ -44,10 +39,9 @@ public class VFReservaPaquetes extends SeleniumBase {
     public void seleccionarHabitacion(int i) throws InterruptedException {
             i--;
             List<WebElement> habitaciones = findElements(checkboxHabitaciones);
-            WebElement habitacioElegida = habitaciones.get(i);
-            habitacioElegida.click();
+            WebElement habitacionElegida = habitaciones.get(i);
+            habitacionElegida.click();
             findElement(btnSiguienteHabitaciones).click();
-            Thread.sleep(4000);
             waitVisibilityElementLocated(localizadorVuelo);
         }
 
