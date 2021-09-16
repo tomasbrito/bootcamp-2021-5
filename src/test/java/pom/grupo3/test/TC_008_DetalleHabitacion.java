@@ -8,7 +8,7 @@ import pom.grupo3.pages.VFPaquetesPage;
 
 import static org.junit.Assert.assertEquals;
 
-public class tc_008 extends TestBase {
+public class TC_008_DetalleHabitacion extends TestBase {
 
     final String BASE_URL = "https://www.viajesfalabella.cl/";
     final String DESDE = "Buenos aires";
@@ -17,8 +17,8 @@ public class tc_008 extends TestBase {
 
 
     @Test
+
     public void test008(){
-        System.out.println("test 012");
         //una pagina
         VFHomePage homePage = new VFHomePage(driver);
         homePage.goToUrl(BASE_URL);
