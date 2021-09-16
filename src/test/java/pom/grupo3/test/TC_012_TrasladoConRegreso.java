@@ -7,7 +7,7 @@ import pom.grupo3.base.TestBase;
 import pom.grupo3.pages.VFHomePage;
 import pom.grupo3.pages.VFTrasladosPage;
 
-public class TC_012 extends TestBase {
+public class TC_012_TrasladoConRegreso extends TestBase {
 
     final String BASE_URL = "https://www.viajesfalabella.cl/";
     final String HOTELES_URL = "https://www.viajesfalabella.cl/hoteles/";
