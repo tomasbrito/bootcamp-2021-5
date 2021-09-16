@@ -25,21 +25,37 @@ public class VFPaquetesSteps  {
         homePaquetes.ingresarCiudadDestino(string,int1);
     }
 
-    @When("seleccionar Todavía no he decidido la fecha")
-    public void seleccionar_todavía_no_he_decidido_la_fecha() {
-        homePaquetes.seleccionarBtn("TodaviaNoElegiFecha");
+    @When("selecciono boton {string}")
+    public void selecciono_boton(String string) {
+        // Write code here that turns the phrase above into concrete actions
+        homePaquetes.seleccionarBtn(string);
     }
 
+    @When("seleccionar fecha ida {string} del {string} de {string}")
+    public void seleccionar_fecha_ida_del_de(String string, String string2, String string3) {
+        homePaquetes.seleccionarFecha("ida",string,string2,string3);
+    }
+    @When("seleccionar fecha vuelta {string} del {string} de {string}")
+    public void seleccionar_fecha_vuelta_del_de(String string, String string2, String string3) {
+        homePaquetes.seleccionarFecha("vuelta",string,string2,string3);
+    }
 
     @When("realizo la busqueda presionando el boton Buscar")
     public void realizo_la_busqueda_presionando_el_boton_buscar() {
         homePaquetes.realizarBusqueda();
     }
 
-    @Then("el navegador me muestra los resultados")
-    public void el_navegador_me_muestra_los_resultados() {
-        homePaquetes.waitUrlContains("paquetes-a-isla-de-pascua-desde-buenos-aires");
-        Assert.assertTrue(homePaquetes.urlContains("paquetes-a-isla-de-pascua-desde-buenos-aires"));
+    @Then("el navegador me muestra los resultados de busqueda de paquetes a {string} desde {string}")
+    public void el_navegador_me_muestra_los_resultados_de_busqueda_de_paquetes_a_desde(String string, String string2) {
+        homePaquetes.waitUrlContains("paquetes-a-"+string+"-desde-" + string2);
+        Assert.assertTrue(homePaquetes.urlContains("paquetes-a-"+string+"-desde-" + string2));
     }
+    @Then("el navegador me muestra los resultados de vuelos disponibles")
+    public void el_navegador_me_muestra_los_resultados_de_vuelos_disponibles() {
+        homePaquetes.waitUrlContains("/trip/flight/");
+        Assert.assertTrue(homePaquetes.urlContains("/trip/flight/"));
+    }
+
+
 
 }

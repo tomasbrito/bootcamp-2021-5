@@ -9,5 +9,5 @@ import org.junit.runner.RunWith;
                 glue = {"bdd.lkelly.steps","bdd.lkelly.bases"},
                 plugin ={"pretty"},
                 tags = "@test")
-public class VFPaqutesRunner {
+public class VFPaquetesRunner {
 }
