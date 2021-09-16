@@ -1,43 +1,30 @@
-package pom.grupo3.base;
+package bdd.gbecker.bases;
 
+import io.cucumber.java.Before;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import java.util.concurrent.TimeUnit;
+public class Hook {
 
-public class TestBase {
-
-    //contiene las configuraciones basicas de los Test a ejecutar
-
-    //atributos
     protected WebDriver driver;
 
-    @BeforeClass
+    @Before(order = 0)
     public static void initialiseBrowser() {
         WebDriverManager.chromedriver().setup();
     }
 
-    @Before
+    @Before(order = 1)
     public void setupBrowser() {
         driver = new ChromeDriver();
         driver.manage().deleteAllCookies();
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
     @After
     public void cleanup() {
-        if (driver != null){
-            for(String handle : driver.getWindowHandles()) {
-                driver.switchTo().window(handle);
-                driver.close();
-            }
-        }
+        //    if (driver != null) driver.close();
     }
-
-
 }

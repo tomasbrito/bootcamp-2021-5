@@ -10,7 +10,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import java.util.Arrays;
+
 import java.util.List;
 
 public class tc_paquete {
@@ -27,7 +27,6 @@ public class tc_paquete {
         driver = new ChromeDriver();
         driver.manage().deleteAllCookies();
         driver.manage().window().maximize();
-
     }
 
     @Test
@@ -69,11 +68,12 @@ public class tc_paquete {
 
         //VALIDACION -> Deben mostrarse primero los puntajes de menor valor
 
-        String valor = driver.findElement(By.xpath("//span[@class='eva-3-rating -md -bad']")).getText();
-        Double valorMenor = Double.parseDouble (valor);
-        System.out.println(valorMenor);
+        //String valor = driver.findElement(By.xpath("//span[@class='eva-3-rating -md -bad']")).getText();
+        //Double valorMenor = Double.parseDouble (valor);
+        //System.out.println(valorMenor);
 
         //GUARDAR ELEMENTOS EN ARRAY Y ORDENARLO
+
 
     }
 
@@ -115,15 +115,28 @@ public class tc_paquete {
         WebElement Fechas = driver.findElement(By.xpath("//input[@placeholder = 'Ida']"));
         Fechas.click();
 
-        //10.Desplazarse a Noviembre
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='_dpmg2--controls-next']")));
-        List <WebElement> btnNext = driver.findElements(By.xpath("//div[@class='_dpmg2--controls-next']"));
+        //10.Seleccionar cualquier fecha de Entrada y Salida
 
-        //11. Seleccionar 10 de Noviembre
+        WebElement MesActual = driver.findElement(By.xpath("//div[@data-month='2021-09']"));
+        List <WebElement> listaDias = MesActual.findElements(By.xpath("//span[@class='_dpmg2--date _dpmg2--available']"));
 
-        //12. Seleccionar hasta 24 de Noviembre
-
+        for (WebElement day : listaDias) {
+            if (day.getText().equals("20")) {
+                day.click();
+                break;
+            }
+        }
+        for (WebElement day : listaDias) {
+            if (day.getText().equals("30")) {
+                day.click();
+                break;
+            }
+        }
+        //NO TOMA EL ELEMENTO APLICAR
         //13. Click en Aplicar
+        //WebElement AplicarFecha = driver.findElement(By.xpath("//button[@ class='_dpmg2--desktopFooter-button _dpmg2--desktopFooter-button-apply sbox-3-btn -lg -primary']"));
+        //AplicarFecha.click();
+
         //14. click en Pasajeros
         //15. Click en + agregar pasajero adulto
         //16. Click Aplicar
@@ -133,7 +146,9 @@ public class tc_paquete {
         //VALIDACION -> Se debe visualizar el siguiente mensaje:
         //"Lo sentimos, no pudimos hallar ningún resultado. Intenta hacer la búsqueda nuevamente."
 
-    }
+
+
+}
 
     @Test
     public void TC_P002 (){

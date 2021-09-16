@@ -21,10 +21,31 @@ public class VFTrasladosPage extends SeleniumBase {
     By botonAñadirPasajero = By.xpath("//body/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/a[2]");
     By botonBuscar = By.xpath("//body/app-root[1]/app-searchbox-container[1]/div[1]/app-searchbox[1]/div[9]/div[1]/div[1]/div[3]/div[2]/div[5]/div[1]/a[1]");
     By botonAplicarFecha = By.xpath("//body/div[3]/div[1]/div[6]/div[2]/button[2]");
-
+    By inputFechaPartida = By.xpath("//body/app-root[1]/app-searchbox-container[1]/div[1]/app-searchbox[1]/div[9]/div[1]/div[1]/div[3]/div[2]/div[3]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/input[1]");
+    By fechaPartidaElegida = By.xpath("//body/div[3]/div[1]/div[5]/div[1]/div[4]/span[30]/span[1]");
+    By botonAplicarFechaPartida = By.xpath("//body/div[3]/div[1]/div[6]/div[2]/button[2]");
+    By selectMoneda = By.xpath("//select[@id='currency-select']");
+    By textoEnDolares = By.xpath("//body/div[6]/div[1]/div[1]/div[2]/main[1]/div[3]/div[1]/div[2]/div[1]/search-item[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/div[3]/span[1]");
+    By botonComprar = By.xpath("//body/div[6]/div[1]/div[1]/div[2]/main[1]/div[3]/div[1]/div[2]/div[1]/search-item[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[2]/button[1]");
+    By casillaHaciaElAeropuerto = By.xpath("//body/app-root[1]/app-searchbox-container[1]/div[1]/app-searchbox[1]/div[9]/div[1]/div[1]/div[3]/div[2]/div[1]/div[2]/span[2]/label[1]/i[1]");
+    By casillaRegresoIncluido = By.xpath("//body/app-root[1]/app-searchbox-container[1]/div[1]/app-searchbox[1]/div[9]/div[1]/div[1]/div[3]/div[2]/div[2]/div[1]/div[3]/span[1]/label[1]/i[1]");
+    By inputFechaHastaElAeropuerto = By.xpath("//body/app-root[1]/app-searchbox-container[1]/div[1]/app-searchbox[1]/div[9]/div[1]/div[1]/div[3]/div[2]/div[3]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/input[1]");
+    By fechaElegidaHastaElAeropuerto = By.xpath("//body/div[2]/div[1]/div[5]/div[1]/div[4]/span[27]/span[1]");
+    By botonAplicarFechaHastaElAeropuerto = By.xpath("//body/div[2]/div[1]/div[6]/div[2]/button[2]/em[1]");
+    By botonComprarHaciaElAeropuerto = By.xpath("//body/div[6]/div[1]/div[1]/div[2]/main[1]/div[3]/div[1]/div[2]/div[3]/search-item[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[2]/button[1]");
+    By botonSeleccionarTarjeta = By.xpath("//div[contains(text(),'Selecciona tu tarjeta')]");
+    By tarjetaFalabella = By.xpath("//h5[contains(text(),'Banco Falabella')]");
+    By textoMastercard = By.xpath("//h5[contains(text(),'MasterCard')]");
+    By textoUnPago = By.xpath("//span[contains(text(),'1 pago')]");
+    By botonCambiarTarjeta = By.xpath("//em[contains(text(),'Cambiar')]");
+    By textoSantander = By.xpath("//h5[contains(text(),'Santander')]");
+    By textoVisa = By.xpath("//h5[contains(text(),'Visa')]");
+    By textoTresCuotas = By.xpath("//span[contains(text(),'3 cuotas')]");
+    By textoVisaBancoSantander = By.xpath("//h6[contains(text(),'Visa Banco Santander')]");
     public VFTrasladosPage(WebDriver driver) {
         super(driver);
     }
+
 
     public void clickearBotonPasajeros() {
         click(botonPasajeros);
@@ -66,4 +87,55 @@ public class VFTrasladosPage extends SeleniumBase {
         click(botonBuscar);
 
     }
+    public void clickearCasillaRegresoIncluido(){
+        click(casillaRegresoIncluido);
+    }
+    public void ingresarFechaPartida(){
+        click(inputFechaPartida);
+        click(fechaPartidaElegida);
+        click(botonAplicarFechaPartida);
+    }
+
+    public void cambiarMonedaADolares(){
+        WebElement select = encontrarElemento(selectMoneda);
+        Select s = new Select(select);
+        s.selectByValue("string:USD");
+    }
+    public String getMonedaUtilizada(){
+        return obtenerTexto(textoEnDolares);
+    }
+    public void clickearBotonComprar(){
+        click(botonComprar);
+    }
+    public void clickearBotonComprarHaciaElAeropuerto(){
+        click(botonComprarHaciaElAeropuerto);
+    }
+    public void clickearCasillaHaciaElAeropuerto(){
+        click(casillaHaciaElAeropuerto);
+    }
+    public void ingresarFechaHaciaElAeropuerto(){
+        click(inputFechaHastaElAeropuerto);
+        click(fechaElegidaHastaElAeropuerto);
+        click(botonAplicarFechaHastaElAeropuerto);
+    }
+    public void clickearBotonSeleccionarTarjeta(){
+        click(botonSeleccionarTarjeta);
+    }
+    public void seleccionarTarjetaFalabella(){
+        click(tarjetaFalabella);
+        click(textoMastercard);
+        click(textoUnPago);
+    }
+    public void clickearBotonCambiarTarjeta(){
+        click(botonCambiarTarjeta);
+    }
+    public void seleccionarTarjetaSantander(){
+        click(textoSantander);
+        click(textoVisa);
+        click(textoTresCuotas);
+    }
+    public String getTextoTarjetaFinal(){
+        return obtenerTexto(textoVisaBancoSantander);
+    }
+
 }
