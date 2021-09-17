@@ -2,6 +2,7 @@ package pom.grupo5.test;
 
 import org.junit.Assert;
 import org.junit.Test;
+import pom.grupo5.base.TestBase;
 import pom.grupo5.pages.VFHomePaquetes;
 import pom.grupo5.pages.VFReservaPaquetes;
 

@@ -3,6 +3,7 @@ package pom.grupo5.test;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import pom.grupo5.base.TestBase;
 import pom.grupo5.pages.VFHomeTraslados;
 
 public class tc003_busquedaCambioTarjeta extends TestBase {

@@ -3,9 +3,10 @@ package pom.grupo5.test;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import pom.grupo5.base.TestBase;
 import pom.grupo5.pages.VFHomeTraslados;
 
-public class tc001_busquedaCampoIncompleto extends TestBase{
+public class tc001_busquedaCampoIncompleto extends TestBase {
 
     final String TRASLADOS_URL = "https://www.viajesfalabella.cl/traslados/";
     final String placeToComplete = "Sheraton Pilar Hotel & Convention Center, Pilar, Provincia de Buenos Aires, Argentina";

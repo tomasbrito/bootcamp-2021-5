@@ -2,9 +2,10 @@ package pom.grupo5.test;
 
 import org.junit.Test;
 import org.openqa.selenium.By;
+import pom.grupo5.base.TestBase;
 import pom.grupo5.pages.VFHomeTraslados;
 
-public class tc004_busquedaDatosIncompletos extends TestBase{
+public class tc004_busquedaDatosIncompletos extends TestBase {
     final String TRASLADOS_URL = "https://www.viajesfalabella.cl/traslados/";
     final String placeFromComplete = "Aeropuerto Internacional Miami, Miami, Estados Unidos";
     final String placeToComplete = "Sanibel Beach, Sanibel, Florida, EE. UU.";
