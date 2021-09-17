@@ -21,8 +21,8 @@ public class TC_002_ErrorRutIvalido extends TestBase {
 
 
     @Test
-    public void test01() {
-        System.out.println("tc-001: Reservar alojamiento");
+    public void test02() {
+        System.out.println("tc-002: Error por falta de edad");
 
         VFHomePage home = new VFHomePage(driver);
         home.goToHome();

@@ -1,5 +1,6 @@
 package pom.grupo3.test;
 
+import org.junit.Assert;
 import org.junit.Test;
 import pom.grupo1.Pages.VFHomePage;
 import pom.grupo3.base.TestBase;
@@ -15,8 +16,10 @@ public class TC_004_FiltrarPorPrecio extends TestBase {
     final int CANT_HIJOS = 1;
     final String EDAD_HIJO = "9 años";
     final String URLHotel = "accommodations/detail";
-    final String precioDesde = "1.500.000";
-    final String precioHasta = "3.000.000";
+    final String precioDesde = "1500000";
+    final String precioHasta = "60177353";
+    final int posicion = 1;
+    final String URLfiltroRangoPrecio = "t_price_range";
 
 
 
@@ -39,6 +42,15 @@ public class TC_004_FiltrarPorPrecio extends TestBase {
         alojamientos.waitForResultsPage(DESTINO);
         //filtrar
         alojamientos.filtrarPorPrecio(precioDesde, precioHasta);
+        alojamientos.waitForResultsPage(URLfiltroRangoPrecio);
+
+        //validar
+        if (alojamientos.comparar(precioDesde, precioHasta)){
+            Assert.assertTrue(true);
+        } else {
+            Assert.fail();
+        }
+
 
     }
 }
