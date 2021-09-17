@@ -115,7 +115,7 @@ public class VFHomePaquetes extends SeleniumBase {
                 findElement(fechaHastaDestino1).click();
                 selectDate(1,dd,mm,aaaa);
                 aplicarFecha(1);
-                return getAttributeValue(fechaDesdeDestino2);
+                return getAttributeValue(fechaHastaDestino1);
             case Destino2Hasta:
                 return getAttributeValue(fechaHastaDestino2);
             case IdaCalendarioLateral:

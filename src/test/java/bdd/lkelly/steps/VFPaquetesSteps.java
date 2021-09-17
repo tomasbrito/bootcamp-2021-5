@@ -15,10 +15,7 @@ public class VFPaquetesSteps  {
         homePaquetes.goToUrl(url);
     }
 
-    @When("seleccionar {string}")
-    public void seleccionar(String string) {
-        homePaquetes.seleccionarBtn(string);
-    }
+
 
     @When("introduzco {string} en el campo origen")
     public void introduzco_en_el_campo_origen(String string) {
@@ -28,6 +25,22 @@ public class VFPaquetesSteps  {
     @When("introduzco solo {int} destino {string} en el campo destino")
     public void introduzco_solo_destino_en_el_campo_destino(Integer int1, String string) {
         homePaquetes.ingresarCiudadDestino(string,int1);
+    }
+
+
+    @When("selecciono boton {string}")
+    public void selecciono_boton(String string) {
+        // Write code here that turns the phrase above into concrete actions
+        homePaquetes.seleccionarBtn(string);
+    }
+
+    @When("seleccionar fecha ida {string} del {string} de {string}")
+    public void seleccionar_fecha_ida_del_de(String string, String string2, String string3) {
+        homePaquetes.seleccionarFecha("ida",string,string2,string3);
+    }
+    @When("seleccionar fecha vuelta {string} del {string} de {string}")
+    public void seleccionar_fecha_vuelta_del_de(String string, String string2, String string3) {
+        homePaquetes.seleccionarFecha("vuelta",string,string2,string3);
     }
 
 
@@ -42,23 +55,11 @@ public class VFPaquetesSteps  {
         Assert.assertTrue(homePaquetes.urlContains("paquetes-a-"+string+"-desde-"+string2));
     }
 
-
-    @When("seleccionar fecha ida {string} del {string} de {string}")
-    public void seleccionar_fecha_ida_del_de(String string, String string2, String string3) {
-       homePaquetes.seleccionarFecha("ida",string,string2,string3);
-    }
-
-    @When("seleccionar fecha vuelta {string} del {string} de {string}")
-    public void seleccionar_fecha_vuelta_del_de(String string, String string2, String string3) {
-        homePaquetes.seleccionarFecha("vuelta",string,string2,string3);
-    }
-
-    @Then("el navegador me muestra los resultados de busqueda de vuelos disponibles")
-    public void el_navegador_me_muestra_los_resultados_de_busqueda_de_vuelos_disponibles() {
+    @Then("el navegador me muestra los resultados de vuelos disponibles")
+    public void el_navegador_me_muestra_los_resultados_de_vuelos_disponibles() {
         homePaquetes.waitUrlContains("/trip/flight/");
         Assert.assertTrue(homePaquetes.urlContains("/trip/flight/"));
     }
-
 
 
 

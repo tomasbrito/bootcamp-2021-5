@@ -24,7 +24,7 @@ public class tc012_reservaPaqueteDesdeHome extends TestBase {
         Thread.sleep(2000);
         homePagePaquetes.switchWindows();
         String urlNuevaPestaña = homePagePaquetes.getUrl();
-        System.out.println(urlNuevaPestaña);
+        Assert.assertTrue(urlNuevaPestaña.contains("trip/accommodations/detail"));
         VFReservaPaquetes pageReservaPaquetes = new VFReservaPaquetes(driver,wait);
         Thread.sleep(2000);
         Assert.assertEquals("Esplendor by Wyndham Cervantes", driver.getTitle());

@@ -61,8 +61,8 @@ public class tc_alojamiento {
 
         //Seleccion de cualquier Fecha disponible entrada y salida
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("_dpmg2--months")));
-        driver.findElements(By.className("_dpmg2--date-number")).get(15).click();
-        driver.findElements(By.className("_dpmg2--date-number")).get(20).click();
+        driver.findElements(By.className("_dpmg2--date-number")).get(23).click();
+        driver.findElements(By.className("_dpmg2--date-number")).get(30).click();
 
         //Click en Aplicar
         WebElement AplicarFecha = driver.findElement(By.xpath("//em[contains(text(),'Aplicar')]"));

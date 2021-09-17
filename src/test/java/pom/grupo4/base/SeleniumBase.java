@@ -56,4 +56,8 @@ public class SeleniumBase {
     public void enter(By localizador){
         driver.findElement(localizador).sendKeys(Keys.ENTER);
     }
+
+    public boolean urlContiene(String url){
+        return this.getUrl().contains(url);
+    }
 }
