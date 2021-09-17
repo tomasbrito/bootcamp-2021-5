@@ -1,5 +1,6 @@
 package pom.grupo3.test;
 
+import org.junit.Assert;
 import org.junit.Test;
 import pom.grupo1.Pages.VFHomePage;
 import pom.grupo3.base.TestBase;
@@ -14,6 +15,7 @@ public class TC_003_ErrorFaltaDeEdad extends TestBase {
     final int CANT_ADULT = 2;
     final int CANT_HIJOS = 1;
     final String EDAD_HIJO = "9 años";
+    final String MENSAJEESPERADO = "Ingresa la edad del menor";
 
 
     @Test
@@ -27,7 +29,12 @@ public class TC_003_ErrorFaltaDeEdad extends TestBase {
         VFAlojamientoG3 alojamientos = new VFAlojamientoG3(driver);
         alojamientos.addAdult(CANT_ADULT);
         alojamientos.addkid(CANT_HIJOS);
-        alojamientos.edadMenor(EDAD_HIJO);
+        alojamientos.aplicarHabitaciones();
+        String mensajeACtual = alojamientos.obtenerMensajeErrorEdad();
+
+        //validaciones
+        Assert.assertEquals(MENSAJEESPERADO, mensajeACtual);
+
 
 
     }

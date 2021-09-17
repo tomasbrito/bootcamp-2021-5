@@ -1,11 +1,12 @@
 package pom.grupo3.test;
 
+import org.junit.Assert;
 import org.junit.Test;
 import pom.grupo1.Pages.VFHomePage;
 import pom.grupo3.base.TestBase;
 import pom.grupo3.pages.VFAlojamientoG3;
 
-public class TC_01_ReservaAlojamiento extends TestBase {
+public class TC_002_ErrorRutIvalido extends TestBase {
 
     final String DESTINO = "Buenos";
     final String YEAR_MONTH = "2021-10"; // aaaa-mm
@@ -15,11 +16,12 @@ public class TC_01_ReservaAlojamiento extends TestBase {
     final int CANT_HIJOS = 1;
     final String EDAD_HIJO = "9 años";
     final String URLHotel = "accommodations/detail";
+    final String codigoInvalido = "abc";
 
 
 
     @Test
-    public void test01(){
+    public void test01() {
         System.out.println("tc-001: Reservar alojamiento");
 
         VFHomePage home = new VFHomePage(driver);
@@ -35,18 +37,15 @@ public class TC_01_ReservaAlojamiento extends TestBase {
         alojamientos.busqueda();
 
         alojamientos.waitForResultsPage(DESTINO);
-        String firstHotelName = alojamientos.nombrePrimerHotel();
+        alojamientos.nombrePrimerHotel();
         alojamientos.switchToHotelTab(URLHotel);
-        String priceForNight = alojamientos.ReservarPimerElemento();
+        alojamientos.ReservarPimerElemento();
+
+        String mensajeError = alojamientos.activarCMRpuntos(codigoInvalido);
+
         //validaciones
+        String mensajeEsperado = "Ingresa un valor válido";
+        Assert.assertEquals(mensajeEsperado, mensajeError);
 
-
-
-
-
-
-
-
-        //Assert.assertEquals( , );
     }
 }

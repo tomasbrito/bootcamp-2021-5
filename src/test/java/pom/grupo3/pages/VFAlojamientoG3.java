@@ -1,6 +1,5 @@
 package pom.grupo3.pages;
 
-import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -31,12 +30,18 @@ public class VFAlojamientoG3 extends SeleniumBase {
     By menorListaEdad = By.xpath("/html/body/div[2]/div/div[1]/div[2]/div[1]/div[2]/div[3]/div[1]/div[2]/div/div/select");
     By resultContainerBy = By.xpath("//div[@class=\"results-cluster-container\"]");
     By btnVerHabitacion = By.xpath("/html/body/aloha-app-root/aloha-detail/div/div[2]/div[2]/div/aloha-infobox-container/aloha-infobox-wrapper-container/div/div/div/aloha-infobox-shopping-content/div/div[2]/aloha-button/button/em");//By.linkText("Ver habitaciones");
-    By precioPorNocheBy = By.xpath("//*[@id=\"roompacks-container-wrapper\"]/aloha-roompacks-container/aloha-roompacks-grid-container/div[2]/div[1]/aloha-roompacks-group-container[1]/div[2]/aloha-roompack-container/div[2]/aloha-roompack-price-container/aloha-summary-price/div/span[2]");
+    By precioTotalBy = By.xpath("//*[@id=\"roompacks-container-wrapper\"]/aloha-roompacks-container/aloha-roompacks-grid-container/div[2]/div[2]/aloha-reservation-summary-container/div/aloha-detail-price-container/aloha-price-container/aloha-summary-price/div/span[2]");
     By btnReservarAhora = By.xpath("//*[@id=\"roompacks-container-wrapper\"]/aloha-roompacks-container/aloha-roompacks-grid-container/div[2]/div[2]/aloha-reservation-summary-container/div/aloha-next-step-button/aloha-button/button/em");
     By btnSiguiente = By.linkText("Siguiente");
     By hotelsListBy = By.xpath("/html/body/aloha-app-root/aloha-results/div/div/div/div[2]/div[2]/aloha-list-view-container/div[2]");//className: results-cluster-container
     By nombreHotelBy = By.xpath("//span[contains(@class,\"accommodation-name\")]");
-
+    By tituloHotel = By.xpath("//*[@id=\"checkout-content\"]/div[2]/div/purchase-detail-component/div/products-detail-component-v2/div/div/product-title-v2/div/div[2]/div");
+    By precioActual = By.xpath("//*[@id=\"chk-total-price\"]/div[2]/money/div/span[3]");
+    By checkCMRpuntos = By.id("cmr-split");
+    By textBoxCMRpuntos = By.id("cmr-payer-identification-number");
+    By fueraDeCMR = By.xpath("//*[@id=\"checkout-content\"]/div[1]/cmr-split/div/div/div/div/div/div[1]/span");
+    By mensajeErrorCMR = By.xpath("//*[@id=\"formData.paymentData.cashPayments[0].payeeIdentification.number\"]/div/div/validation-error/span");
+    By errorEdad = By.xpath("/html/body/div[2]/div/div[1]/div[2]/div[1]/div[3]/div/div[2]/p");
 
 
     public void selectDestino(String place) {
@@ -87,7 +92,6 @@ public class VFAlojamientoG3 extends SeleniumBase {
 
     public void edadMenor(String edad_menor) {
         elmentoVisible(edad_menor);
-
         click(btnHabitacionesAplicar);
     }
 
@@ -118,15 +122,35 @@ public class VFAlojamientoG3 extends SeleniumBase {
 
         waitForResultsPage(URLDetalleHabitacion);
         //click(btnVerHabitacion);
-        String precioXNoche = "0";//String precioXNoche = obtenerTexto(precioPorNocheBy);
-        click(btnReservarAhora);
-
+        String precioTotal = obtenerTexto(precioTotalBy);
+        //click(btnReservarAhora);
+        //String precioXNoche = obtenerTexto(precioPorNocheBy);
         waitElementsToBeMoreThan(0, btnSiguiente, TIMEOUT_GENERAL);
         click(btnSiguiente);
 
         waitForResultsPage(URLFormularioPago);
-        return precioXNoche;
+        return precioTotal;
     }
 
+    public String obtenerNombreHotel() {
+        return obtenerTexto(tituloHotel);
+    }
+    public String precioFinal() {
+        return obtenerTexto(precioActual);
+    }
 
+    public String activarCMRpuntos(String codigoInvalido) {
+        click(checkCMRpuntos);
+        tipear(codigoInvalido, textBoxCMRpuntos);
+        click(fueraDeCMR);
+        return obtenerTexto(mensajeErrorCMR);
+    }
+
+    public String obtenerMensajeErrorEdad() {
+        return obtenerTexto(errorEdad);
+    }
+
+    public void aplicarHabitaciones() {
+        click(btnHabitacionesAplicar);
+    }
 }
