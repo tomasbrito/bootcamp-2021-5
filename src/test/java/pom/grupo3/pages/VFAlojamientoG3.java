@@ -42,7 +42,9 @@ public class VFAlojamientoG3 extends SeleniumBase {
     By fueraDeCMR = By.xpath("//*[@id=\"checkout-content\"]/div[1]/cmr-split/div/div/div/div/div/div[1]/span");
     By mensajeErrorCMR = By.xpath("//*[@id=\"formData.paymentData.cashPayments[0].payeeIdentification.number\"]/div/div/validation-error/span");
     By errorEdad = By.xpath("/html/body/div[2]/div/div[1]/div[2]/div[1]/div[3]/div/div[2]/p");
-
+    By campoPrecioDesde = By.xpath("/html/body/aloha-app-root/aloha-results/div/div/div/div[1]/aloha-filter-list/div/ul/li[2]/aloha-filter/aloha-slider-filter/ul/div[3]/div[1]/aloha-input/div/div/input");//By.xpath("//input[@type='number'][0]");
+    By campoPrecioHasta = By.xpath("/html/body/aloha-app-root/aloha-results/div/div/div/div[1]/aloha-filter-list/div/ul/li[2]/aloha-filter/aloha-slider-filter/ul/div[3]/div[2]/aloha-input/div/div/input");//By.xpath("//input[@type='number'][1]");
+    By btnAplicarFiltroPrecio = By.xpath("/html/body/aloha-app-root/aloha-results/div/div/div/div[1]/aloha-filter-list/div/ul/li[2]/aloha-filter/aloha-slider-filter/ul/aloha-button/button/em");
 
     public void selectDestino(String place) {
         WebElement destino = encontrarElemento(origenBy);
@@ -121,7 +123,7 @@ public class VFAlojamientoG3 extends SeleniumBase {
         click(primerResultadoBy);
 
         waitForResultsPage(URLDetalleHabitacion);
-        //click(btnVerHabitacion);
+        click(btnVerHabitacion);
         String precioTotal = obtenerTexto(precioTotalBy);
         //click(btnReservarAhora);
         //String precioXNoche = obtenerTexto(precioPorNocheBy);
@@ -152,5 +154,12 @@ public class VFAlojamientoG3 extends SeleniumBase {
 
     public void aplicarHabitaciones() {
         click(btnHabitacionesAplicar);
+    }
+
+    public void filtrarPorPrecio(String precioDesde, String precioHasta) {
+        tipear(precioDesde, campoPrecioDesde);
+        //tipear(precioHasta, campoPrecioHasta);//el campo no se borra automaticamente
+        click(campoPrecioHasta);
+        click(btnAplicarFiltroPrecio);
     }
 }
