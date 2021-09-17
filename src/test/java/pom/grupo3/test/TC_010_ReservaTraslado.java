@@ -15,9 +15,9 @@ public class TC_010_ReservaTraslado extends TestBase {
 
 
     @Test
-    public void test012_ReservaTraslado(){
-        System.out.println("test 012");
-        //una pagina
+    public void test010(){
+        System.out.println("tc_010: Reservar Traslado");
+
         VFHomePage homePage = new VFHomePage(driver);
         homePage.goToUrl(BASE_URL);
         homePage.irATraslado();

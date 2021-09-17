@@ -17,8 +17,8 @@ public class TC_009_CambiarMoneda extends TestBase {
 
     @Test
     public void test009(){
-        System.out.println("test 012");
-        //una pagina
+        System.out.println("tc_009: Cambiar moneda");
+
         VFHomePage homePage = new VFHomePage(driver);
         homePage.goToUrl(BASE_URL);
         homePage.irATraslado();

@@ -88,7 +88,7 @@ public class VFTrasladosPage extends SeleniumBase {
     public boolean comparar(String desde, String hasta) {
         WebElement partida = encontrarElemento(puntoPartida);
         WebElement llegada = encontrarElemento(puntollegada);
-        return partida.getText().contains(desde)|| llegada.getText().contains(hasta);
+        return partida.getText().contains(desde) || llegada.getText().contains(hasta);
     }
 
     public String confirmarCompra() {

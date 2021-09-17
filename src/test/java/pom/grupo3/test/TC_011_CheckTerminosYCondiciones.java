@@ -16,8 +16,8 @@ public class TC_011_CheckTerminosYCondiciones extends TestBase {
 
 
     @Test
-    public void test011_CheckTerminosYCondiciones(){
-        //una pagina
+    public void test011(){
+        System.out.println("tc_011: Check terminos y condiciones");
         VFHomePage homePage = new VFHomePage(driver);
         homePage.goToUrl(BASE_URL);
         homePage.irATraslado();

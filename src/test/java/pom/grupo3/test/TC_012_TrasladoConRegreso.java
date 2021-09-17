@@ -18,8 +18,8 @@ public class TC_012_TrasladoConRegreso extends TestBase {
 
     @Test
     public void test012(){
-        System.out.println("test 012");
-        //una pagina
+        System.out.println("tc_012: Traslado con regreso");
+
         VFHomePage homePage = new VFHomePage(driver);
         homePage.goToUrl(BASE_URL);
         homePage.irATraslado();
