@@ -89,6 +89,9 @@ public class SeleniumBase {
         wait.until(ExpectedConditions.elementToBeClickable(locator));
 
     }
+
+    public void waitForElementAndClick(By locator){wait.until(ExpectedConditions.elementToBeClickable(locator)).click();}
+
     public Select getSelect(By locator){
         return new Select(driver.findElement(locator));
     }
