@@ -23,6 +23,10 @@ public class SeleniumBase {
         return driver.findElement(locator);
     }
 
+    public WebElement getElementFromAList(int index, List<WebElement> list) {
+        return list.get(index);
+    }
+
     public List<WebElement> findElements(By locator) {
         return driver.findElements(locator);
     }
@@ -43,12 +47,29 @@ public class SeleniumBase {
         return findElement(locator).getText();
     }
 
+    public String getValue(By locator) {
+        return findElement(locator).getAttribute("value");
+    }
+
+    public WebElement findElementByItsTextFromAList(String text, By locator) {
+        List<WebElement> list = findElements(locator);
+        for (WebElement element:list) {
+            if (element.getText().equals(text))
+                return element;
+        }
+        return null;
+    }
+
     public void type(String text, WebElement element) {
         element.sendKeys(text);
     }
 
     public void type(String text, By locator) {
         driver.findElement(locator).sendKeys(text);
+    }
+
+    public void type(Keys key, By locator) {
+        driver.findElement(locator).sendKeys(key);
     }
 
     public void click(By locator) {
@@ -142,16 +163,24 @@ public class SeleniumBase {
         }
     }
 
-    public void waitElementToBeClickable(By selector, int timeout) {
+    public void goBack() {
+        driver.navigate().back();
+    }
+
+    public void acceptAlert() {
+        driver.switchTo().alert().accept();
+    }
+
+        public void waitElementToBeClickable(By selector, int timeout) {
         WebDriverWait wait = new WebDriverWait(driver, timeout);
         try {
-            wait.until(ExpectedConditions.elementToBeClickable(findElement(selector)));
+            wait.until(ExpectedConditions.elementToBeClickable(selector));
         } catch (TimeoutException e) {
             System.out.println("Error: waitElementToBeClickable");
         }
     }
 
-    public void waitElementToBeClickable(WebElement element, int timeout) {
+    /*public void waitElementToBeClickable(WebElement element, int timeout) {
         WebDriverWait wait = new WebDriverWait(driver, timeout);
         try {
             wait.until(ExpectedConditions.elementToBeClickable(element));
@@ -160,6 +189,8 @@ public class SeleniumBase {
         }
     }
 
+     */
+
     public void waitPresenceOfElementLocated(By selector, int timeout) {
         WebDriverWait wait = new WebDriverWait(driver, timeout);
         try {
@@ -167,6 +198,11 @@ public class SeleniumBase {
         } catch (TimeoutException e) {
             System.out.println("Error: waitPresenceOfElementLocated");
         }
+    }
+
+    public void selectByIndex(By locator, int index) {
+        Select select = new Select(findElement(locator));
+        select.selectByIndex(index);
     }
 
     public void selectByValue(By locator, String value){
@@ -183,4 +219,5 @@ public class SeleniumBase {
         ArrayList<String> browserTabs = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(browserTabs.get(tabNum));
     }
+
 }

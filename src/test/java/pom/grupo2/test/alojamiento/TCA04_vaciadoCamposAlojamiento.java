@@ -1,4 +1,4 @@
-package pom.grupo2.test;
+package pom.grupo2.test.alojamiento;
 
 import org.junit.Assert;
 import org.junit.Test;
