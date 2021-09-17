@@ -3,9 +3,7 @@ package pom.grupo5.test;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import pom.grupo5.base.SeleniumBase;
 import pom.grupo5.pages.VFHomeTraslados;
-import pom.grupo5.base.TestBase;
 
 public class tc001_busquedaCampoIncompleto extends TestBase{
 

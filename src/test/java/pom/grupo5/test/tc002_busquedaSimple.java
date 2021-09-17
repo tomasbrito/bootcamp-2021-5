@@ -2,11 +2,7 @@ package pom.grupo5.test;
 
 import org.junit.Test;
 import org.openqa.selenium.By;
-import pom.grupo5.base.TestBase;
 import pom.grupo5.pages.VFHomeTraslados;
-import pom.grupo5.base.SeleniumBase;
-
-import java.util.Date;
 
 public class tc002_busquedaSimple extends TestBase {
     final String TRASLADOS_URL = "https://www.viajesfalabella.cl/traslados/";
