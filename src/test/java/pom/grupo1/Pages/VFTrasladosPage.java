@@ -4,8 +4,11 @@ import static org.junit.Assert.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 import pom.grupo1.base.SeleniumBase;
 import org.openqa.selenium.WebElement;
+
 import java.util.List;
 
 public class VFTrasladosPage extends SeleniumBase {
@@ -28,6 +31,14 @@ public class VFTrasladosPage extends SeleniumBase {
     By aplicarFechasButtonBy = By.xpath("(//button/*[text()=\"Aplicar\"])[2]");
     By resultContainerBy = By.xpath("//div[@class=\"results-cluster-container\"]");
     By pointsDescriptionListBy = By.xpath("//div[@class=\"points-description\"]/ul/li");
+    //test2
+    By fechaHoursBy = By.xpath("//option[@value=\"30\"]/parent::*");
+    By plusButtonBy = By.xpath("(//a[contains(@class,\"steppers-icon-right\")])[2]");
+    By roomBlocksBy = By.xpath("//div[@class=\"_pnlpk-itemBlock\"]");
+    By selectTagBy = By.tagName("select");
+    By btnHabitacionesAplicar = By.linkText("Aplicar");
+    By pasajerosInputBy = By.xpath("//label[text()=\"Pasajeros\"]/parent::div");
+    By searchParametersListBy = By.xpath("//ul[@class=\"re-search-container\"]/*/span");
 
 //    //test1
 //    By alojamientosFormBy = By.className("sbox-dates");
@@ -58,7 +69,7 @@ public class VFTrasladosPage extends SeleniumBase {
 //    By checkoutMsgBy = By.tagName("h2");
     // Test 3
     By airportInput = By.xpath("//input[@class='input-tag sbox-main-focus sbox-origin sbox-primary sbox-places-first places-inline']");
-    By firstOption = By.xpath("//li[@class='item'][1]");
+    By firstOption = By.xpath("//li[@class=\"item -active\"]");
     By hotelInput = By.xpath("//div[@class='sbox-places']//input[@class='input-tag sbox-main-focus sbox-destination sbox-secondary sbox-places-second places-inline']");
     By directionLabels = By.xpath("//label[@class=\"radio-label-container\"]");
     // Test 4
@@ -83,10 +94,10 @@ public class VFTrasladosPage extends SeleniumBase {
 
     public void setAirportAndHotel(String airport, String hotel) {
         type(airport, airportInput);
-        waitElementToBeClickable(firstOption, 4);
+        waitPresenceOfElementLocated(firstOption, 4);
         click(firstOption);
         type(hotel, hotelInput);
-        waitElementToBeClickable(firstOption, 4);
+        waitPresenceOfElementLocated(firstOption, 4);
         click(firstOption);
     }
 
@@ -122,7 +133,7 @@ public class VFTrasladosPage extends SeleniumBase {
     }
 
     public void selectTransferMethod() {
-        waitElementToBeClickable(transferMethod, 8);
+        waitPresenceOfElementLocated(transferMethod, 8);
         click(transferMethod);
         waitElementToBeClickable(bankSelect, 8);
         selectByIndex(bankSelect, 1);
@@ -218,12 +229,44 @@ public class VFTrasladosPage extends SeleniumBase {
         waitElementsToBeMoreThan(0, resultContainerBy, GENERAL_TIMEOUT_TIME);
     }
 
-    public boolean isTrasladoInfoCorrect(String airportName, String hotelName) {
+    public void selectHoursAndDates(String trasladoHour, String yearMonth,
+                                    String arriboDay, String partidaDay) {
+
+        List<WebElement> fechaHoras = findElements(fechaHoursBy);
+
+        for (WebElement hora : fechaHoras) {
+            Select horaSelect = new Select(hora);
+            horaSelect.selectByVisibleText(trasladoHour);
+        }
+
+        selectDates(yearMonth, arriboDay, partidaDay);
+
+    }
+
+    public void addChild(String childAge) {
+        click(pasajerosInputBy);
+        click(plusButtonBy);
+
+        WebElement ageList = findChildElement(selectTagBy, findElement(roomBlocksBy));
+        selectByValue(ageList, childAge);
+
+        click(btnHabitacionesAplicar);
+    }
+
+    public boolean isDestinoInfoCorrect(String airportName, String hotelName) {
         List<WebElement> infoList = findElements(pointsDescriptionListBy);
 
         return getText(infoList.get(0)).contains(airportName) &&
                 getText(infoList.get(2)).contains(hotelName);
     }
+
+    public boolean isHourAndPersonsInfoCorrect(String trasladoHour, String persons) {
+        List<WebElement> infoList = findElements(searchParametersListBy);
+
+        return getText(infoList.get(1)).contains(trasladoHour) &&
+                getText(infoList.get(2)).contains(persons);
+    }
+
 
 
 //    public void waitForResultsPage(String expectedUrl) {
@@ -253,13 +296,8 @@ public class VFTrasladosPage extends SeleniumBase {
 //        }
 //    }
 //
-//    public void selectOneChildPerRoom(int roomAmount) {
-//
-//        for (int i = 1; i < (roomAmount * 2) + 1; i = i + 2) {
-//            click(findElements(plusButtonsBy).get(i));
-//        }
-//    }
-//
+
+
 //    public void addRoom(int roomAmount) {
 //        click(habitacionesInputBy);
 //

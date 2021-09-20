@@ -8,8 +8,9 @@ import pom.grupo1.base.TestBase;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class atc01_busquedaTrasladoSimple extends TestBase {
+public class atc02_busquedaTrasladoCompleto extends TestBase {
 
+    final String PERSONS_NUM = "2";
     final String DESTINO = "santiago";
     final String HOTEL = "hotel w santiago";
     final String YEAR_MONTH = "2021-10"; // aaaa-mm
@@ -18,10 +19,11 @@ public class atc01_busquedaTrasladoSimple extends TestBase {
     final String RESULTADO_BUSQUEDA_URL = "www.viajesfalabella.cl/transfer/shopping/#!/search/roundtrip/airport/";
     final String AIRPORT_NAME = "Aeropuerto Arturo Merino Benitez";
     final String HOTEL_NAME = "Hotel W Santiago";
-
+    final String TRASLADO_HOUR = "08:00";
+    final String CHILD_AGE = "10";
 
     @Test
-    public void atc01() {
+    public void atc02() {
         VFHomePage home = new VFHomePage(driver);
         home.goToHome();
         home.goToTraslados();
@@ -31,10 +33,16 @@ public class atc01_busquedaTrasladoSimple extends TestBase {
         traslados.selectDesde(DESTINO);
         traslados.selectHasta(HOTEL);
 
-        traslados.selectDates(YEAR_MONTH, ARRIBO_DAY, PARTIDA_DAY);
+        traslados.selectHoursAndDates(TRASLADO_HOUR, YEAR_MONTH, ARRIBO_DAY, PARTIDA_DAY);
+
+        traslados.addChild(CHILD_AGE);
+
         traslados.makeSearch();
         traslados.waitForResultsPage(RESULTADO_BUSQUEDA_URL);
 
-        assertTrue(traslados.isDestinoInfoCorrect(AIRPORT_NAME, HOTEL_NAME));
+        boolean isDataCorrect = traslados.isDestinoInfoCorrect(AIRPORT_NAME, HOTEL_NAME) &&
+                traslados.isHourAndPersonsInfoCorrect(TRASLADO_HOUR, PERSONS_NUM);
+
+        assertTrue(isDataCorrect);
     }
 }

@@ -113,7 +113,7 @@ public class SeleniumBase {
         try {
             fluentWait.until(ExpectedConditions.numberOfElementsToBeMoreThan(locator, amount));
         } catch (TimeoutException e) {
-            System.out.println("Error: waitElementsToBeMoreThan");
+            System.out.println("waitElementsToBeMoreThan finished: " + locator);
         }
     }
 
@@ -123,7 +123,7 @@ public class SeleniumBase {
         try {
             wait.until(ExpectedConditions.urlContains(expectedUrl));
         } catch (TimeoutException e) {
-            System.out.println("Error waitUrlContains: " + expectedUrl);
+            System.out.println("waitUrlContains finished: " + expectedUrl);
         }
     }
 
@@ -132,7 +132,7 @@ public class SeleniumBase {
         try {
             wait.until(ExpectedConditions.invisibilityOf(element));
         } catch (TimeoutException e) {
-            System.out.println("Error: waitInvisibilityOf");
+            System.out.println("waitInvisibilityOf finished: " + element);
         }
     }
 
@@ -141,7 +141,7 @@ public class SeleniumBase {
         try {
             wait.until(ExpectedConditions.invisibilityOf(findElement(locator)));
         } catch (TimeoutException e) {
-            System.out.println("Error: waitInvisibilityOf");
+            System.out.println("waitInvisibilityOf finished: " + locator);
         }
     }
 
@@ -150,7 +150,7 @@ public class SeleniumBase {
         try {
             wait.until(ExpectedConditions.invisibilityOf(element));
         } catch (TimeoutException e) {
-            System.out.println("Error: waitInvisibilityOf");
+            System.out.println("waitInvisibilityOf finished: " + element);
         }
     }
 
@@ -159,7 +159,7 @@ public class SeleniumBase {
         try {
             wait.until(ExpectedConditions.invisibilityOf(findElement(selector)));
         } catch (TimeoutException e) {
-            System.out.println("Error: waitInvisibilityOf");
+            System.out.println("waitInvisibilityOf finished: " + selector);
         }
     }
 
@@ -174,9 +174,9 @@ public class SeleniumBase {
         public void waitElementToBeClickable(By selector, int timeout) {
         WebDriverWait wait = new WebDriverWait(driver, timeout);
         try {
-            wait.until(ExpectedConditions.elementToBeClickable(selector));
+            wait.until(ExpectedConditions.elementToBeClickable(findElement(selector)));
         } catch (TimeoutException e) {
-            System.out.println("Error: waitElementToBeClickable");
+            System.out.println("waitElementToBeClickable finished: " + selector);
         }
     }
 
@@ -185,7 +185,7 @@ public class SeleniumBase {
         try {
             wait.until(ExpectedConditions.elementToBeClickable(element));
         } catch (TimeoutException e) {
-            System.out.println("Error: waitElementToBeClickable");
+            System.out.println("waitElementToBeClickable finished: " + element);
         }
     }
 
@@ -196,7 +196,7 @@ public class SeleniumBase {
         try {
             wait.until(ExpectedConditions.presenceOfElementLocated(selector));
         } catch (TimeoutException e) {
-            System.out.println("Error: waitPresenceOfElementLocated");
+            System.out.println("waitPresenceOfElementLocated finished: " + selector);
         }
     }
 
@@ -205,17 +205,17 @@ public class SeleniumBase {
         select.selectByIndex(index);
     }
 
-    public void selectByValue(By locator, String value){
+    public void selectByValue(By locator, String value) {
         Select select = new Select(findElement(locator));
         select.selectByValue(value);
     }
 
-    public void selectByValue(WebElement element, String value){
+    public void selectByValue(WebElement element, String value) {
         Select select = new Select(element);
         select.selectByValue(value);
     }
 
-    public void switchTab(int tabNum){
+    public void switchTab(int tabNum) {
         ArrayList<String> browserTabs = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(browserTabs.get(tabNum));
     }
