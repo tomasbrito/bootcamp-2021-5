@@ -18,8 +18,8 @@ public class atc01_prohibirBusquedaDePaquete extends TestBase {
         VFPaquetesPage homePage = new VFPaquetesPage(driver);
         homePage.goToUrl(BASE_URL);
         homePage.irAPaquetes();
-        homePage.ingresarDatosOrigen();
-        homePage.ingresarDatosDestino();
+        homePage.ingresarDatosOrigen("Santiago");
+        homePage.ingresarDatosDestino("Viña del mar");
         homePage.realizarBusqueda();
         Assert.assertEquals(entradaMsg,homePage.obtenerMensajeFechaEntrada());
         Assert.assertEquals(salidaMsg,homePage.obtenerMensajeFechaSalida());

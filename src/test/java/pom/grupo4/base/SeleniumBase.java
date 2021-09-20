@@ -5,6 +5,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SeleniumBase {
@@ -59,5 +60,10 @@ public class SeleniumBase {
 
     public boolean urlContiene(String url){
         return this.getUrl().contains(url);
+    }
+    public void cambiarPestaña(){
+        ArrayList<String> browserTabs = new ArrayList<>(driver.getWindowHandles());
+        driver.close();
+        driver.switchTo().window(browserTabs.get(1));
     }
 }
