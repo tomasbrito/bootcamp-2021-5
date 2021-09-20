@@ -1,11 +1,11 @@
-package pom.grupo5.pages;
+package bdd.lkelly.pages;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pom.grupo5.base.SeleniumBase;
+import bdd.lkelly.bases.SeleniumBase;
 
 import java.util.List;
 
@@ -23,6 +23,7 @@ public class VFHomePaquetes extends SeleniumBase {
     By origen = By.xpath("//input[contains(@class,'sbox-places-first sbox-origin-container')]");
     By destino = By.xpath("//input[contains(@class,'sbox-places-second')]");
     By segundoDestino = By.xpath("//input[contains(@class,'sbox-hotel-second-destination')]");
+    By localizadorOpcion = By.xpath("//body/div[11]/div[1]/div[1]/ul[1]/li[1]");
     By btnBuscar = By.xpath("//a[contains(@class, 'sbox-search')]");
     By checkbox = By.xpath("//*[contains(@class, 'switch-container')]");
     By fechaIda = By.xpath("//input[@placeholder='Ida']");
@@ -33,17 +34,15 @@ public class VFHomePaquetes extends SeleniumBase {
     By fechaHastaDestino2 = By.xpath("//input[contains(@class,'sbox-hotel-second-checkout-date')]");
     By btnVueloMasAuto = By.xpath("//input[@value='va']");
     By btnDosAlojamientos = By.xpath("//input[@value='vhh']");
+    By btnNextCalendario = By.xpath("//body/div[5]/div[1]/div[2]/div[2]");
     By btnApicarCalendario = By.xpath("//button[contains(@class,'_dpmg2--desktopFooter-button-apply')]");
-    By resumen = By.xpath("//*[@id=\"pkg-wizard\"]/div/div[4]");
-    By ofertasPaquete = By.xpath("//a[contains(@class,'offer-href')]");
-    By habitaciones = By.xpath("//div[contains(@class,'sbox-ui-rooms-container sbox-passengers-picker-container')]");
-    By btnMenosPersonas = By.xpath("//a[@class='steppers-icon-left sbox-3-icon-minus']");
-    By alojamientoSiguiente = By.xpath("//*[@class='eva-3-btn -md -primary -eva-3-fwidth']");
-    By localizadorOpcion = By.xpath("//body/div[11]/div[1]/div[1]/ul[1]/li[1]");
-    By aplicarHabitaciones = By.xpath("//body[1]/div[4]/div[1]/div[2]/a[1]");
     By btnVerResumen = By.xpath("//body[1]/div[13]/div[1]/div[3]/div[1]/div[2]/div[1]/div[2]");
+    By resumen = By.xpath("//*[@id=\"pkg-wizard\"]/div/div[4]");
     By headerResumen = By.xpath("//body/div[@id='pkg-wizard']/div[1]/div[4]/div[1]/div[1]/div[1]");
+    By ofertasPaquete = By.xpath("//a[contains(@class,'offer-href')]");
+
     //  Keyword Driven
+
     public VFHomePaquetes(WebDriver driver, WebDriverWait wait) {
         super(driver,wait);
     }
@@ -95,6 +94,7 @@ public class VFHomePaquetes extends SeleniumBase {
         }
     }
 
+
     public boolean urlContains(String s) {return getUrl().contains(s);}
 
     public String seleccionarFecha(String tipoFecha,String dd, String mm, String aaaa) {
@@ -115,7 +115,7 @@ public class VFHomePaquetes extends SeleniumBase {
                 findElement(fechaHastaDestino1).click();
                 selectDate(1,dd,mm,aaaa);
                 aplicarFecha(1);
-                return getAttributeValue(fechaHastaDestino1);
+                return getAttributeValue(fechaDesdeDestino2);
             case Destino2Hasta:
                 return getAttributeValue(fechaHastaDestino2);
             case IdaCalendarioLateral:
@@ -165,21 +165,5 @@ public class VFHomePaquetes extends SeleniumBase {
     }
 
 
-    public void seleccionarCantidadDeAdultos(int cant) {
-        findElement(habitaciones).click();
-        int clicks;
-        if(cant < 2){
-             findElement(btnMenosPersonas).click();
-        }else if(cant > 2){
-            //clicks = cant -2;
-           // for (int i=0; i< clicks; i++)
-            // Falta implementar para sumar + de 2 personas
-        }
-        findElement(aplicarHabitaciones).click();
-    }
 
-    public void seleccionarAlojamientoSugerido() {
-        waitElementClickable(alojamientoSiguiente);
-        findElement(alojamientoSiguiente).click();
-    }
 }
