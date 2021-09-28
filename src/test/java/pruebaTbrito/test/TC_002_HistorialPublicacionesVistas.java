@@ -2,8 +2,6 @@ package pruebaTbrito.test;
 
 import org.junit.Assert;
 import org.junit.Test;
-import pom.grupo1.Pages.VFHomePage;
-import pom.grupo3.pages.VFAlojamientoG3;
 import pruebaTbrito.Pages.MLHomePage;
 import pruebaTbrito.base.TestBase;
 
@@ -16,7 +14,7 @@ public class TC_002_HistorialPublicacionesVistas extends TestBase {
     final String textoABuscar = "notebook";
 
     @Test
-    public void test01(){
+    public void test002(){
         MLHomePage home = new MLHomePage(driver);
         home.goToUrl(BASE_URL);
         home.realizarBusqueda(textoABuscar);

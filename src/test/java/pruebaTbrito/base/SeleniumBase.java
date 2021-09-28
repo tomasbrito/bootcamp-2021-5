@@ -68,7 +68,8 @@ public class SeleniumBase {
     }
 
     public void switchToIframe(){
-        driver.switchTo().frame(0);
+        List<WebElement> iframes = driver.findElements(By.tagName("iframe"));
+        driver.switchTo().frame(iframes.get(2));
     }
 
 }
